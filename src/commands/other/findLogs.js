@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { buildEmbed, logCommand } = require('../../functions/general');
-const { findChannels, searchLogs } = require('../../functions/commands/findlogs');
+const { searchLogs } = require('../../functions/commands/findlogs');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -29,10 +29,9 @@ module.exports = {
     await logCommand(interaction);
     
     if (items[0].length > 2) {
-      const channels = findChannels(items[0]);
       reply.setTitle(`Searching for __${items[0]}__.`);
       await interaction.reply({embeds: [reply], ephemeral: true});
-      await searchLogs(interaction, channels, items, months, checkVariants);
+      await searchLogs(interaction, items, months, checkVariants);
     } else { 
       reply.setTitle('Please put in at least 3 letters.');
       await interaction.reply({embeds: [reply], ephemeral: true});

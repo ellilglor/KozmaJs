@@ -2,8 +2,7 @@ const fetchAll = require('discord-fetch-all');
 const fs = require('fs');
 const { contentFilter } = require('./findlogs');
 
-const convertLogs = async (interaction, channelName) => {
-  const id = channelNames.get(channelName);
+const convertLogs = async (interaction, channelName, id) => {
   const channel = interaction.guild.channels.cache.get(id);
   const messages = [];
 
@@ -129,26 +128,7 @@ const extractItem = (string, guilds) => {
   return contentFilter(result);
 }
 
-const channelNames = new Map([
-  ['mixed-trades','806452637423370250'],
-  ['equipment','806450782542102529'],
-  ['costumes','806452033291812865'],
-  ['helm-back','806450894693728278'],
-  ['helm-front','806450937380077568'],
-  ['helm-side','806450974029381662'],
-  ['helm-top','806451298434154546'],
-  ['armor-aura','806451662716665878'],
-  ['armor-ankle','806451696322084877'],
-  ['armor-back','806451731826212884'],
-  ['armor-front','806451783383121950'],
-  ['armor-rear','806451814882082819'],
-  ['miscellaneous','806452205146079252'],
-  ['Sprite Food', '878045932300677151'],
-  ['Materials', '880908641304182785']
-]);
-
 module.exports = {
-  channelNames,
   convertLogs,
   saveStats,
   getBotLogs

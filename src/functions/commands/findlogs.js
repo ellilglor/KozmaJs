@@ -1,97 +1,8 @@
 const { tradelogEmbed, buildEmbed } = require('../../functions/general');
-const { items, colors, exceptionsCheck, exceptions, spreadsheet, equipmentFamilies, colorSets } = require('../../data/structures/findlogs');
+const { spreadsheet, equipmentFamilies, colorSets, channels, roses } = require('../../data/structures/findlogs');
 const fs = require('fs');
 
-const roses = ['black', 'red', 'white', 'blue', 'gold', 'green', 'coral', 'violet', 'moonstone', 'malachite', 'garnet', 'amethyst', 'citrine', 'prismatic', 'aquamarine', 'turquoise'];
-
-const findChannels = (item) => {
-  const result = ['mixed-trades'];
-  item = contentFilter(item);
-
-  if (colors.includes(item)) {
-    for (const channel in items) {
-      result.push(channel);
-    }
-    return result;
-  }
-
-  for (const channel in items) {
-    for (const name of items[channel]) {
-      if (item.includes(name)) {
-        if (item.includes('recipe')) {
-          result.push('miscellaneous');
-        }
-
-        for (const check of exceptionsCheck) {
-          if (!name.includes(check)) { continue; }
-
-          if (exceptions.includes(item)) {
-            result.push('equipment');
-           }
-
-          if (name.includes('plate helm') || name.includes('plate mail')) {
-            item.includes('volcanic') ? result.push('costumes', 'equipment') : result.push('costumes');
-          } else { 
-            result.push('costumes');
-          };
-        };
-
-        if (name.includes('airbraker shield')) {
-          item.slice(0,1).includes('a') ? result.push('equipment') : result.push('costumes');
-        };
-
-        if (name.includes('pipe')) {
-          item.includes('exhaust') ? result.push('armor-back') : result.push('helm-front');
-        };
-
-        if (name.includes('rose')) {
-          if (item.includes('tabard') || item.includes('chapeau')) {
-            result.push('costumes');
-          } else {
-            item.includes('aura') ? result.push('armor-aura') : result.push('helm-side');
-          }
-        };
-
-        if (name.includes('clover')) {
-          if (item.includes('lapel')) {
-            result.push('armor-front');
-          } else {
-            item.includes('eyes') ? result.push('miscellaneous') : result.push('helm-top');
-          }
-        };
-
-        if (name.includes('wrench')) {
-          item.includes('wand') ? result.push('equipment') : result.push('armor-back');
-        };
-
-        if (name.includes('spiraltail')) {
-          if (item.includes('mask') || item.includes('mail')) {
-            result.push('costumes');
-          } else { 
-            result.push('armor-rear'); 
-          }
-        };
-
-        if (name.includes('plume')) {
-          item.includes('cap') ? result.push('costumes') : result.push('helm-back');
-        };
-
-        if (name.includes('seedling')) {
-          item.includes('virulent') ? result.push('equipment') : result.push('armor-front');
-        };
-
-        if (result.length === 1) { result.push(channel); }
-
-        return result;
-      };
-    };
-  };
-
-  result.push('miscellaneous', 'Sprite Food', 'Materials');
-  return result;
-};
-
-const searchLogs = async (interaction, channels, items, months, checkVariants) => {
+const searchLogs = async (interaction, items, months, checkVariants) => {
   items[0] = contentFilter(items[0]);
   let logsFound = false;
   const reverse = ['ultron stinks'];
@@ -100,7 +11,7 @@ const searchLogs = async (interaction, channels, items, months, checkVariants) =
   stopHere.setMonth(stopHere.getMonth() - months);
 
   if (checkVariants) {
-    items = addVariants(channels, items);
+    items = addVariants(items);
   }
 
   if (items[0].includes('ctr') && items[0].includes('asi')) {
@@ -111,7 +22,7 @@ const searchLogs = async (interaction, channels, items, months, checkVariants) =
   }
 
   for (const channel of channels) {
-    const messages = JSON.parse(fs.readFileSync(`src/data/tradelogs/${channel}.json`));
+    const messages = JSON.parse(fs.readFileSync(`src/data/tradelogs/${channel[0]}.json`));
     const matches = [];
     let firstMatch = false;
 
@@ -134,7 +45,7 @@ const searchLogs = async (interaction, channels, items, months, checkVariants) =
         firstMatch = true;
         logsFound = true;
         const foundIn = tradelogEmbed()
-          .setTitle(`I found these posts in ${channel}:`)
+          .setTitle(`I found these posts in ${channel[0]}:`)
           .setColor('#f9d49c');
         matches.push(foundIn);
       }
@@ -158,10 +69,10 @@ const searchLogs = async (interaction, channels, items, months, checkVariants) =
     }
   }
 
-  await searchFinished(interaction, logsFound, channels, items[0]);
+  await searchFinished(interaction, logsFound, items[0]);
 };
 
-const searchFinished = async (interaction, logsFound, channels, item) => {
+const searchFinished = async (interaction, logsFound, item) => {
   const message = buildEmbed()
     .setColor('#f9d49c')
     .setDescription('By default I only look at tradelogs from the past 3 months!\nIf you want me to look past that use the *months* option.\n\nIf you notice a problem please contact @ellilglor#6866!\nDid you know we have our own discord server?\n<https://discord.gg/nGW89SHHj3>');
@@ -172,11 +83,9 @@ const searchFinished = async (interaction, logsFound, channels, item) => {
     message.setTitle(`I couldn't find any listings for __${item}__.`); 
   }
 
-  if (channels.includes('equipment')) {
-    for (const equipment of spreadsheet) {
-      if (item.includes(equipment)) {
-        message.addField('** **', `__${item}__ can be found on the merchant sheet:\n https://docs.google.com/spreadsheets/d/1h-SoyMn3kVla27PRW_kQQO6WefXPmLZYy7lPGNUNW7M/htmlview#`, false);
-      }
+  for (const equipment of spreadsheet) {
+    if (item.includes(equipment)) {
+      message.addField('** **', `__${item}__ can be found on the merchant sheet:\n https://docs.google.com/spreadsheets/d/1h-SoyMn3kVla27PRW_kQQO6WefXPmLZYy7lPGNUNW7M/htmlview#`, false);
     }
   }
 
@@ -184,22 +93,25 @@ const searchFinished = async (interaction, logsFound, channels, item) => {
   await interaction.user.send({embeds: [message]});
 };
 
-const addVariants = (channels, items) => {
-  if (channels.includes('equipment')) {
-    itemFamilyLoop:
-    for (const family in equipmentFamilies) {
-      for (const name of equipmentFamilies[family]) {
-        if (!items[0].includes(name)) { continue; }
+const addVariants = (items) => {
+  let check = true;
+  
+  itemFamilyLoop:
+  for (const family in equipmentFamilies) {
+    for (const name of equipmentFamilies[family]) {
+      if (!items[0].includes(name)) { continue; }
       
-        const uvs = ' ' + items[0].replace(name, '').trim();
-        items.pop();
-        for (const item of equipmentFamilies[family]) {
-          items.push(`${item}${uvs}`.trim());
-        }
-        break itemFamilyLoop;
+      const uvs = ' ' + items[0].replace(name, '').trim();
+      items.pop();
+      for (const item of equipmentFamilies[family]) {
+        items.push(`${item}${uvs}`.trim());
       }
+      check = false;
+      break itemFamilyLoop;
     }
-  } else {
+  }
+
+  if (check) {
     colorLoop:
     for (const set in colorSets) {
       for (const name of colorSets[set]) {
@@ -270,7 +182,6 @@ const uvSwap = (name) => {
 };
 
 module.exports = {
-  findChannels,
   searchLogs,
   contentFilter
 };

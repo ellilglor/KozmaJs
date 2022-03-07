@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { buildEmbed, logCommand } = require('../../functions/general');
-const { channelNames, convertLogs, saveStats, getBotLogs } = require('../../functions/commands/update');
+const { convertLogs, saveStats, getBotLogs } = require('../../functions/commands/update');
+const { channels } = require('../../data/structures/findlogs');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -13,8 +14,8 @@ module.exports = {
     await logCommand(interaction);
     await interaction.reply({embeds: [reply], ephemeral: true});
 
-    for (const channel of channelNames) {
-      stats.push(await convertLogs(interaction, channel[0]));
+    for (const channel of channels) {
+      stats.push(await convertLogs(interaction, channel[0], channel[1]));
       reply.setTitle(`Finished ${channel[0]}`);
       await interaction.editReply({embeds: [reply]});
     }

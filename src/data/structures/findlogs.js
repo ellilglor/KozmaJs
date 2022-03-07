@@ -1,32 +1,3 @@
-const items = {
-"helm-front": ['visor', 'dapper combo', 'game face', 'glasses', 'goggles', 'helmmounted display', 'mustache', 'pipe', 'gloweyes', 'shades', 'party blowout', 'eye of fury', 'whiskers', 'dread seal', 'dazzling gem', 'Rebreather', 'targeting module', 'monocle', 'stagger star', 'disguise kit', 'beard', 'wolver chops', 'eye patch', 'owlite spectacles', 'truffle snuffler'],
-
-"helm-back": ['long feather', 'plume', 'ribbon', 'scarf', 'heavenly halo', 'gear halo', 'sensor unit', 'aero spoiler', 'pigtails'],
-
-"helm-side": ['com unit', 'helm guards', "mechtennas", 'mecha wings', 'vertical vents', 'golden laurel', 'node receiver', 'voltaic headset', 'raider horns', 'rose', 'ear muffs', 'helm wings', 'snorkel', 'ear feathers', 'porkular vents'],
-
-"helm-top": ['vee','flower','halo','headband','maedate','mohawk','toupee','candle','party hat','crown','topper',"seraphtenna",'headlamp', 'aero fin', 'devious horns', 'spiralhorns', 'snipe perch', 'clover',  'raider helm crest',  'top prop',  'com dish',  "poptennas",  'aero twin fin', 'scholarly tam', 'hoghawk'],
-
-"armor-aura": ['aura'],
-
-"armor-ankle": ['ankle', 'slippers', 'trotters'],
-
-"armor-front": ['barrel belly',	'bandolier',	'canteen',	'parrying blade',	'crest',	'monster pocket',	'bone pendant', 'patrol pendant',	'tome of rage',	'node container',	'binoculars',	'shackles',	'sealed pauldrons',	'floating',	'lapel clover',	'boutonniere',	'wayward compass',	'carabiner',	'coiled rope',	'treat pouch',	'handy propellors',	'camera',	'radio',	'test kit',	'burying spade', 'daisy chain', 'hibiscus chain', 'frasera chain',	'astrolabe',	'sash bag', 'seedling'],
-
-"armor-back": ['side blade',	'vitakit',	'wings',	'antispikes',	'ruinous crystal',	'power pistons',	'pack',	'writhing tendrils',	'intel tube',	'shoulder booster',	'exhaust pipes',	'pylons',	'windup key',	'wrench',	'arctic pauldrons',	'side spade',	'plant fuel',	'ancient scroll'],
-
-"armor-rear": ['wolver tail',	'tails tails',	'cat tail',	'trojan tail',	'dust bunny tail',	'extension cord',	'spiraltail',	'buhgok tail',	'doggie tail',	'tailspin',	'pig tail'],
-
-"costumes": ['chapeau',	'tabard',	'bombhead mask',	'stranger',	'metal sonic',	'fur cap',	'hood',	'cloak',	'pith helm',	'brigandine',	'plate helm',	'plate mail',	'sallet',	'cuirass',	'scale helm',	'scale mail',	'tailed helm',	'culet','winged helm',	'raiment',	'crescent helm',	'flak jacket',	'round helm',	'draped armor',	'imperial tricorne',	'medieval war helm',	'shogun helmet',	'impostoclaus hat',	'winterfest coat',	'humbug hat',	'avenger helm',	'crusader helm',	'champion helm',	'dragon helm',	'warrior helm',	'battle chef',	'diablo helm',	'grim mask',	'oni helm',	'hedge coat',	'obsidian hood',	'obsidian mantle',	'dragon armor',	'wolf helm',	'wolf armor',	'polar wolf hood',	'polar wolf coat',	'warden helm',	'warden armor',	'celestial nav',	'galactic guardian',	'field cap',	'plumed cap',	'stately cap',	'splash sarong',	'splash trunks',	'node slime mask',	'node slime guards',	'gremlin helmet',	'gremlin suit',	'gatecrasher helm',	'gun pup helm',	'mecha helm',	'mecha suit',	'kat suit',	'venom fiend mask',  'venom fiend mail',	'magmatic fanatic mask',  'magmatic fanatic mail',	'polar warden',	'arctic rogue',	'voltaic radical',	'nefarious',	'night cap',	'onesie',	'pullover',	'spiraltail mask',	'spiraltail mail',	'stellar sentinel',	'volcanic plated',	'arctic acolyte',	'fowl cowl',	'fowl cloak',	'gold buckled',	'raider helm',	'raider tunic',	'buccaneer bicorne',	'captain coat',	'snow hat',	'down puffer',	'snow hat',	'wolver mask',	'aero armor',	'aero helm',	'boater',	'floppy beach hat',	'bio helm',	'bio coat',	'budding',	'illuminating ward',	'owlite mask',	'owlite robe',	'battle boar',	'airbraker shield',	'jaws of megalodon',	'shroom'],
-
-"equipment": ['asi','ctr','scissor',	'cleaver',	'bitter',	'deadly candy poker',	'humbug hazer',	'jack froster',	'scalding hot cocoa',	'charcoaler',	'furious fork',	'soaker',	'node slime crusher',	'node slime wall',	'final gasp',	'cinnamug',	'peppermint',	'crystalline',	'caladbolg',	"pot o' crowns",	"winter's edge",	'squall caller',	'skeggox',	'raider buckler',	'dread captain',	'broadsider',	'powder keg',	'ship wheel',	'ice axe',	'alpha claw gauntlet',	'airbraker shield',	'pollinator',	'virulent',	'scythe',	'banker',	'saber',	'wrecker',	'hammer',	'slime slasher',	'static edge', 'hot edge','searing edge', 'shocking edge',	'hatchet',	'blade',	'basher',	'snarble barb',	'flourish',	'troika',	'spur',	'cutter',	'calibur',	'brandish',	'grintovec',	'rigadoon',	'nightblade',	'flamberge',	'striker',	'sword',	'kamarin',	'arc razor',	'jalovec',	'boltbrand',	'thorn',	'blizzbrand',	'blazebrand',	'winmillion',	'khorovod',	'faust',	'cold iron',	'avenger',	'turbillion',	'sweet dreams',	'obsidian edge',	'voltedge',	'triglav',	'sudaruska',	'glacius',	'combuster',	'amputator',	'acheron',	'fang',	'stun gun', 'punch gun', 'frost gun', 'pummel gun',	'duelist',	'spitfire',	'zapper',	'pulsar',	'catalyzer',	'alchemer',	'autogun',	'tundrus',	'chaingun',	'buster',	'needle',	'pepperbox',	'magnus',	'antigua',	'raptor',	'cannon',	'driver',	'silversix',	'blackhawk',	'wand',	'orbitgun',	'winter grave',	'wildfire',	'riftlocker',	'phantamos',	'permafroster',	'repeater',	'griffin',	'arcana',	'mixmaster',	'tortofist',	'gorgofist',	'carbine',	'supernova',	'polaris',	'neutralizer',	'biohazard',	'valiance',	'sentenza',	'slug',	'callahan',	'peacemaker',	'firecracker',	'cold snap',	'proto', 'splinter', 'shard bomb', 'shards', 'dark matter', 'crystal bomb', 'blast',	'spine',	'slumber',	'salt bomb',	'capacitor',	'charge', 'electron bomb', 'graviton bomb', 'big angry bomb', 'irontech',	'vaporizer',	'deconstructor',	'haze',	'atomizer',	'vortex',	'obsidian crusher',	'stagger',	'voltaic tempest',	'barrage',	'venom veiler',	'torpor',	'shivermist',	'nitronome',	'agni',  'heart pendant', 'stone pendant',	'white laurel',	'charm',	'amulet',	'katnip pouch',	'jelly band', 'daybreaker',	'bracelet',	'crystal pin',	'early riser',	'solstice',	'module',	'promissory',	'gift of',	'locket',	'totem',  'buckler',	'green ward',	'shield',	'defender',	'shell',	'twisted',	'tortoise',	'blackened',	'power mitt',	'omegaward',	'gorgomega',	'almire', 'aegis',  'vitasuit',	'fencing',	'tri-guard',	'spiral scale',	'padded',	'ignition',	'frostbreaker',	'emberbreak',	'circuit breaker',	'wolver coat',	'volt breaker',	'spiral plate',	'spiral demo',	'skelly',	'shade armor', 'shade helm',	'sentinel helm', 'sentinel armor',	'pathfinder',	'magic',	'jelly mail',  'jelly helm',  'jelly crown','icebreaker',	'firebreak',	'cobalt',	'padded demo',	'surge breaker',	'quicksilver',	'hunting',	'kat hiss',	'kat eye',	'kat claw',	'gunslinger',	'fused demo',	'dusker',	'chroma suit',	'boosted plate',	'blizzbreaker',	'blazebreak',	'black kat',	'angelic',	'wyvern scale',	'virulisk',	'sunset',	'silvermail',	'seraphic',	'salamander',	'miracle',	'heavy plate','heavy demo',	'ash tail',	'volcanic demo',	'vog cub',	'valkyrie helm', 'valkyrie mail',	'starlit demo',	'snarbolax coat', 'snarbolax cap',	'skolver',	'shadowsun',	'sacred',	'radiant silvermail',	'justifier',	'ironmight plate',	'ice queen',	'heavenly iron',	'grey feather',	'divine mantle',	'deadshot',	'chaos',	'bombastic',	'azure guardian',	'of the fallen',	'ancient plate',	'alimirian crusader',  'seerus',	'wolver cap',	'chroma mask',	'mercurial',	'nameless',	'divine veil']};
-
-const colors = ['cool','dusky','fancy','heavy','military','regal','toasty','prismatic','divine','volcanic','shadow','hunter','surge','hallow','frosty','dangerous','polar','ancient','celestial','lovely','hazardous','vile','glacial','electric','verdant','dazed','wicked','ruby','blazing','peridot','slumber','sapphire','autumn','opal','citrine','turquoise','garnet','amethyst','aquamarine','diamond','emerald','pearl','grey','tech blue','tech green','tech orange','tech pink','tawny','late harvest','shadowtech blue','shadowtech green','shadowtech orange','shadowtech pink'];
-
-const exceptionsCheck = ["cloak","hood","raiment","scale mail","scale helm","plate helm","plate mail"];
-
-const exceptions = ["magic cloak", "kat hiss cloak", "kat eye cloak", "kat claw cloak", "elemental cloak", "black kat cloak", "miracle cloak", "chaos cloak", "magic hood", "kat hiss hood", "kat eye hood", "kat claw hood", "elemental hood", "black kat hood", "miracle hood", "angelic raiment", "kat hiss raiment", "kat claw raiment", "kat eye raiment", "black kat raiment", "spiral scale mail", "drake scale mail", "wyvern scale mail", "dragon scale mail", "spiral scale helm", "drake scale helm", "wyvern scale helm", "dragon scale helm", "spiral plate helm", "boosted plate helm", "heavy plate helm", "ironmight plate helm", "ancient plate helm", "spiral plate mail", "boosted plate mail", "heavy plate mail", "ironmight plate mail", "ancient plate mail"];
-
 const spreadsheet = ["brand","glacius","combuster","voltedge","flourish","snarble barb","thorn blade","sealed sword","avenger","faust","autogun","needle","chaingun", "alchemer","driver","magnus","tundrus","winter grave","blaster","antigua","raptor", "silversix","blackhawk","pulsar","wildfire","riftlocker","phantamos","permafroster", "grim reapater","gilded griffin","arcana","obsidian carbine","supernova","polaris", "valiance","sentenza","iron slug","callahan","argent peacemaker","blast bomb", "electron","graviton","spine cone","vaporizer","haze","capacitor","smogger","spike shower","atomizer","slumber squall","stagger storm","voltaic tempest","dark briar barrage","venom veiler","torpor tantrum","shivermist buster","nitronome","ash of agni","black kat"];
 
 const equipmentFamilies = {
@@ -133,12 +104,30 @@ const colorSets = {
 "snipes": ['fern', 'lavender', 'lemon', 'peach', 'rose', 'sky', 'vanilla', 'cocoa', 'cherry', 'lime', 'mint', 'plum', 'sage', 'wheat']
 }
 
+const channels = new Map([
+  ['mixed-trades','806452637423370250'],
+  ['equipment','806450782542102529'],
+  ['costumes','806452033291812865'],
+  ['helm-back','806450894693728278'],
+  ['helm-front','806450937380077568'],
+  ['helm-side','806450974029381662'],
+  ['helm-top','806451298434154546'],
+  ['armor-aura','806451662716665878'],
+  ['armor-ankle','806451696322084877'],
+  ['armor-back','806451731826212884'],
+  ['armor-front','806451783383121950'],
+  ['armor-rear','806451814882082819'],
+  ['miscellaneous','806452205146079252'],
+  ['Sprite Food', '878045932300677151'],
+  ['Materials', '880908641304182785']
+]);
+
+const roses = ['black', 'red', 'white', 'blue', 'gold', 'green', 'coral', 'violet', 'moonstone', 'malachite', 'garnet', 'amethyst', 'citrine', 'prismatic', 'aquamarine', 'turquoise'];
+
 module.exports = {
-  items,
-  colors,
-  exceptionsCheck,
-  exceptions,
   spreadsheet,
   equipmentFamilies,
-  colorSets
+  colorSets,
+  channels,
+  roses
 }
