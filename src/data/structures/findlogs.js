@@ -101,7 +101,49 @@ const colorSets = {
 
 "tech": ['tech blue', 'tech green', 'tech orange', 'tech pink'],
 
-"snipes": ['fern', 'lavender', 'lemon', 'peach', 'rose', 'sky', 'vanilla', 'cocoa', 'cherry', 'lime', 'mint', 'plum', 'sage', 'wheat']
+"snipes": ['fern', 'lavender', 'lemon', 'peach', 'rose', 'sky', 'vanilla', 'cocoa', 'cherry', 'lime', 'mint', 'plum', 'sage', 'wheat'],
+
+"winterfest onesies": ['candy striped', 'festively striped', 'holly striped', 'joyous striped'],
+
+"winterfest pullovers": ['flashy winter', 'garish winter', 'gaudy winter', 'tacky winter'],
+
+"kat suits": ['feral kat', 'primal kat', 'savage kat', 'wild kat'],
+
+"polar colors": ['polar day', 'polar night', 'polar twilight'],
+
+"buhgok tails": ['black buhgok', 'brown buhgok', 'gold buhgok'],
+
+"fowls": ['black fowl', 'brown fowl', 'gold fowl'],
+
+"buckled coats": ['ancient gold', 'hunter gold', 'peridot gold'],
+
+"clovers": ['ancient clover', 'hunter clover', 'peridot clover'],
+
+"lapel clover": ['ancient lapel', 'hunter lapel', 'peridot lapel'],
+
+"lucky toppers": ['ancient lucky', 'hunter lucky', 'peridot lucky'],
+
+"lucky pipes": ['ancient pipe', 'hunter pipe', 'peridot pipe'],
+
+"lucky beards": ['autumn lumberfell', 'citrine lumberfell', 'dazed lumberfell'],
+
+"obsidian": ['influence', 'devotion', 'rituals', 'sight'],
+
+"raider": ['winter raider', 'squall raider', 'firestorm raider'],
+
+"battle chef 1": ['black battle', 'white battle'],
+
+"battle chef 2": ['blue battle', 'red battle'],
+
+"battle chef 3": ['pink battle', 'purple battle', 'yellow battle'],
+
+"rose 1": ['the black rose', 'the white rose'],
+
+"rose 2": ['the gold rose', 'the green rose', 'the blue rose', 'the red rose'],
+
+"rose 3": ['the amethyst rose', 'the aquamarine rose', 'the citrine rose', 'the garnet rose', 'the malachite rose', 'the moonstone rose', 'the turquoise rose'],
+
+"rose 4": ['the coral rose', 'the violet rose']
 }
 
 const channels = new Map([

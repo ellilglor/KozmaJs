@@ -118,23 +118,32 @@ const addVariants = (items) => {
         if (!items[0].includes(name)) { continue; }
 
         if (set.includes('gems')) {
-          if (items[0].includes('bout') || items[0].includes('rose') || items[0].includes('tabard') || items[0].includes('chapeau')) {
+          if (items[0].includes('bout') || items[0].includes('rose') || items[0].includes('tabard') || items[0].includes('chapeau') || items[0].includes('buckled') || items[0].includes('clover') || items[0].includes('pipe') || items[0].includes('lumberfell')) {
             continue;
           }
         }
       
         const template = items[0].replace(name, '').trim();
 
-        if (name.includes('rose')) {
-          if (roses.includes(template)) {
+        if (set.includes('snipes') && name.includes('rose')) {
+          if (roses.includes(template) || template.includes('tabard') || template.includes('chapeau')) {
             continue;
           }
         }
 
         items.pop();
-        for (const color of colorSets[set]) {
-          items.push(`${color} ${template}`);
+        if (set.includes('obsidian') || set.includes('rose')) {
+          for (const color of colorSets[set]) {
+            const variant = `${template} ${color}`;
+            items.push(variant.trim());
+          }
+        } else {
+          for (const color of colorSets[set]) {
+            const variant = `${color} ${template}`;
+            items.push(variant.trim());
+          }
         }
+        
         break colorLoop;
       }
     }
