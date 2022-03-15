@@ -2,9 +2,8 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageActionRow, MessageButton } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
 const { unbox, getImage } = require('../../functions/commands/unbox');
+const { lockboxes, depotBoxes } = require('../../data/structures/unbox')
 const wait = require('util').promisify(setTimeout);
-
-const lockboxes = ['Copper', 'Steel', 'Silver', 'Platinum', 'Gold', 'Titanium', 'Iron', 'Mirrored'];
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -24,7 +23,8 @@ module.exports = {
       .addChoice('Mirrored', 'Mirrored')
       .addChoice('Equinox', 'Equinox')
       .addChoice('Confection', 'Confection')
-      .addChoice('Spritely', 'Spritely')),
+      .addChoice('Spritely', 'Spritely')
+      .addChoice('Lucky', 'Lucky')),
 	async execute(interaction, option, opened, spent) {
     const reply = buildEmbed();
     const box = option || interaction.options.getString('box');
@@ -36,6 +36,9 @@ module.exports = {
 
     if (lockboxes.includes(box)) {
       totalSpent = spent || '750';
+      money = false;
+    } else if (depotBoxes.includes(box)){
+      totalSpent = spent || '3495';
       money = false;
     } else {
       totalSpent = spent || '4.95';

@@ -1,7 +1,6 @@
+const { lockboxes, depotBoxes } = require('../../data/structures/unbox')
 const command = require(`../../commands/games/unbox`);
 const choices = command.data.options[0].choices;
-
-const lockboxes = ['Copper', 'Steel', 'Silver', 'Platinum', 'Gold', 'Titanium', 'Iron', 'Mirrored'];
 
 module.exports = {
   data: {
@@ -15,6 +14,9 @@ module.exports = {
 
     if (lockboxes.includes(box)) {
       spent += 750;
+      money = false;
+    } else if (depotBoxes.includes(box)){
+      spent += 3495;
       money = false;
     } else {
       let cost = 0;
