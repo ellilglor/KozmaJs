@@ -11,7 +11,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
   stopHere.setMonth(stopHere.getMonth() - months);
 
   if (checkVariants) {
-    items = addVariants(items);
+      items = addVariants(items);
   }
 
   if (items[0].includes('ctr') && items[0].includes('asi')) {
@@ -121,6 +121,10 @@ const addVariants = (items) => {
           if (items[0].includes('bout') || items[0].includes('rose') || items[0].includes('tabard') || items[0].includes('chapeau') || items[0].includes('buckled') || items[0].includes('clover') || items[0].includes('pipe') || items[0].includes('lumberfell')) {
             continue;
           }
+        }
+
+        if (items[0].includes('drakon') || items[0].includes('maskeraith')) {
+          continue
         }
       
         const template = items[0].replace(name, '').trim();
