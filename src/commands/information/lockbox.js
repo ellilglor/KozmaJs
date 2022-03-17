@@ -43,14 +43,14 @@ module.exports = {
     } else if (slime) {
       if (slime.length > 2) {
         const match = findSlimeBox(slime);
-        match ? reply.setTitle(match) : reply.setTitle(`I didn't find a match for __${slime}__.`);
+        reply.setTitle(match || `I didn't find a match for __${slime}__.`.slice(0,256));
       } else { 
         reply.setTitle(`Please put in at least 3 letters.`); 
       }
     } else if (item) {
       if (item.length > 2) {
         const match = findItem(item);
-        match ? reply.setTitle(`These lockboxes contain __${item}__:`).setDescription(match) : reply.setTitle(`I didn't find a box containing __${item}__.`);
+        match ? reply.setTitle(`These lockboxes contain __${item}__:`).setDescription(match) : reply.setTitle(`I didn't find a box containing __${item}__.`.slice(0,256));
       } else { 
         reply.setTitle(`Please put in at least 3 letters.`); 
       }

@@ -29,7 +29,7 @@ module.exports = {
     await logCommand(interaction);
     
     if (items[0].length > 2) {
-      reply.setTitle(`Searching for __${items[0]}__.`);
+      reply.setTitle(`Searching for __${items[0]}__.`.slice(0,256));
       await interaction.reply({embeds: [reply], ephemeral: true});
       await searchLogs(interaction, items, months, checkVariants);
     } else { 

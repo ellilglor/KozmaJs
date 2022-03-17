@@ -52,7 +52,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
 
       const msg = tradelogEmbed()
         .setTitle(message.date)
-        .setDescription(message.content);
+        .setDescription(message.content.slice(0,4096));
 
       if (message.image) { msg.setImage(message.image); }
 
@@ -78,9 +78,9 @@ const searchFinished = async (interaction, logsFound, item) => {
     .setDescription('By default I only look at tradelogs from the past 3 months!\nIf you want me to look past that use the *months* option.\n\nIf you notice a problem please contact @ellilglor#6866!\nDid you know we have our own discord server?\n<https://discord.gg/nGW89SHHj3>');
 
   if (logsFound) {
-    message.setTitle(`I couldn't find anything else for __${item}__, hope these helped!`);
+    message.setTitle(`I couldn't find anything else for __${item}__, hope these helped!`.slice(0,256));
   } else { 
-    message.setTitle(`I couldn't find any listings for __${item}__.`); 
+    message.setTitle(`I couldn't find any listings for __${item}__.`.slice(0,256)); 
   }
 
   for (const equipment of spreadsheet) {

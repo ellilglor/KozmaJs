@@ -37,7 +37,7 @@ const logCommand = async ({ client, options, member, user, commandName, message:
   const message = `${user.tag} used /${command}${option} in ${location}`;
 
   console.log(message);
-  await logChannel.send(message);
+  await logChannel.send(message.slice(0,2000));
 };
 
 module.exports = {
