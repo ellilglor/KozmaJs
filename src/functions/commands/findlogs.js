@@ -1,4 +1,4 @@
-const { tradelogEmbed, buildEmbed } = require('../../functions/general');
+const { tradelogEmbed, buildEmbed, contentFilter } = require('../../functions/general');
 const { spreadsheet, equipmentFamilies, colorSets, channels, roses } = require('../../data/structures/findlogs');
 const fs = require('fs');
 
@@ -11,7 +11,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
   stopHere.setMonth(stopHere.getMonth() - months);
 
   if (checkVariants) {
-      items = addVariants(items);
+    items = addVariants(items);
   }
 
   if (items[0].includes('ctr') && items[0].includes('asi')) {
@@ -155,24 +155,6 @@ const addVariants = (items) => {
 
   return items;
 }
-const contentFilter = (content) => {
-	result = content.replace(/['"\+\[\]()\-{},]/g, "").toLowerCase();
-
-	if (result.includes('gm')) {
-		result = result.replace('gm', '').concat(' ', 'asi vh ctr vh');
-	}
-
-	result = result
-		.replace("  ", " ")
-		.replace("mixer", "overcharged mixmaster")
-		.replace(/vh/g, "very high")
-		.replace("bkc", "black kat cowl")
-		.replace("bkr", "black kat raiment")
-		.replace("bkm", "black kat mail")
-		.trim();
-
-	return result;
-};
 
 const uvSwap = (name) => {
 	let result = '';

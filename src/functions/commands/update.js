@@ -1,14 +1,19 @@
 const fetchAll = require('discord-fetch-all');
 const fs = require('fs');
-const { contentFilter } = require('./findlogs');
+const { contentFilter } = require('../general');
 
 const convertLogs = async (interaction, channelName, id) => {
   const channel = interaction.guild.channels.cache.get(id);
   const messages = [];
 
   const allMessages = await fetchAll.messages(channel);
+  test = 1
   for (const message of allMessages) {
     const msg = messageSnipper(message, true);
+    // if (msg) { 
+    //   msg.channel = channelName;
+    //   await interaction.client.createTradelog(msg); 
+    // }
     if (msg) { messages.push(msg); }
   }
 

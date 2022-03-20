@@ -1,4 +1,6 @@
 const { MessageEmbed } = require('discord.js');
+const { saveUser } = require('./database/user');
+const { saveCommand, saveSearched, saveBox } = require('./database/commands');
 
 const buildEmbed = () => {
   const embed = new MessageEmbed()
@@ -32,12 +34,49 @@ const logCommand = async ({ client, options, member, user, commandName, message:
     }
   }
   if (extra) { option += ` ${extra}`; }
+  
+  await saveData(user, command, option);
+  
   if (item) { option += ` ${item}`; }
 
   const message = `${user.tag} used /${command}${option} in ${location}`;
-
   console.log(message);
   await logChannel.send(message.slice(0,2000));
+};
+
+const saveData = async (user, command, option) => {
+  await saveUser(user, command);
+  await saveCommand(command);
+
+  if (command.includes('findlogs')) {
+    option = option.replace(/[0-9]/g, '')
+      .replace(' variant-search', '')
+      .replace(' single-search', '');
+    option = contentFilter(option);
+
+    await saveSearched(option);
+  } else if (command.includes('unbox')) {
+    await saveBox(option);
+  }
+}
+
+const contentFilter = (content) => {
+	result = content.replace(/['"\+\[\]()\-{},]/g, "").toLowerCase();
+
+	if (result.includes('gm')) {
+		result = result.replace('gm', '').concat(' ', 'asi vh ctr vh');
+	}
+
+	result = result
+		.replace("  ", " ")
+		.replace("mixer", "overcharged mixmaster")
+		.replace(/vh/g, "very high")
+		.replace("bkc", "black kat cowl")
+		.replace("bkr", "black kat raiment")
+		.replace("bkm", "black kat mail")
+		.trim();
+
+	return result;
 };
 
 module.exports = {
@@ -45,4 +84,5 @@ module.exports = {
   tradelogEmbed,
   noPermission,
   logCommand,
+  contentFilter
 };

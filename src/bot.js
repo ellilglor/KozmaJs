@@ -22,5 +22,5 @@ const buttonFolders = fs.readdirSync('./src/buttons');
   client.handleButtons(buttonFolders);
   client.keepAlive();
   client.login(process.env.TOKEN);
-  //client.dbLogin(dbEventFiles);
+  client.dbLogin(dbEventFiles);
 })();
