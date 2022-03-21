@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { buildEmbed, noPermission, logCommand } = require('../../functions/general');
-const fs = require('fs');
+const { saveRate, getRate } = require('../../functions/database/rate');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -16,11 +16,13 @@ module.exports = {
 
     if (newValue) {
       if (interaction.member && (interaction.member.roles.cache.has('760222967808131092') || interaction.member.roles.cache.has('796399775959220304'))) {
-        fs.writeFileSync('src/data/rate.json', JSON.stringify([{rate : newValue}]));
+        await saveRate(newValue);
         reply.setTitle(`The conversion rate has been changed to: ${newValue}.`);
-      } else { reply = noPermission(reply) }
+      } else { 
+        reply = noPermission(reply);
+      }
     } else {
-      const rate = JSON.parse(fs.readFileSync('src/data/rate.json'))[0].rate
+      const rate = await getRate();
       reply.setTitle(`The current crowns per energy rate is: ${rate}.`)
       .setDescription('We use this rate for calculating **/convert**.');
     }

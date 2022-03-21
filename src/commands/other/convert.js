@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { buildEmbed, logCommand } = require('../../functions/general');
-const fs = require('fs');
+const { getRate } = require('../../functions/database/rate');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -20,7 +20,7 @@ module.exports = {
   async execute(interaction) {
     const amount = interaction.options.getInteger('amount');
     const currency = interaction.options.getString('currency');
-    const rate = JSON.parse(fs.readFileSync('src/data/rate.json'))[0].rate;
+    const rate = await getRate();
     const reply = buildEmbed().setDescription(`used conversion rate: **${rate}** crowns per energy`);
     await logCommand(interaction);
 

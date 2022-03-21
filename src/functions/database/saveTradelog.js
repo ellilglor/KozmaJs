@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const tradelog = require('../../data/schemas/tradelog');
 
-const saveTradelog = (message) => {
+const saveTradelog = async (message) => {
   let tradelogProfile = await tradelog.findOne({ _id: message.discordId });
 
   if (!tradelogProfile) {
