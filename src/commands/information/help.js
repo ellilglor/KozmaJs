@@ -17,7 +17,7 @@ module.exports = {
         `**/unbox** Simulate opening a box and be disappointed for free.\n\n` +
         `*If you notice a problem please contact @ellilglor#6866!*`);
 
-    await logCommand(interaction);
 		await interaction.reply({embeds: [reply], ephemeral: true});
+    await logCommand(interaction);
 	}
 };

@@ -20,19 +20,20 @@ module.exports = {
     const command = client.commands.get(interaction.commandName);
     const button = client.buttons.get(interaction.customId);
     if (!command && !button) return await interaction.reply({embeds: [noCode], ephemeral: true});
-  try {
-    command ? await command.execute(interaction) : await button.execute(interaction);
-  } catch (error) {
-    const logChannel = client.channels.cache.get(process.env.botLogs);
-    const name = interaction.commandName || interaction.customId
-    await logChannel.send(`<@214787913097936896> Error while executing ${name}!\n${error}`);
-    console.log(`Error while executing ${name}!`, { error });
+    
+    try {
+      command ? await command.execute(interaction) : await button.execute(interaction);
+    } catch (error) {
+      const logChannel = client.channels.cache.get(process.env.botLogs);
+      const name = interaction.commandName || interaction.customId
+      await logChannel.send(`<@214787913097936896> Error while executing ${name}!\n${error}`);
+      console.log(`Error while executing ${name}!`, { error });
 
-    if (!interaction.reply) {
-      await interaction.reply({embeds: [crashed], ephemeral: true});
-    } else {
-      await interaction.editReply({embeds: [crashed]});
-    }
-  };
+      if (!interaction.reply) {
+        await interaction.reply({embeds: [crashed], ephemeral: true});
+      } else {
+        await interaction.editReply({embeds: [crashed]});
+      }
+    };
 	},
 };

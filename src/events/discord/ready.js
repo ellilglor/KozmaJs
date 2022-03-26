@@ -1,3 +1,6 @@
+const { dbCheckExpiredMutes } = require('../../functions/database/tradeMute');
+const { checkOldMessages } = require('../../functions/moderation/kbpTradeMute');
+
 const permissions = [
 	{
 		id: '760222967808131092', type: 'ROLE', permission: true,
@@ -25,6 +28,15 @@ module.exports = {
 	async execute(client) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
     client.user.setPresence({ activities: [{ name: '/help', type: 'LISTENING' }], status: 'online' });
+
+    await checkOldMessages(client);
+
+    const check = async () => {
+      await dbCheckExpiredMutes(client);
+      setTimeout(check, 1000 * 60 * 30);
+    }
+    check();
+    
 
     //await setPermissions(client);
 	},

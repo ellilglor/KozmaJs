@@ -31,7 +31,6 @@ module.exports = {
     const slime = interaction.options.getString('slime');
     const item = interaction.options.getString('item');
     const reply = buildEmbed();
-    await logCommand(interaction);
 
     if (box) {
       const match = findBox(box);
@@ -59,5 +58,6 @@ module.exports = {
     }
 
     await interaction.reply({embeds: [reply], ephemeral: true});
+    await logCommand(interaction);
 	}
 };

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const user = require('../../data/schemas/user');
+const user = require('../../data/schemas/stats/user');
 
 const saveUser = async (u, command) => {
   let userProfile = await user.findOne({ _id: u.id });

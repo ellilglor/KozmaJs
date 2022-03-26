@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { buildEmbed } = require('../../functions/general');
+const { checkOldMessages } = require('../../functions/moderation/kbpTradeMute')
 
 module.exports = {
 	data: new SlashCommandBuilder()

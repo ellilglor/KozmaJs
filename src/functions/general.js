@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const { saveUser } = require('./database/user');
-const { saveCommand, saveSearched, saveBox } = require('./database/commands');
+const { saveCommand, saveSearched, saveBox } = require('./database/stats');
 
 const buildEmbed = () => {
   const embed = new MessageEmbed()

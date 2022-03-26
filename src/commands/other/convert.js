@@ -22,7 +22,6 @@ module.exports = {
     const currency = interaction.options.getString('currency');
     const rate = await getRate();
     const reply = buildEmbed().setDescription(`used conversion rate: **${rate}** crowns per energy`);
-    await logCommand(interaction);
 
     if (currency === 'crowns') {
       const converted = parseInt(amount/parseInt(rate)).toLocaleString('en');
@@ -33,5 +32,6 @@ module.exports = {
     }
     
     await interaction.reply({embeds: [reply], ephemeral: true});
+    await logCommand(interaction);
   }
 };

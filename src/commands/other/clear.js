@@ -8,8 +8,8 @@ module.exports = {
 		.setDescription('Removes all bot messages in your dms.'),
 	async execute(interaction) {
     const reply = buildEmbed().setTitle('Clearing messages');
-    await logCommand(interaction);
 		await interaction.reply({embeds: [reply], ephemeral: true});
+    await logCommand(interaction);
 
     await interaction.user.createDM();
     const channel = interaction.user.dmChannel;

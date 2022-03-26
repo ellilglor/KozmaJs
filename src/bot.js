@@ -2,7 +2,7 @@ const { Client, Intents, Collection} = require('discord.js');
 const fs = require('fs');
 require('dotenv').config();
 
-const client = new Client({ intents: Intents.FLAGS.GUILDS });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
 client.commands = new Collection();
 client.buttons = new Collection();
 
@@ -21,6 +21,6 @@ const buttonFolders = fs.readdirSync('./src/buttons');
   client.handleCommands(commandFolders);
   client.handleButtons(buttonFolders);
   client.keepAlive();
-  client.login(process.env.TOKEN);
   client.dbLogin(dbEventFiles);
+  client.login(process.env.TOKEN);
 })();
