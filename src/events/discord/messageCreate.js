@@ -9,9 +9,6 @@ module.exports = {
     const logChannel = client.channels.cache.get(process.env.botLogs);
 
     try {
-      // if (message.channelId === '879297439054581770') { 
-      //   await giveBuyMute(message, logChannel);
-      // }
       if (message.channelId === '872172994158538812') { 
         await giveBuyMute(message, logChannel);
       } else if (message.channelId === '872173055386980373') { 

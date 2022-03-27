@@ -3,19 +3,25 @@ const fs = require('fs');
 const unbox = (box) => {
   const content = JSON.parse(fs.readFileSync(`src/data/boxes/${box}.json`));
   const roll = Math.random() * 100;
+  const result = [content[0].name];
   let prevOdds = 0;
 
   for (const item of content) {
     if ((prevOdds <= roll) && (roll < prevOdds + item.chance)) {
+      result.splice(0, result.length);
+      result.push(item.name)
       if (bonusBoxes.includes(box)) {
-        item.name += bonusRoll(box, content, roll, item.name);
+        //item.name += bonusRoll(box, content, roll, item.name);
+        const bonusItem = bonusRoll(box, content, roll, item.name);
+        if (bonusItem) { result.push(bonusItem)}
       }
-      return item.name;
+      //return item.name;
+      return result
     }
     prevOdds += item.chance;
   }
 
-  return content[0].name
+  return result
 }
 
 const bonusRoll = (box, content, roll, unboxed) => {
@@ -23,7 +29,7 @@ const bonusRoll = (box, content, roll, unboxed) => {
   
   if (box.includes('Confection')) {
     const bRoll = Math.random() * 100;
-    if (bRoll <= 1) { result = ' & Sprinkle Aura'; }
+    if (bRoll <= 1) { result = 'Sprinkle Aura'; }
   } else if (box.includes('Lucky') && roll <= 32) {
     let finished = false;
     while (!finished) {
@@ -36,7 +42,7 @@ const bonusRoll = (box, content, roll, unboxed) => {
           if (unboxed.includes(item.name)) {
             break bonusRollLoop;
           } else {
-            result += ` & ${item.name}`;
+            result = item.name;
             finished = true;
             break bonusRollLoop;
           }

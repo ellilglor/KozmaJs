@@ -1,7 +1,6 @@
 const { buildEmbed } = require('../../functions/general');
 
 const noCode = buildEmbed().setTitle('It looks like something went wrong!');
-const maintenance = buildEmbed().setTitle('The bot is currently being worked on.\nPlease try again later.')
 const crashed = buildEmbed()
   .setTitle('There was an error while executing this command!')
   .setDescription('@ellilglor#6866 has been notified.');
@@ -11,7 +10,8 @@ module.exports = {
 	async execute(interaction, client) {
 		if (!interaction.isCommand() && !interaction.isButton()) return;
 
-    // if (interaction.user.tag !== 'ellilglor#6866') { 
+    // if (interaction.user.tag !== 'ellilglor#6866') {
+    //   const maintenance = buildEmbed().setTitle('The bot is currently being worked on.\nPlease try again later.')
     //   interaction.reply({embeds: [maintenance], ephemeral: true})
     //   console.log(interaction.user.tag)
     //   return 
@@ -19,6 +19,7 @@ module.exports = {
     
     const command = client.commands.get(interaction.commandName);
     const button = client.buttons.get(interaction.customId);
+
     if (!command && !button) return await interaction.reply({embeds: [noCode], ephemeral: true});
     
     try {
