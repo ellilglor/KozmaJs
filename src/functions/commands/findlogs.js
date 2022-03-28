@@ -124,8 +124,12 @@ const addVariants = (items) => {
         }
 
         if (items[0].includes('drakon') || items[0].includes('maskeraith')) {
-          continue
+          continue;
         }
+
+        if (set.includes('snipes') && items[0].includes('slime')) {
+          continue;
+        } 
       
         const template = items[0].replace(name, '').trim();
 
