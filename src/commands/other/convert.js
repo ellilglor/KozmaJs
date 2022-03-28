@@ -12,15 +12,19 @@ module.exports = {
       .addChoice('Crowns', 'crowns')
       .addChoice('Energy', 'energy')
       .setRequired(true))
-   .addIntegerOption(option =>
+    .addIntegerOption(option =>
 		  option.setName('amount')
 			.setDescription('Amount you want to convert.')
       .setMinValue(1000)
-			.setRequired(true)),
+			.setRequired(true))
+    .addIntegerOption(option =>
+		  option.setName('rate')
+			.setDescription('Optional custom conversion rate.')
+      .setMinValue(1)),
   async execute(interaction) {
     const amount = interaction.options.getInteger('amount');
     const currency = interaction.options.getString('currency');
-    const rate = await getRate();
+    const rate = interaction.options.getInteger('rate') || await getRate();
     const reply = buildEmbed().setDescription(`used conversion rate: **${rate}** crowns per energy`);
 
     if (currency === 'crowns') {
