@@ -23,6 +23,7 @@ module.exports = {
       .addChoice('Titanium', 'Titanium')
       .addChoice('Iron', 'Iron')
       .addChoice('Mirrored', 'Mirrored')
+      .addChoice('QQQ', 'Slime')
       .addChoice('Equinox', 'Equinox')
       .addChoice('Confection', 'Confection')
       .addChoice('Spritely', 'Spritely')

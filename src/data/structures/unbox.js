@@ -1,4 +1,4 @@
-const lockboxes = ['Copper', 'Steel', 'Silver', 'Platinum', 'Gold', 'Titanium', 'Iron', 'Mirrored'];
+const lockboxes = ['Copper', 'Steel', 'Silver', 'Platinum', 'Gold', 'Titanium', 'Iron', 'Mirrored', 'Slime'];
 
 const depotBoxes = ['Lucky'];
 
