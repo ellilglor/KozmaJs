@@ -27,7 +27,7 @@ module.exports = {
     } catch (error) {
       const logChannel = client.channels.cache.get(process.env.botLogs);
       const name = interaction.commandName || interaction.customId
-      await logChannel.send(`<@214787913097936896> Error while executing ${name}!\n${error}`);
+      await logChannel.send(`<@214787913097936896> Error while executing ${name} for ${interaction.user.tag}!\n${error}`);
       console.log(`Error while executing ${name}!`, { error });
 
       if (!interaction.reply) {

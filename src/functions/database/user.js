@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const user = require('../../data/schemas/stats/user');
 
 const saveUser = async (u, command) => {

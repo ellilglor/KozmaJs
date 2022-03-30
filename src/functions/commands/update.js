@@ -17,7 +17,7 @@ const convertLogs = async (interaction, channelName, id) => {
 };
 
 const messageSnipper = (msg) => {
-  if (!msg.content) { return; }
+  if (!msg.content) return;
 
   msg.attachments.first() ? imageUrl = msg.attachments.first().url : imageUrl = null;
 

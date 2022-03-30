@@ -12,7 +12,7 @@ const buildStats = async (embeds, interaction) => {
   for (const user of users) {
     userCount += 1;
     userDesc = userDesc.concat('',`**${userCount}. ${user.tag}** | ${user.amount} | ${user.unboxed}\n`);
-    if (userCount > 19) { break }
+    if (userCount > 19) break;
   }
   userDesc = userDesc.concat('',`\nTotal amount of users: ${users.length}`);
   userStats.setDescription(userDesc);
@@ -24,7 +24,7 @@ const buildStats = async (embeds, interaction) => {
   let serverSum = 0;
   let serversDesc = '';
   interaction.client.guilds.cache.forEach(guild => {
-    serverArray.push({name: guild.name, members: guild.memberCount})
+    serverArray.push({name: guild.name, members: guild.memberCount});
   })
   serverArray.sort((a, b) => {
     return b.members - a.members;
@@ -77,14 +77,14 @@ const buildStats = async (embeds, interaction) => {
   embeds.push(logStats);
 
   //findlogs command stats
-  const searchStats = buildEmbed().setTitle('Most searched items:');
+  const searchStats = buildEmbed().setTitle('Top 20 searched items:');
   let searchDesc = '';
   let itemCount = 0;
   const items = await getSearched();
   for (const item of items) {
     itemCount += 1;
     searchDesc = searchDesc.concat('', `**${itemCount}. ${item.item}** | ${item.amount}\n`);
-    if (itemCount > 19) { break }
+    if (itemCount > 19) break;
   }
   searchStats.setDescription(searchDesc);
   embeds.push(searchStats);

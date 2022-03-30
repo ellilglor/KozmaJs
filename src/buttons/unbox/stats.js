@@ -5,9 +5,9 @@ module.exports = {
     name: 'unbox-stats'
   },
   async execute (interaction) {
-    if (!interaction) { return; }
+    if (!interaction) return;
     
-    const box = interaction.message.embeds[0].author.name
+    const box = interaction.message.embeds[0].author.name;
     const amount = interaction.message.embeds[0].fields[0].value;
     let spent = interaction.message.embeds[0].fields[1].value;
     const showStats = true;

@@ -30,14 +30,13 @@ module.exports = {
     client.user.setPresence({ activities: [{ name: '/help', type: 'LISTENING' }], status: 'online' });
 
     //await checkOldMessages(client);
-
+    
     const check = async () => {
       await dbCheckExpiredMutes(client);
       setTimeout(check, 1000 * 60 * 30);
     }
     check();
     
-
     //await setPermissions(client);
 	},
 };

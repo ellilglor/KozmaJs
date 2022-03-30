@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const buy = require('../../data/schemas/moderation/buyMute');
 const sell = require('../../data/schemas/moderation/sellMute');
 
@@ -16,7 +15,7 @@ const dbBuyMute = async (member, logChannel, exp) => {
       })
     await buyProfile.save().catch(err => console.log(err));
   } else {
-    await logChannel.send(`<@214787913097936896> ${member.tag} is already in the WTB-mutes database!`);
+    await logChannel.send(`WTB - <@214787913097936896> ${member.tag} is already in the database!`);
   }
 }
 
@@ -34,7 +33,7 @@ const dbSellMute = async (member, logChannel, exp) => {
       })
     await sellProfile.save().catch(err => console.log(err));
   } else {
-    await logChannel.send(`<@214787913097936896> ${member.tag} is already in the WTS-mutes database!`);
+    await logChannel.send(`WTS - <@214787913097936896> ${member.tag} is already in the database!`);
   }
 }
 
@@ -65,7 +64,7 @@ const dbCheckExpiredMutes = async (client) => {
 const removeRole = (members, results, role) => {
   for (const result of results) {
     const member = members.cache.get(result._id);
-    if (!member) { continue }
+    if (!member) continue
     member.roles.remove(role);
   }
 }

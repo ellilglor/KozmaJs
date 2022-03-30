@@ -6,8 +6,8 @@ module.exports = {
     name: 'unbox-again'
   },
   async execute (interaction) {
-    if (!interaction) { return; }
-    const box = interaction.message.embeds[0].author.name
+    if (!interaction) return;
+    const box = interaction.message.embeds[0].author.name;
     const amount = parseInt(interaction.message.embeds[0].fields[0].value) + 1;
     let spent = parseFloat(interaction.message.embeds[0].fields[1].value.replace("$", ""));
     const showStats = false;
@@ -31,6 +31,6 @@ module.exports = {
       spent = cost.toFixed(2);
     }
 
-    await command.execute(interaction, showStats, box, String(amount), String(spent))
+    await command.execute(interaction, showStats, box, String(amount), String(spent));
   }
 };

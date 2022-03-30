@@ -5,10 +5,8 @@ module.exports = {
     name: 'next-stats'
   },
   async execute (interaction) {
-    if (!interaction) { return; }
+    if (!interaction) return;
 
-    const button = 'next';
-
-    await command.execute(interaction, button);
+    await command.execute(interaction, 'next');
   }
 };

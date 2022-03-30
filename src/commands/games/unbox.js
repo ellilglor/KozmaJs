@@ -28,8 +28,8 @@ module.exports = {
       .addChoice('Confection', 'Confection')
       .addChoice('Spritely', 'Spritely')
       .addChoice('Lucky', 'Lucky')),
-  async execute(interaction, showStats, option, opened, spent) {
-    const box = option || interaction.options.getString('box');
+  async execute(interaction, showStats, choice, opened, spent) {
+    const box = choice || interaction.options.getString('box');
     const amount = opened || '1';
     const boxImage = getImage('Boxes', box);
     let unboxed = 'placeholder';
@@ -38,38 +38,36 @@ module.exports = {
     if (!showStats) {
       unboxed = unbox(box);
       itemImage = getImage(box, unboxed.toString());
-      await logCommand(interaction, option, unboxed);
+      await logCommand(interaction, choice, unboxed);
     }
 
-    const id = interaction.user.id
-    if (!items[id]) {
-      items[id] = {};
-    }
+    const id = interaction.user.id;
+    if (!items[id]) { items[id] = {}; }
 
     if (!showStats) {
-      if (!items[id][box] || !option) { items[id][box] = {} }
+      if (!items[id][box] || !choice) { items[id][box] = {}; }
       for (const item of unboxed) {
         items[id][box][item] = items[id][box][item] + 1 || 1;
       }
     }
-    
+
+    let money = false;
     if (lockboxes.includes(box)) {
       totalSpent = spent || '750';
-      money = false;
     } else if (depotBoxes.includes(box)){
       totalSpent = spent || '3495';
-      money = false;
     } else {
       totalSpent = spent || '4.95';
       money = true;
     }
 
-    const openedEmbed = buildEmbed();
-    openedEmbed.setAuthor({ name: box, iconURL: boxImage})
+    const openedEmbed = buildEmbed()
+      .setAuthor({ name: box, iconURL: boxImage})
       .addField('Opened:', `${amount}`, true)
       .addField('Total spent:', money ? `$${totalSpent}` : `${totalSpent} Energy`, true);
       
     if (showStats) {
+      // sort items from most to least
       items[id][box] = Object.fromEntries(
         Object.entries(items[id][box]).sort(([,a],[,b]) => b-a)
       );
@@ -85,29 +83,31 @@ module.exports = {
 
       openedEmbed.setDescription(embedDesc);
     } else {
-      openedEmbed.setTitle('You unboxed:')
+      openedEmbed
+        .setTitle('You unboxed:')
         .setDescription(`*${unboxed.toString().replace(/,/g, ' & ')}*`)
         .setThumbnail(itemImage);
     }
 
     const buttons = new MessageActionRow()
-    .addComponents(new MessageButton()
+      .addComponents(
+      new MessageButton()
 				.setCustomId('unbox-again')
 				.setEmoji('🔁')
 				.setStyle('SECONDARY'),
       new MessageButton()
         .setCustomId('unbox-stats')
-        .setEmoji('🐋')
+        .setEmoji('📘')
 				.setStyle('SECONDARY')
         .setDisabled(showStats)
 		);
 
     if (!showStats) {
-      const reply = buildEmbed();
-      reply.setTitle(`Opening your box`)
-      .setDescription('3...')
-      .setAuthor({ name: box, iconURL: boxImage});
-    option ? await interaction.update({embeds: [reply], components: []}) : await interaction.reply({embeds: [reply], ephemeral: true});
+      const reply = buildEmbed()
+        .setTitle(`Opening your box`)
+        .setDescription('3...')
+        .setAuthor({ name: box, iconURL: boxImage});
+    choice ? await interaction.update({embeds: [reply], components: []}) : await interaction.reply({embeds: [reply], ephemeral: true});
       await wait(1000);
       reply.setDescription('2...');
       await interaction.editReply({embeds: [reply]});

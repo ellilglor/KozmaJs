@@ -12,7 +12,6 @@ module.exports = {
 	async execute(interaction) {
     const newValue = interaction.options.getInteger('value');
     let reply = buildEmbed();
-    await logCommand(interaction);
 
     if (newValue) {
       if (interaction.member && (interaction.member.roles.cache.has('760222967808131092') || interaction.member.roles.cache.has('796399775959220304'))) {
@@ -23,10 +22,12 @@ module.exports = {
       }
     } else {
       const rate = await getRate();
-      reply.setTitle(`The current crowns per energy rate is: ${rate}.`)
-      .setDescription('We use this rate for calculating **/convert**.');
+      reply
+        .setTitle(`The current crowns per energy rate is: ${rate}.`)
+        .setDescription('We use this rate for calculating **/convert**.');
     }
     
     await interaction.reply({embeds: [reply], ephemeral: true});
+    await logCommand(interaction);
 	}
 };

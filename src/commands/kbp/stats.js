@@ -24,12 +24,12 @@ module.exports = {
 
     const buttons = new MessageActionRow()
 		  .addComponents(
-			  new MessageButton()
+			new MessageButton()
 				.setCustomId('prev-stats')
 				.setLabel('◀')
 				.setStyle('PRIMARY')
         .setDisabled(pages[id] === 0),
-        new MessageButton()
+      new MessageButton()
 				.setCustomId('next-stats')
 				.setLabel('▶')
 				.setStyle('PRIMARY')

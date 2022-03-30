@@ -1,13 +1,11 @@
 const { boxes, slimeBoxes } = require('../../data/structures/lockbox');
 
 const findBox = (name) => {
-  const result = boxes.get(name);
-  return result;
+  return boxes.get(name);
 };
 
 const findSlimeBox = (name) => {
-  const result = slimeBoxes.get(name.toLowerCase());
-  return result;
+  return slimeBoxes.get(name.toLowerCase());
 };
 
 const findItem = (item) => {
@@ -15,9 +13,7 @@ const findItem = (item) => {
   item = item.replace(/['"\+\[\]()\-{},]/g,"").toLowerCase();
 
   boxes.forEach (function(value, key) {
-    if (!value.toLowerCase().replace(/['"\+\[\]()\-{},]/g,"").includes(item)) {
-      return;
-    }
+    if (!value.toLowerCase().replace(/['"\+\[\]()\-{},]/g,"").includes(item)) return;
     
     result += `\n\n__**${key.toUpperCase()} LOCKBOX:**__\n`;
 

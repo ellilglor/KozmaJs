@@ -27,10 +27,8 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
     let firstMatch = false;
 
     for (const message of messages) {
+      if (Date.parse(message.date) < Date.parse(stopHere)) break; 
       let sendMessage = false;
-      if (Date.parse(message.date) < Date.parse(stopHere)) { 
-        break; 
-      }
 
       for (const x in items) {
         if (message.content.includes(items[x]) || message.content.includes(reverse[x])) {
@@ -39,7 +37,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
         }
       }
 
-      if (!sendMessage) { continue }
+      if (!sendMessage) continue
 
       if (!firstMatch) {
         firstMatch = true;
@@ -86,10 +84,10 @@ const searchFinished = async (interaction, logsFound, item) => {
   for (const equipment of spreadsheet) {
     if (item.includes(equipment)) {
       message.addField('** **', `__${item}__ can be found on the merchant sheet:\n https://docs.google.com/spreadsheets/d/1h-SoyMn3kVla27PRW_kQQO6WefXPmLZYy7lPGNUNW7M/htmlview#`, false);
+      break;
     }
   }
 
-  //console.log(`finished /search ${item} for ${interaction.user.tag}`);
   await interaction.user.send({embeds: [message]});
 };
 
@@ -99,7 +97,7 @@ const addVariants = (items) => {
   itemFamilyLoop:
   for (const family in equipmentFamilies) {
     for (const name of equipmentFamilies[family]) {
-      if (!items[0].includes(name)) { continue; }
+      if (!items[0].includes(name)) continue;
       
       const uvs = ' ' + items[0].replace(name, '').trim();
       items.pop();
@@ -115,7 +113,7 @@ const addVariants = (items) => {
     colorLoop:
     for (const set in colorSets) {
       for (const name of colorSets[set]) {
-        if (!items[0].includes(name)) { continue; }
+        if (!items[0].includes(name)) continue;
 
         if (set.includes('gems')) {
           if (items[0].includes('bout') || items[0].includes('rose') || items[0].includes('tabard') || items[0].includes('chapeau') || items[0].includes('buckled') || items[0].includes('clover') || items[0].includes('pipe') || items[0].includes('lumberfell')) {

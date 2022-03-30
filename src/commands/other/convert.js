@@ -25,7 +25,7 @@ module.exports = {
     const amount = interaction.options.getInteger('amount');
     const currency = interaction.options.getString('currency');
     const rate = interaction.options.getInteger('rate') || await getRate();
-    const reply = buildEmbed().setDescription(`used conversion rate: **${rate}** crowns per energy`);
+    const reply = buildEmbed().setDescription(`Used conversion rate: **${rate}** crowns per energy.`);
 
     if (currency === 'crowns') {
       const converted = parseInt(amount/parseInt(rate)).toLocaleString('en');

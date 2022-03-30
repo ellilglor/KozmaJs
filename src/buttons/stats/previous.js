@@ -5,10 +5,8 @@ module.exports = {
     name: 'prev-stats'
   },
   async execute (interaction) {
-    if (!interaction) { return; }
+    if (!interaction) return;
 
-    const button = 'previous';
-
-    await command.execute(interaction, button);
+    await command.execute(interaction, 'previous');
   }
 };
