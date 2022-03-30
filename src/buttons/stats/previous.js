@@ -10,6 +10,5 @@ module.exports = {
     const button = 'previous';
 
     await command.execute(interaction, button);
-    //await interaction.update({ content: 'next', components: [] });
   }
 };

@@ -14,10 +14,8 @@ module.exports = {
 
     if (lockboxes.includes(box)) {
       spent += 750;
-      money = false;
     } else if (depotBoxes.includes(box)){
       spent += 3495;
-      money = false;
     } else {
       let cost = 0;
 
@@ -31,7 +29,6 @@ module.exports = {
       cost += extra * 4.95;
 
       spent = cost.toFixed(2);
-      money = true;
     }
 
     await command.execute(interaction, showStats, box, String(amount), String(spent))

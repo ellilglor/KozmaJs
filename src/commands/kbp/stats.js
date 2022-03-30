@@ -16,10 +16,10 @@ module.exports = {
     pages[id] = pages[id] || 0;
 
     if (button) {
-      button.includes('nextStat') ? ++pages[id] : --pages[id];
+      button.includes('next') ? ++pages[id] : --pages[id];
     } else {
       embeds.splice(0, embeds.length);
-      buildStats(embeds, interaction);
+      await buildStats(embeds, interaction);
     }
 
     const buttons = new MessageActionRow()
