@@ -1,32 +1,32 @@
 const { dbBuyMute, dbSellMute, dbCheckExpiredMutes } = require('../database/tradeMute');
 const staffIds = ['214787913097936896', '922921889347817483', '282992095835455489', '452999349882847242'];
 
-const giveBuyMute = async (message, logChannel) => {
-  if (staffIds.includes(message.member.user.id)) { return }
+const giveBuyMute = async ({ member, guild }, logChannel) => {
+  if (staffIds.includes(member.user.id)) return;
   
-  const role = message.guild.roles.cache.find((r) => r.name === 'WTB-Cooldown');
+  const role = guild.roles.cache.find((r) => r.name === 'WTB-Cooldown');
 
   if (!role) {
     await logChannel.send(`<@214787913097936896> no role with the name 'WTB-Cooldown' was found`);
     return;
   }
 
-  await dbBuyMute(message.member.user, logChannel);
-  message.member.roles.add(role);
+  await dbBuyMute(member.user, logChannel);
+  member.roles.add(role);
 }
 
-const giveSellMute = async (message, logChannel) => {
-  if (staffIds.includes(message.member.user.id)) { return }
+const giveSellMute = async ({ member, guild }, logChannel) => {
+  if (staffIds.includes(member.user.id)) return;
   
-  const role = message.guild.roles.cache.find((r) => r.name === 'WTS-Cooldown');
+  const role = guild.roles.cache.find((r) => r.name === 'WTS-Cooldown');
 
   if (!role) {
     await logChannel.send(`<@214787913097936896> no role with the name 'WTS-Cooldown' was found`);
     return;
   }
 
-  await dbSellMute(message.member.user, logChannel);
-  message.member.roles.add(role);
+  await dbSellMute(member.user, logChannel);
+  member.roles.add(role);
 }
 
 const checkOldMessages = async (client) => {
@@ -41,13 +41,13 @@ const checkOldMessages = async (client) => {
 
   const WTBmessages = await WTBchannel.messages.fetch({ limit: 25 });
   WTBmessages.forEach(msg => {
-    const expires = msg.createdAt
-    expires.setHours(expires.getHours() + 23);
+    const expires = msg.createdAt;
+    expires.setHours(expires.getHours() + 22);
     
-    if (d > expires) { return }
-    if (staffIds.includes(msg.author.id)) { return };
+    if (d > expires) return;
+    if (staffIds.includes(msg.author.id)) return;
     
-    WTBmentions = WTBmentions.concat(' ', `<@${msg.author.id}>`)
+    WTBmentions = WTBmentions.concat(' ', `<@${msg.author.id}>`);
     WTBids[msg.author.id] = msg.createdAt;
   });
   
@@ -69,13 +69,13 @@ const checkOldMessages = async (client) => {
 
   const WTSmessages = await WTSchannel.messages.fetch({ limit: 25 });
   WTSmessages.forEach(msg => {
-    const expires = msg.createdAt
-    expires.setHours(expires.getHours() + 23);
+    const expires = msg.createdAt;
+    expires.setHours(expires.getHours() + 22);
     
-    if (d > expires) { return }
-    if (staffIds.includes(msg.author.id)) { return };
+    if (d > expires) return;
+    if (staffIds.includes(msg.author.id)) return;
     
-    WTSmentions = WTSmentions.concat(' ', `<@${msg.author.id}>`)
+    WTSmentions = WTSmentions.concat(' ', `<@${msg.author.id}>`);
     WTSids[msg.author.id] = msg.createdAt;
   });
 

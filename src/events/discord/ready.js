@@ -29,7 +29,7 @@ module.exports = {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
     client.user.setPresence({ activities: [{ name: '/help', type: 'LISTENING' }], status: 'online' });
 
-    //await checkOldMessages(client);
+    await checkOldMessages(client);
     
     const check = async () => {
       await dbCheckExpiredMutes(client);
