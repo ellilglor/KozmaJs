@@ -31,24 +31,36 @@ const giveSellMute = async ({ member, guild }, logChannel) => {
 
 const checkOldMessages = async (client) => {
   const logChannel = client.channels.cache.get(process.env.botLogs);
+  const string = 'Checking if these people need to be muted:';
+  let stop = false;
+
+  const logMessages = await logChannel.messages.fetch({ limit: 25 });
+  logMessages.every(msg => {
+    if (msg.content.includes(string)) stop = true;
+    return !stop;
+  })
+
+  if (stop) return;
+  
   const guild = await client.guilds.fetch('760222722919497820');
   const d = new Date();
 
   const WTBchannel = client.channels.cache.get('872172994158538812');
   const WTBrole = guild.roles.cache.find((r) => r.name === 'WTB-Cooldown');
-  let WTBmentions = 'WTB - Checking if these people need to be muted:';
+  let WTBmentions = `WTB - ${string}`;
   const WTBids = {};
 
   const WTBmessages = await WTBchannel.messages.fetch({ limit: 25 });
-  WTBmessages.forEach(msg => {
+  WTBmessages.every(msg => {
     const expires = msg.createdAt;
     expires.setHours(expires.getHours() + 22);
-    
-    if (d > expires) return;
-    if (staffIds.includes(msg.author.id)) return;
+
+    if (d > expires) return false;
+    if (staffIds.includes(msg.author.id)) return true;
     
     WTBmentions = WTBmentions.concat(' ', `<@${msg.author.id}>`);
     WTBids[msg.author.id] = msg.createdAt;
+    return true;
   });
   
   if (Object.keys(WTBids).length > 0) {
@@ -64,19 +76,20 @@ const checkOldMessages = async (client) => {
 
   const WTSchannel = client.channels.cache.get('872173055386980373');
   const WTSrole = guild.roles.cache.find((r) => r.name === 'WTS-Cooldown');
-  let WTSmentions = 'WTS - Checking if these people need to be muted:';
+  let WTSmentions = `WTS - ${string}`;
   const WTSids = {};
 
   const WTSmessages = await WTSchannel.messages.fetch({ limit: 25 });
-  WTSmessages.forEach(msg => {
+  WTSmessages.every(msg => {
     const expires = msg.createdAt;
     expires.setHours(expires.getHours() + 22);
     
-    if (d > expires) return;
-    if (staffIds.includes(msg.author.id)) return;
+    if (d > expires) return false;
+    if (staffIds.includes(msg.author.id)) return true;
     
     WTSmentions = WTSmentions.concat(' ', `<@${msg.author.id}>`);
     WTSids[msg.author.id] = msg.createdAt;
+    return true;
   });
 
   if (Object.keys(WTSids).length > 0) {

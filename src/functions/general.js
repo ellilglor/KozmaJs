@@ -34,7 +34,7 @@ const logCommand = async ({ client, options, member, user, commandName, message:
     }
   }
   if (extra) { option += ` ${extra}`; }
-  
+
   await saveData(user, command, option);
   
   if (item) { option += ` ${item}`; }
