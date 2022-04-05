@@ -11,10 +11,10 @@ module.exports = {
 		if (!interaction.isCommand() && !interaction.isButton()) return;
 
     // if (interaction.user.tag !== 'ellilglor#6866') {
-    //   const maintenance = buildEmbed().setTitle('The bot is currently being worked on.\nPlease try again later.')
-    //   interaction.reply({embeds: [maintenance], ephemeral: true})
-    //   console.log(interaction.user.tag)
-    //   return 
+    //   const maintenance = buildEmbed().setTitle('The bot is currently being worked on.\nPlease try again later.');
+    //   interaction.reply({embeds: [maintenance], ephemeral: true});
+    //   console.log(interaction.user.tag);
+    //   return;
     // }
     
     const command = client.commands.get(interaction.commandName);
@@ -26,7 +26,7 @@ module.exports = {
       command ? await command.execute(interaction) : await button.execute(interaction);
     } catch (error) {
       const logChannel = client.channels.cache.get(process.env.botLogs);
-      const name = interaction.commandName || interaction.customId
+      const name = interaction.commandName || interaction.customId;
       await logChannel.send(`<@214787913097936896> Error while executing ${name} for ${interaction.user.tag}!\n${error}`);
       console.log(`Error while executing ${name}!`, { error });
 

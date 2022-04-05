@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageActionRow, MessageButton } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
 const { unbox, getImage } = require('../../functions/commands/unbox');
-const { lockboxes, depotBoxes } = require('../../data/structures/unbox')
+const { lockboxes, depotBoxes } = require('../../data/structures/unbox');
 const wait = require('util').promisify(setTimeout);
 
 const items = {};
@@ -33,21 +33,19 @@ module.exports = {
     const amount = opened || '1';
     const boxImage = getImage('Boxes', box);
     let unboxed = 'placeholder';
-    let itemImage = 'placeholder';
+    let desc = '**In this session you opened:**';
+
+    const id = interaction.user.id;
+    if (!items[id]) items[id] = {};
     
     if (!showStats) {
       unboxed = unbox(box);
-      itemImage = getImage(box, unboxed.toString());
-      await logCommand(interaction, choice, unboxed);
-    }
+      desc = unboxed.map(function(item){ return item.name; }).toString().replace(/,/g, ' & ');
+      await logCommand(interaction, choice, desc);
 
-    const id = interaction.user.id;
-    if (!items[id]) { items[id] = {}; }
-
-    if (!showStats) {
-      if (!items[id][box] || !choice) { items[id][box] = {}; }
+      if (!items[id][box] || !choice) items[id][box] = {};
       for (const item of unboxed) {
-        items[id][box][item] = items[id][box][item] + 1 || 1;
+        items[id][box][item.name] = items[id][box][item.name] + 1 || 1;
       }
     }
 
@@ -61,32 +59,31 @@ module.exports = {
       money = true;
     }
 
-    const openedEmbed = buildEmbed()
+    const embed = buildEmbed()
       .setAuthor({ name: box, iconURL: boxImage})
       .addField('Opened:', `${amount}`, true)
       .addField('Total spent:', money ? `$${totalSpent}` : `${totalSpent} Energy`, true);
       
     if (showStats) {
-      // sort items from most to least
+      // sort items from most to least opened
       items[id][box] = Object.fromEntries(
         Object.entries(items[id][box]).sort(([,a],[,b]) => b-a)
       );
 
-      let embedDesc = '**In this session you opened:**';
       for (const key in items[id][box]) {
-        embedDesc = embedDesc.concat('\n',`${key} : ${items[id][box][key]}`);
-        if (embedDesc.length >= 4030) {
-          embedDesc = embedDesc.concat('\n',`**I have reached the character limit!**`);
+        desc = desc.concat('\n',`${key} : ${items[id][box][key]}`);
+        if (desc.length >= 4030) {
+          desc = desc.concat('\n',`**I have reached the character limit!**`);
           break;
         }
       }
 
-      openedEmbed.setDescription(embedDesc);
+      embed.setDescription(desc);
     } else {
-      openedEmbed
+      embed
         .setTitle('You unboxed:')
-        .setDescription(`*${unboxed.toString().replace(/,/g, ' & ')}*`)
-        .setThumbnail(itemImage);
+        .setDescription(`*${desc}*`)
+        .setThumbnail(unboxed[0].url);
     }
 
     const buttons = new MessageActionRow()
@@ -115,9 +112,9 @@ module.exports = {
       reply.setDescription('1...');
       await interaction.editReply({embeds: [reply]});
       await wait(1000);
-      await interaction.editReply({embeds: [openedEmbed], components: [buttons]});
+      await interaction.editReply({embeds: [embed], components: [buttons]});
 	  } else {
-      await interaction.update({embeds: [openedEmbed], components: [buttons]});
+      await interaction.update({embeds: [embed], components: [buttons]});
     }
 	}
 };

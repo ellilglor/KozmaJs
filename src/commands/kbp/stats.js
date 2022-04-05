@@ -18,6 +18,7 @@ module.exports = {
     if (button) {
       button.includes('next') ? ++pages[id] : --pages[id];
     } else {
+      await interaction.deferReply({ephemeral: true});
       embeds.splice(0, embeds.length);
       await buildStats(embeds, interaction);
     }
@@ -41,7 +42,7 @@ module.exports = {
     if (button) {
       await interaction.update({embeds: [embed], components: [buttons]});
     } else {
-      await interaction.reply({embeds: [embed], components: [buttons], ephemeral: true});
+      await interaction.editReply({embeds: [embed], components: [buttons]});
       await logCommand(interaction);
     }
 	}
