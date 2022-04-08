@@ -125,7 +125,7 @@ const addVariants = (items) => {
           continue;
         }
 
-        if (set.includes('snipes') && items[0].includes('slime')) {
+        if (set.includes('snipes') && (items[0].includes('slime') || items[0].includes('plume'))) {
           continue;
         } 
       
