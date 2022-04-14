@@ -47,7 +47,7 @@ const dbCheckExpiredMutes = async (client) => {
     const WTBrole = guild.roles.cache.find((r) => r.name === 'WTB-Cooldown');
     let WTBmentions = 'WTB - Unmuting:';
     await logChannel.send(getMentions(WTBexpired, WTBmentions));
-    removeRole(guild.members, WTBexpired, WTBrole);
+    await removeRole(guild.members, WTBexpired, WTBrole, logChannel);
   }
   await buy.deleteMany(query);
   
@@ -56,16 +56,20 @@ const dbCheckExpiredMutes = async (client) => {
     const WTSrole = guild.roles.cache.find((r) => r.name === 'WTS-Cooldown');
     let WTSmentions = 'WTS - Unmuting:';
     await logChannel.send(getMentions(WTSexpired, WTSmentions));
-    removeRole(guild.members, WTSexpired, WTSrole);
+    await removeRole(guild.members, WTSexpired, WTSrole, logChannel);
   }
   await sell.deleteMany(query);
 }
 
-const removeRole = (members, results, role) => {
+const removeRole = async (members, results, role, logChannel) => {
   for (const result of results) {
     const member = members.cache.get(result._id);
     if (!member) continue
-    member.roles.remove(role);
+    await member.roles.remove(role);
+    
+    if (member.roles.cache.has(role.id)) {
+      await logChannel.send(`<@214787913097936896> Failed to remove ${role.name} from <@${result._id}>`)
+    }
   }
 }
 
