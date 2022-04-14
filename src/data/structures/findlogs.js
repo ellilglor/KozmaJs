@@ -147,6 +147,7 @@ const colorSets = {
 }
 
 const channels = new Map([
+  ['special-listings', '807369188133306408'],
   ['mixed-trades','806452637423370250'],
   ['equipment','806450782542102529'],
   ['costumes','806452033291812865'],

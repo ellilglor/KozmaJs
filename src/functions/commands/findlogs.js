@@ -50,9 +50,10 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
 
       const msg = tradelogEmbed()
         .setTitle(message.date)
+        .setURL(message.messageUrl)
         .setDescription(message.content.slice(0,4096));
 
-      if (message.image) { msg.setImage(message.image); }
+      if (message.image) msg.setImage(message.image);
 
       if (matches.length === 10) {
         await interaction.user.send({embeds: matches});
