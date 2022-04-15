@@ -1,16 +1,11 @@
 const { dbCheckExpiredMutes } = require('../../functions/database/tradeMute');
 const { checkOldMessages } = require('../../functions/moderation/kbpTradeMute');
+const { checkForNewLogs } = require('../../functions/commands/update');
 
 const permissions = [
-	{
-		id: '760222967808131092', type: 'ROLE', permission: true,
-	},
-  {
-		id: '796399775959220304', type: 'ROLE', permission: true,
-	},
-  {
-    id: '596704162700460085', type: 'USER', permission: true,
-  }
+	{ id: '760222967808131092', type: 'ROLE', permission: true },
+  { id: '796399775959220304', type: 'ROLE', permission: true },
+  { id: '596704162700460085', type: 'USER', permission: true }
 ];
 
 const commandIds = ['941046861496733798', '941046861496733799', '946116429399347222'];
@@ -30,6 +25,7 @@ module.exports = {
     client.user.setPresence({ activities: [{ name: '/help', type: 'LISTENING' }], status: 'online' });
 
     await checkOldMessages(client);
+    await checkForNewLogs(client);
     
     const check = async () => {
       await dbCheckExpiredMutes(client);

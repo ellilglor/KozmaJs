@@ -1,5 +1,6 @@
 const buy = require('../../data/schemas/moderation/buyMute');
 const sell = require('../../data/schemas/moderation/sellMute');
+const wait = require('util').promisify(setTimeout);
 
 const dbBuyMute = async (member, logChannel, exp) => {
   let buyProfile = await buy.findOne({ _id: member.id });
@@ -40,7 +41,7 @@ const dbSellMute = async (member, logChannel, exp) => {
 const dbCheckExpiredMutes = async (client) => {
   const guild = await client.guilds.fetch('760222722919497820');
   const logChannel = client.channels.cache.get(process.env.botLogs);
-  const query = { expires: { $lt: new Date()} };
+  const query = { expires: { $lt: new Date() } };
   
   const WTBexpired = await buy.find(query);
   if (WTBexpired.length > 0) {
@@ -64,21 +65,23 @@ const dbCheckExpiredMutes = async (client) => {
 const removeRole = async (members, results, role, logChannel) => {
   for (const result of results) {
     const member = members.cache.get(result._id);
-    if (!member) continue
+    if (!member) continue;
     await member.roles.remove(role);
+
+    await wait(100);
     
     if (member.roles.cache.has(role.id)) {
-      await logChannel.send(`<@214787913097936896> Failed to remove ${role.name} from <@${result._id}>`)
+      await logChannel.send(`<@214787913097936896> Failed to remove ${role.name} from <@${result._id}>`);
     }
   }
 }
 
 const getMentions = (results, mentions) => {
   for (const result of results) {
-    mentions = mentions.concat(' ', `<@${result._id}>`)
+    mentions = mentions.concat(' ', `<@${result._id}>`);
   }
 
-  console.log(mentions)
+  console.log(mentions);
   return mentions;
 }
 
