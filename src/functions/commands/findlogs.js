@@ -74,7 +74,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
 const searchFinished = async (interaction, logsFound, item) => {
   const message = buildEmbed()
     .setColor('#f9d49c')
-    .setDescription('By default I only look at tradelogs from the past 3 months!\nIf you want me to look past that use the *months* option.\n\nIf you notice a problem please contact @ellilglor#6866!\nDid you know we have our own discord server?\n<https://discord.gg/nGW89SHHj3>');
+    .setDescription('By default I only look at tradelogs from the past 6 months!\nIf you want me to look past that use the *months* option.\n\nIf you notice a problem please contact @ellilglor#6866!\nDid you know we have our own discord server?\n<https://discord.gg/nGW89SHHj3>');
 
   if (logsFound) {
     message.setTitle(`I couldn't find anything else for __${item}__, hope these helped!`.slice(0,256));

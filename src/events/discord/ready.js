@@ -23,12 +23,11 @@ module.exports = {
 	async execute(client) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
     client.user.setPresence({ activities: [{ name: '/help', type: 'LISTENING' }], status: 'online' });
-
     await checkOldMessages(client);
-    await checkForNewLogs(client);
     
     const check = async () => {
       await dbCheckExpiredMutes(client);
+      await checkForNewLogs(client);
       setTimeout(check, 1000 * 60 * 30);
     }
     check();

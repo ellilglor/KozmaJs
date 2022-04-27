@@ -22,10 +22,10 @@ module.exports = {
       .addChoice('No', 'single-search')),
 	async execute(interaction) {
     const items = [interaction.options.getString('item')];
-    const months = interaction.options.getInteger('months') || 3;
+    const months = interaction.options.getInteger('months') || 6;
     const variants = interaction.options.getString('variants');
     const checkVariants = !variants || variants.includes('variant') ? true : false;
-    const reply = buildEmbed().setDescription(`**I will dm you what I can find.**\n\nBy default I only look at tradelogs from the past 3 months!\nIf you want me to look past that use the *months* option.\n\n__**Info when searching:**__\n~ Slime boxes: combination first then *slime lockbox*\nExample: QQQ Slime Lockbox\n~ UV'd equipment: use asi / ctr + med / high / very high / max\nThe bot automatically swaps asi & ctr so you don't have to search twice.\n~ Equipment: The bot looks for the entire family tree of your item!\nSo when you lookup *brandish* it will also look for *combuster* for example\n~ Sprite pods: type out as seen in game\nExample: Drakon Pod (Divine)`);
+    const reply = buildEmbed().setDescription(`**I will dm you what I can find.**\n\nBy default I only look at tradelogs from the past 6 months!\nIf you want me to look past that use the *months* option.\n\n__**Info when searching:**__\n~ Slime boxes: combination first then *slime lockbox*\nExample: QQQ Slime Lockbox\n~ UV'd equipment: use asi / ctr + med / high / very high / max\nThe bot automatically swaps asi & ctr so you don't have to search twice.\n~ Equipment: The bot looks for the entire family tree of your item!\nSo when you lookup *brandish* it will also look for *combuster* for example\n~ Sprite pods: type out as seen in game\nExample: Drakon Pod (Divine)`);
     
     if (items[0].length > 2) {
       reply.setTitle(`Searching for __${items[0]}__.`.slice(0,256));
