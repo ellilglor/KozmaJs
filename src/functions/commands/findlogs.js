@@ -24,6 +24,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
   for (const channel of channels) {
     const messages = JSON.parse(fs.readFileSync(`src/data/tradelogs/${channel[0]}.json`));
     const matches = [];
+    let charCount = 0;
     let firstMatch = false;
 
     for (const message of messages) {
@@ -48,6 +49,8 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
         matches.push(foundIn);
       }
 
+      charCount += message.content.length;
+
       const msg = tradelogEmbed()
         .setTitle(message.date)
         .setURL(message.messageUrl)
@@ -55,9 +58,10 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
 
       if (message.image) msg.setImage(message.image);
 
-      if (matches.length === 10) {
+      if (matches.length === 10 || charCount >= 5900) {
         await interaction.user.send({embeds: matches});
         matches.splice(0, matches.length);
+        charCount = 0;
       } else { 
         matches.push(msg);
       }
