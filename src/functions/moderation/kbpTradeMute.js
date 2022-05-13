@@ -1,4 +1,5 @@
 const { dbBuyMute, dbSellMute, dbCheckExpiredMutes } = require('../database/tradeMute');
+const { tradelogEmbed } = require('../general');
 const staffIds = ['214787913097936896', '922921889347817483', '282992095835455489', '452999349882847242'];
 
 const giveBuyMute = async ({ member, guild }, logChannel) => {
@@ -102,6 +103,18 @@ const checkOldMessages = async (client) => {
       }
     }
   }
+
+  if ((d.getDate() % 3).equals(0)) {
+    await sendReminder(WTBchannel);
+    await sendReminder(WTSchannel);
+  }
+}
+
+const sendReminder = async (channel) => {
+  const reminder = tradelogEmbed()
+    .setTitle('This message is a reminder of the __22 hour slowmode__ in this channel!')
+    .setDescription('Editing your message is not possible due to how we handle this slowmode.\nWe apologise for any inconvenience this may cause.');
+  await channel.send({ embeds: [reminder] });
 }
 
 module.exports = {
