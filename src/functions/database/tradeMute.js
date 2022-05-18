@@ -65,7 +65,12 @@ const dbCheckExpiredMutes = async (client) => {
 const removeRole = async (members, results, role, logChannel) => {
   for (const result of results) {
     const member = members.cache.get(result._id);
-    if (!member) continue;
+    
+    if (!member) {
+      await logChannel.send(`<@214787913097936896> Failed to find <@${result._id}>`);
+      continue;
+    }
+    
     await member.roles.remove(role);
 
     await wait(100);
