@@ -104,7 +104,7 @@ const checkOldMessages = async (client) => {
     }
   }
 
-  if ((d.getDate() % 3).equals(0)) {
+  if ((d.getDate() % 3) === 0) {
     await sendReminder(WTBchannel);
     await sendReminder(WTSchannel);
   }

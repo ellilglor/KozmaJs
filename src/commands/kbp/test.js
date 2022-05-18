@@ -10,7 +10,7 @@ module.exports = {
 	  //if (interaction.channel.id === '879297439054581770') { return }
     const reply = buildEmbed().setTitle('Currently not in use.');
     await interaction.deferReply({ephemeral: true});
-    
+
 	  await interaction.editReply({embeds: [reply]});
   }  
 };

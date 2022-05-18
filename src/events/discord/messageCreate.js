@@ -4,7 +4,8 @@ const kbpId = '760222722919497820';
 module.exports = {
 	name: 'messageCreate',
 	async execute(message, client) {
-    if (message.guildId !== kbpId) { return }
+    if (message.guildId !== kbpId) return 
+    if (message.author.id === client.user.id) return
 
     const logChannel = client.channels.cache.get(process.env.botLogs);
 
