@@ -1,11 +1,12 @@
 const { giveBuyMute, giveSellMute } = require('../../functions/moderation/kbpTradeMute')
 const kbpId = '760222722919497820';
+const botId = '898505614404235266';
 
 module.exports = {
 	name: 'messageCreate',
 	async execute(message, client) {
-    if (message.guildId !== kbpId) return 
-    if (message.author.id === client.user.id) return
+    if (message.guildId !== kbpId) return
+    if (message.author.id === botId) return
 
     const logChannel = client.channels.cache.get(process.env.botLogs);
 
