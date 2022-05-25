@@ -33,6 +33,7 @@ const giveSellMute = async ({ member, guild }, logChannel) => {
 const checkOldMessages = async (client) => {
   const logChannel = client.channels.cache.get(process.env.botLogs);
   const string = 'Checking if these people need to be muted:';
+  const botId = '898505614404235266';
   let stop = false;
 
   const logMessages = await logChannel.messages.fetch({ limit: 25 });
@@ -58,6 +59,7 @@ const checkOldMessages = async (client) => {
 
     if (d > expires) return false;
     if (staffIds.includes(msg.author.id)) return true;
+    if (msg.author.id === botId) return true;
     
     WTBmentions = WTBmentions.concat(' ', `<@${msg.author.id}>`);
     WTBids[msg.author.id] = msg.createdAt;
@@ -87,6 +89,7 @@ const checkOldMessages = async (client) => {
     
     if (d > expires) return false;
     if (staffIds.includes(msg.author.id)) return true;
+    if (msg.author.id === botId) return true;
     
     WTSmentions = WTSmentions.concat(' ', `<@${msg.author.id}>`);
     WTSids[msg.author.id] = msg.createdAt;
