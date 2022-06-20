@@ -1,5 +1,5 @@
 const { tradelogEmbed, buildEmbed, contentFilter } = require('../../functions/general');
-const { spreadsheet, equipmentFamilies, colorSets, channels, roses } = require('../../data/structures/findlogs');
+const { spreadsheet, equipmentFamilies, colorSets, channels, roses, commonFeatured } = require('../../data/structures/findlogs');
 const fs = require('fs');
 
 const searchLogs = async (interaction, items, months, checkVariants) => {
@@ -31,6 +31,10 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
       if (Date.parse(message.date) < Date.parse(stopHere)) break; 
       let sendMessage = false;
 
+      if (channel[0].includes('special-listings')) {
+        if (commonFeatured.some((item) => items.includes(item))) continue;
+      }
+
       for (const x in items) {
         if (message.content.includes(items[x]) || message.content.includes(reverse[x])) {
           sendMessage = true;
@@ -38,7 +42,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
         }
       }
 
-      if (!sendMessage) continue
+      if (!sendMessage) continue;
 
       if (!firstMatch) {
         firstMatch = true;

@@ -167,10 +167,13 @@ const channels = new Map([
 
 const roses = ['black', 'red', 'white', 'blue', 'gold', 'green', 'coral', 'violet', 'moonstone', 'malachite', 'garnet', 'amethyst', 'citrine', 'prismatic', 'aquamarine', 'turquoise'];
 
+const commonFeatured = ['prismatic gloweyes', 'divine valkyrie wings', 'volcanic valkyrie wings', 'shadow valkyrie wings', 'scissor blades', 'prismatic wings', 'tabard of the coral rose', 'chapeau of the coral rose', 'prime bombhead mask', 'tabard of the violet rose', 'chapeau of the violet rose', 'volcanic wings', 'divine wings', 'shadow wings', 'medieval war helm', 'overcharged mixmaster', 'imperial tricorne', 'shadow dragon wings']
+
 module.exports = {
   spreadsheet,
   equipmentFamilies,
   colorSets,
   channels,
-  roses
+  roses,
+  commonFeatured
 }
