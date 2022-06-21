@@ -22,10 +22,10 @@ module.exports = {
       .addChoice('Colors', 'Colors'))
     .addStringOption(option =>
       option.setName('slime')
-      .setDescription('Find where you can find a special themed box'))
+      .setDescription('Find where you can find a special themed box.'))
     .addStringOption(option =>
       option.setName('item')
-      .setDescription('Find which lockbox drops your item')),
+      .setDescription('Find which lockbox drops your item.')),
 	async execute(interaction) {
     let box = interaction.options.getString('boxes');
     const slime = interaction.options.getString('slime');
