@@ -12,10 +12,15 @@ module.exports = {
       .setRequired(true)),
 	async execute(interaction) {
     const kats = interaction.options.getInteger('kats');
-    const chance = (1-Math.pow((1-1/250), kats)) * 100;
+    let chance = (1-Math.pow((1-1/250), kats)) * 100;
+    if (chance > 99.99) chance = 99.99;
 
     const reply = buildEmbed()
-      .setTitle(`After killing ${kats} black kats you have a ${chance.toFixed(2)}% chance of getting at least 1 Book of Dark Rituals.`);
+      .setThumbnail('https://media3.spiralknights.com/wiki-images/9/91/Crafting-Book_of_Dark_Rituals.png')
+      .setTitle(`After killing ${kats} Black Kats you have a ${chance.toFixed(2)}% chance of getting at least 1 Book of Dark Rituals.`)
+      .addField('Black Kat spawn:', `1/90 or 1.11%`, true)
+      .addField('Book drop:', '1/250 or 0.4%', true)
+      .addField('Overal chance per Kat:', '0.004%', true);
     
     await interaction.reply({embeds: [reply], ephemeral: true});
     await logCommand(interaction);
