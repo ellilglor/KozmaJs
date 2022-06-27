@@ -40,6 +40,8 @@ const dbSellMute = async (member, logChannel, exp) => {
 
 const dbCheckExpiredMutes = async (client) => {
   const guild = await client.guilds.fetch('760222722919497820');
+  await guild.members.fetch();
+  
   const logChannel = client.channels.cache.get(process.env.botLogs);
   const query = { expires: { $lt: new Date() } };
   

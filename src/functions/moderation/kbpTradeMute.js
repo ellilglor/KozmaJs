@@ -1,4 +1,4 @@
-const { dbBuyMute, dbSellMute, dbCheckExpiredMutes } = require('../database/tradeMute');
+const { dbBuyMute, dbSellMute } = require('../database/tradeMute');
 const { tradelogEmbed } = require('../general');
 const staffIds = ['214787913097936896', '922921889347817483', '282992095835455489', '452999349882847242'];
 
@@ -45,7 +45,9 @@ const checkOldMessages = async (client) => {
   if (stop) return;
   
   const guild = await client.guilds.fetch('760222722919497820');
+  await guild.members.fetch();
   const d = new Date();
+  let remind = true;
 
   const WTBchannel = client.channels.cache.get('872172994158538812');
   const WTBrole = guild.roles.cache.find((r) => r.name === 'WTB-Cooldown');
@@ -59,7 +61,10 @@ const checkOldMessages = async (client) => {
 
     if (d > expires) return false;
     if (staffIds.includes(msg.author.id)) return true;
-    if (msg.author.id === botId) return true;
+    if (msg.author.id === botId) {
+      remind = false;
+      return true;
+    }
     
     WTBmentions = WTBmentions.concat(' ', `<@${msg.author.id}>`);
     WTBids[msg.author.id] = msg.createdAt;
@@ -89,7 +94,10 @@ const checkOldMessages = async (client) => {
     
     if (d > expires) return false;
     if (staffIds.includes(msg.author.id)) return true;
-    if (msg.author.id === botId) return true;
+    if (msg.author.id === botId) {
+      remind = false;
+      return true;
+    }
     
     WTSmentions = WTSmentions.concat(' ', `<@${msg.author.id}>`);
     WTSids[msg.author.id] = msg.createdAt;
@@ -107,7 +115,7 @@ const checkOldMessages = async (client) => {
     }
   }
 
-  if ((d.getDate() % 3) === 0) {
+  if ((d.getDate() % 3) === 0 && remind) {
     await sendReminder(WTBchannel);
     await sendReminder(WTSchannel);
   }
