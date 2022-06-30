@@ -14,6 +14,13 @@ Want to invite the bot to your server? use this [link](https://discord.com/api/o
 
 ## Available Commands
 <details>
+<summary>/bookchance</summary>
+  
+<br>This command will tell you how bad your luck has been or if you should have played the lottery instead of farming for the Book of Dark Rituals.
+</details>
+
+<br>
+<details>
 <summary>/clear</summary>
   
 <br>Don't want to see all previous messages the bot has sent you from /findlogs? Then this command has you covered! it will delete all the messages the bot has sent you.
@@ -33,7 +40,7 @@ Want to invite the bot to your server? use this [link](https://discord.com/api/o
 <br>This is the command this bot even exists. Saw someone advertising an item but don't know how much you should offer? Or did see you something interesting on the auction house and don't know if you should buy it to ~~hoard for months until it gets rerun~~ resell for more? Then /findlogs is here for you! This command will search through our 20k+ tradelogs for the most recent known transactions where the item was a part of.<br>
 
 Extra options:<br>
-- *months* ~ By default the bot only looks in the past 3 months but you can extend this period through the *months* option.<br>
+- *months* ~ By default the bot only looks in the past 6 months but you can extend this period through the *months* option.<br>
 - *variants* ~ When looking for equipment and certain color themes the bot automatically looks for items of that equipment's family tree or color themes of similar value. You can disable this through the *variants* option.<br>
 
 Qol implementations:<br>
