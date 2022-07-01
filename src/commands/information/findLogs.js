@@ -12,7 +12,7 @@ module.exports = {
 			.setRequired(true))
     .addIntegerOption(option =>
 		  option.setName('months')
-			.setDescription('How far back the bot should search. Default: 3 months.')
+			.setDescription('How far back the bot should search. Default: 6 months.')
       .setMinValue(1)
       .setMaxValue(24))
     .addStringOption(option =>
