@@ -6,9 +6,17 @@ module.exports = {
     name: 'recraft'
   },
   async execute (interaction) {
-    if (!interaction) { return; }
+    if (!interaction) return;
+    
     const title = interaction.message.embeds[0].title;
-    const amount = parseInt(interaction.message.embeds[0].fields[0].value) + 1;
+    const fields = interaction.message.embeds[0].fields;
+    let amount = 1;
+
+    for (const field of fields) {
+      if (field.name.includes('crafted')) {
+        amount = parseInt(field.value) + 1;
+      }
+    }
 
     for (const choice of choices) {
       if (title.includes(choice.value)) {

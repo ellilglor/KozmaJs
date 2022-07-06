@@ -4,6 +4,11 @@ const { buildEmbed, logCommand } = require('../../functions/general');
 const { craftItem, rollUv, getPunchImage } = require('../../functions/commands/punch');
 const wait = require('util').promisify(setTimeout);
 
+const punch = {
+  name: 'Punch:',
+  iconURL: 'https://media3.spiralknights.com/wiki-images/archive/1/1b/20200502113903!Punch-Mugshot.png'
+};
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('punch')
@@ -17,7 +22,7 @@ module.exports = {
       .addChoice('Swiftstrike Buckler', 'Swiftstrike Buckler')
       .addChoice('Black Kat Cowl', 'Black Kat Cowl')),
 	async execute(interaction, option, crafted) {
-    const reply = buildEmbed().setAuthor({ name: 'Punch:', iconURL: 'https://media3.spiralknights.com/wiki-images/archive/1/1b/20200502113903!Punch-Mugshot.png'});
+    const reply = buildEmbed().setAuthor(punch);
     const item = option || interaction.options.getString('item');
     const amount = crafted || '1';
     //await logCommand(interaction, option);
@@ -38,11 +43,16 @@ module.exports = {
 				  .setStyle('PRIMARY'),
 		  );
 
-      const result = buildEmbed();
-      result.setTitle(`You crafted: ${item}`)
-        .setAuthor({ name: 'Punch:', iconURL: 'https://media3.spiralknights.com/wiki-images/archive/1/1b/20200502113903!Punch-Mugshot.png'})
-        .setThumbnail(getPunchImage(item))
-        .addField('Amount crafted:', amount);
+      const result = buildEmbed()
+        .setTitle(`You crafted: ${item}`)
+        .setAuthor(punch)
+        .setThumbnail(getPunchImage(item));
+
+      for (const uv in craftUvs) {
+        result.addField(`UV #${parseInt(uv) + 1}`, craftUvs[uv], true);
+      }
+
+      result.addField('Amount crafted:', amount);
 
       reply.setTitle(`Crafting ${item}`).setDescription('3...');
       option ? await interaction.update({embeds: [reply], components: []}) : await interaction.reply({embeds: [reply], ephemeral: true});
@@ -53,11 +63,6 @@ module.exports = {
       reply.setDescription('1...');
       await interaction.editReply({embeds: [reply]});
       await wait(1000);
-      if (craftUvs.length > 0) {
-        reply.setDescription(craftUvs.toString().replace(/,/g, "\n"));
-      } else {
-        reply.setDescription('');
-      }
       await interaction.editReply({embeds: [result], components: [buttons]});
       
 
