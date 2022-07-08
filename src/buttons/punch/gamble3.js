@@ -9,6 +9,8 @@ module.exports = {
 
     const embed = interaction.message.embeds[0];
 
+    embed.description = ``;
+
     for (const field of embed.fields) {
       if (field.name.includes('🔒 UV #1')) {
         field.name = field.name.replace('🔒', '🔓');

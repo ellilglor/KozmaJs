@@ -27,8 +27,6 @@ module.exports = {
     const amount = crafted || '1';
     //await logCommand(interaction, option);
 
-    console.log(interaction.user.tag)
-
     if (interaction.user.tag === 'ellilglor#6866') {
       const craftUvs = craftItem(item);
       const buttons = new MessageActionRow()
@@ -75,6 +73,8 @@ module.exports = {
     } else { 
       reply.setTitle('This Command is not implemented yet.')
         .setDescription('An announcement will be made once its ready.'); 
+
+      console.log(interaction.user.tag)
 
       await interaction.reply({embeds: [reply], ephemeral: true});
     }

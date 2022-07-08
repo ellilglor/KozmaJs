@@ -18,14 +18,12 @@ const craftItem = (item) => {
     uvs.push(rollUv(item, crafting, uvs));
   }
 
-  console.log(uvs)
   return uvs;
 }
 
 const rollUv = (item, crafting, uvs) => {
   const itemType = getItemType(item);
   const uvGrade = getUvGrade(itemType);
-  if (!crafting) crafting = false;
   let uvType = getUvType(itemType, crafting);
 
   for (const uv of uvs) {
@@ -41,15 +39,16 @@ const rollUv = (item, crafting, uvs) => {
 
 const getUvGrade = (type) => {
   const gradeRoll = roll();
+  let result = '\n'
 
   if (gradeRoll <= 245) {
-    type.includes('weapon') ? result = ' Very High' : result = ' Maximum';
+    type.includes('weapon') ? result += 'Very High' : result += 'Maximum';
   } else if (gradeRoll <= 732) {
-    result = ' High';
+    result += 'High';
   } else if (gradeRoll <= 2683) {
-    result = ' Medium';
+    result += 'Medium';
   } else {
-    result = ' Low';
+    result += 'Low';
   }
 
   return result;

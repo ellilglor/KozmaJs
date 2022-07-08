@@ -12,6 +12,7 @@ module.exports = {
     let uvCount = 0;
 
     embed.title = embed.title.replace('You crafted: ', '');
+    embed.fields.pop();
 
     for (const field of embed.fields) {
       if (field.name.includes('UV #')) {
@@ -19,6 +20,9 @@ module.exports = {
         uvCount += 1;
       }
     }
+
+    embed.addField('\u200B', '\u200B');
+    embed.addField('Crowns Spent:', '0', true);
     
     const lockButtons = new MessageActionRow()
       .addComponents(

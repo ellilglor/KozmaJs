@@ -6,13 +6,12 @@ module.exports = {
     if (!interaction) return;
 
     const embed = interaction.message.embeds[0];
+    embed.description = ``;
 
-    for (const field of embed.fields) {
-      if (field.name.includes('🔒 UV #3')) {
-        field.name = field.name.replace('🔒', '🔓');
-      } else if (field.name.includes('🔓 UV #3')) {
-        field.name = field.name.replace('🔓', '🔒');
-      }
+    if (embed.fields[2].name.includes('🔒 UV #3')) {
+      embed.fields[2].name = '🔓 UV #3';
+    } else {
+      embed.fields[2].name = '🔒 UV #3';
     }
 
     await interaction.update({ embeds: [embed] });
