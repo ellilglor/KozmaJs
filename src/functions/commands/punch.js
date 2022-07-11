@@ -1,8 +1,7 @@
 const fs = require('fs');
 
 const craftItem = (item) => {
-  //const craftRoll = roll();
-  const craftRoll = 9;
+  const craftRoll = roll();
   const crafting = true;
   const uvs = [];
 
