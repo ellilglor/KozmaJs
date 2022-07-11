@@ -21,8 +21,11 @@ module.exports = {
       }
     }
 
-    embed.addField('\u200B', '\u200B');
-    embed.addField('Crowns Spent:', '0', true);
+   //  embed.addFields(
+		 //  { name: '\u200B', value: '\u200B' },
+	  //   { name: 'Crowns Spent:', value: '0', inline: true },
+	  // )
+    embed.addField('Crowns Spent:', '0');
     
     const lockButtons = new MessageActionRow()
       .addComponents(

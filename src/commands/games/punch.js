@@ -27,7 +27,7 @@ module.exports = {
     const amount = crafted || '1';
     //await logCommand(interaction, option);
 
-    if (interaction.user.tag === 'ellilglor#6866') {
+    if (interaction.channel?.id === '879297439054581770') {
       const craftUvs = craftItem(item);
       const buttons = new MessageActionRow()
 		    .addComponents(
