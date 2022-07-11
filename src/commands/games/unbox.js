@@ -65,20 +65,24 @@ module.exports = {
       .addField('Total spent:', money ? `$${totalSpent}` : `${totalSpent} Energy`, true);
       
     if (showStats) {
-      // sort items from most to least opened
-      items[id][box] = Object.fromEntries(
-        Object.entries(items[id][box]).sort(([,a],[,b]) => b-a)
-      );
+      if (!items[id][box]) {
+        embed.setDescription(`The bot has restarted and this data is lost!`);
+      } else {
+        // sort items from most to least opened
+        items[id][box] = Object.fromEntries(
+          Object.entries(items[id][box]).sort(([,a],[,b]) => b-a)
+        );
 
-      for (const key in items[id][box]) {
-        desc = desc.concat('\n',`${key} : ${items[id][box][key]}`);
-        if (desc.length >= 4030) {
-          desc = desc.concat('\n',`**I have reached the character limit!**`);
-          break;
+        for (const key in items[id][box]) {
+          desc = desc.concat('\n',`${key} : ${items[id][box][key]}`);
+          if (desc.length >= 4030) {
+            desc = desc.concat('\n',`**I have reached the character limit!**`);
+            break;
+          }
         }
-      }
 
-      embed.setDescription(desc);
+        embed.setDescription(desc);
+      }
     } else {
       embed
         .setTitle('You unboxed:')
