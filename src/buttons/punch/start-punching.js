@@ -1,4 +1,4 @@
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 
 module.exports = {
   data: {
@@ -7,12 +7,12 @@ module.exports = {
   async execute (interaction) {
     if (!interaction) return;
 
-    const embed = interaction.message.embeds[0];
+    const embed = new MessageEmbed(interaction.message.embeds[0]);
     const unlockEmoji = '🔓';
     let uvCount = 0;
 
     embed.title = embed.title.replace('You crafted: ', '');
-    embed.fields.pop();
+    embed.fields[embed.fields.length - 1] = { name: 'Crowns Spent', value: '0' };
 
     for (const field of embed.fields) {
       if (field.name.includes('UV #')) {
@@ -20,15 +20,8 @@ module.exports = {
         uvCount += 1;
       }
     }
-
-   //  embed.addFields(
-		 //  { name: '\u200B', value: '\u200B' },
-	  //   { name: 'Crowns Spent:', value: '0', inline: true },
-	  // )
-    embed.addField('Crowns Spent:', '0');
     
-    const lockButtons = new MessageActionRow()
-      .addComponents(
+    const lockButtons = new MessageActionRow().addComponents(
       new MessageButton()
 				.setCustomId('punch-lock').setEmoji('🔒').setStyle('PRIMARY')
         .setDisabled(true),
@@ -43,8 +36,7 @@ module.exports = {
         .setDisabled(uvCount < 3)
 		);
 
-    const gambleButtons = new MessageActionRow()
-      .addComponents(
+    const gambleButtons = new MessageActionRow().addComponents(
       new MessageButton()
 				.setCustomId('punch-gamble').setEmoji('🎲').setStyle('PRIMARY')
         .setDisabled(true),

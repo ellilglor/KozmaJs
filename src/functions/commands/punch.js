@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
 
 const craftItem = (item) => {
@@ -120,8 +121,42 @@ const getPunchImage = (match) => {
   }
 }
 
+const lockUv = async (interaction, uv) => {
+  const embed = new MessageEmbed(interaction.message.embeds[0]);
+  const buttons = interaction.message.components;
+  let lockCount = 0;
+
+  embed.fields[uv - 1].name = embed.fields[uv - 1].name.includes('🔒') ? `🔓 UV #${uv}` : `🔒 UV #${uv}`;
+
+  for (const field of embed.fields) {
+    if (field.name.includes('🔒')) lockCount += 1;
+  }
+
+  switch(lockCount) {
+    case 3:
+      buttons[1].components[3].disabled = true;
+      break;
+    case 2:
+      buttons[1].components[2].disabled = true;
+      buttons[1].components[3].disabled = false;
+      break;
+    case 1:
+      buttons[1].components[1].disabled = true;
+      buttons[1].components[2].disabled = false;
+      buttons[1].components[3].disabled = false;
+      break;
+    default:
+      buttons[1].components[1].disabled = false;
+      buttons[1].components[2].disabled = false;
+      buttons[1].components[3].disabled = false;
+  } 
+
+  await interaction.update({ embeds: [embed], components: buttons });
+}
+
 module.exports = {
   craftItem,
   rollUv,
-  getPunchImage
+  getPunchImage,
+  lockUv
 }
