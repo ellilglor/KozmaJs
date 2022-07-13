@@ -30,43 +30,30 @@ module.exports = {
       .addChoice('Lucky', 'Lucky')),
   async execute(interaction, showStats, choice, opened, spent) {
     const box = choice || interaction.options.getString('box');
+    const id = interaction.user.id;
     const amount = opened || '1';
     const boxImage = getImage('Boxes', box);
-    let unboxed = 'placeholder';
-    let desc = '**In this session you opened:**';
+    let desc = '**In this session you opened:**', totalSpent = 0, money = false;
 
-    const id = interaction.user.id;
     if (!items[id]) items[id] = {};
-    
-    if (!showStats) {
-      unboxed = unbox(box);
-      desc = unboxed.map(function(item){ return item.name; }).toString().replace(/,/g, ' & ');
-      await logCommand(interaction, choice, desc);
 
-      if (!items[id][box] || !choice) items[id][box] = {};
-      for (const item of unboxed) {
-        items[id][box][item.name] = items[id][box][item.name] + 1 || 1;
-      }
-    }
-
-    let money = false;
     if (lockboxes.includes(box)) {
       totalSpent = spent || '750';
-    } else if (depotBoxes.includes(box)){
+    } else if (depotBoxes.includes(box)) {
       totalSpent = spent || '3495';
     } else {
       totalSpent = spent || '4.95';
       money = true;
     }
 
-    const embed = buildEmbed()
+    const result = buildEmbed()
       .setAuthor({ name: box, iconURL: boxImage})
       .addField('Opened:', `${amount}`, true)
       .addField('Total spent:', money ? `$${totalSpent}` : `${totalSpent} Energy`, true);
-      
+    
     if (showStats) {
       if (!items[id][box]) {
-        embed.setDescription(`The bot has restarted and this data is lost!`);
+        result.setDescription(`The bot has restarted and this data is lost!`);
       } else {
         // sort items from most to least opened
         items[id][box] = Object.fromEntries(
@@ -81,25 +68,27 @@ module.exports = {
           }
         }
 
-        embed.setDescription(desc);
+        result.setDescription(desc);
       }
     } else {
-      embed
-        .setTitle('You unboxed:')
-        .setDescription(`*${desc}*`)
-        .setThumbnail(unboxed[0].url);
+      const unboxed = unbox(box);
+      desc = unboxed.map(item => { return item.name; }).toString().replace(/,/g, ' & ');
+      
+      await logCommand(interaction, choice, desc);
+
+      if (!items[id][box] || !choice) items[id][box] = {};
+      for (const item of unboxed) {
+        items[id][box][item.name] = items[id][box][item.name] + 1 || 1;
+      }
+
+      result.setTitle('You unboxed:').setDescription(`*${desc}*`).setThumbnail(unboxed[0].url);
     }
 
-    const buttons = new MessageActionRow()
-      .addComponents(
+    const buttons = new MessageActionRow().addComponents(
       new MessageButton()
-				.setCustomId('unbox-again')
-				.setEmoji('🔁')
-				.setStyle('SECONDARY'),
+				.setCustomId('unbox-again').setEmoji('🔁').setStyle('SECONDARY'),
       new MessageButton()
-        .setCustomId('unbox-stats')
-        .setEmoji('📘')
-				.setStyle('SECONDARY')
+        .setCustomId('unbox-stats').setEmoji('📘').setStyle('SECONDARY')
         .setDisabled(showStats)
 		);
 
@@ -108,17 +97,14 @@ module.exports = {
         .setTitle(`Opening your box`)
         .setDescription('3...')
         .setAuthor({ name: box, iconURL: boxImage});
-    choice ? await interaction.update({embeds: [reply], components: []}) : await interaction.reply({embeds: [reply], ephemeral: true});
-      await wait(1000);
-      reply.setDescription('2...');
-      await interaction.editReply({embeds: [reply]});
-      await wait(1000);
-      reply.setDescription('1...');
-      await interaction.editReply({embeds: [reply]});
-      await wait(1000);
-      await interaction.editReply({embeds: [embed], components: [buttons]});
+      const message = { embeds: [reply], components: [], ephemeral: true };
+      choice ? await interaction.update(message) : await interaction.reply(message);
+
+      await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('2...')] });
+      await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('1...')] });
+      await wait(1000); await interaction.editReply({ embeds: [result], components: [buttons] });
 	  } else {
-      await interaction.update({embeds: [embed], components: [buttons]});
+      await interaction.update({ embeds: [result], components: [buttons] });
     }
 	}
 };

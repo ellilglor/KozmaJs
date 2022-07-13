@@ -1,10 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageActionRow, MessageButton } = require('discord.js');
-const { logCommand } = require('../../functions/general');
 const { buildStats } = require('../../functions/commands/stats');
 
-const embeds = [];
-const pages = {};
+const embeds = [], pages = {};
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -16,34 +14,25 @@ module.exports = {
     pages[id] = pages[id] || 0;
 
     if (button) {
+      if (embeds.length === 0) await buildStats(embeds, interaction);
       button.includes('next') ? ++pages[id] : --pages[id];
     } else {
-      await interaction.deferReply({ephemeral: true});
+      await interaction.deferReply({ ephemeral: true });
       embeds.splice(0, embeds.length);
       await buildStats(embeds, interaction);
     }
 
-    const buttons = new MessageActionRow()
-		  .addComponents(
+    const buttons = new MessageActionRow().addComponents(
 			new MessageButton()
-				.setCustomId('prev-stats')
-				.setLabel('◀')
-				.setStyle('PRIMARY')
+				.setCustomId('prev-stats').setLabel('◀').setStyle('PRIMARY')
         .setDisabled(pages[id] === 0),
       new MessageButton()
-				.setCustomId('next-stats')
-				.setLabel('▶')
-				.setStyle('PRIMARY')
+				.setCustomId('next-stats').setLabel('▶').setStyle('PRIMARY')
         .setDisabled(pages[id] === embeds.length - 1),
 		);
     
     const embed = embeds[pages[id]];
-    
-    if (button) {
-      await interaction.update({embeds: [embed], components: [buttons]});
-    } else {
-      await interaction.editReply({embeds: [embed], components: [buttons]});
-      await logCommand(interaction);
-    }
-	}
+    const message = { embeds: [embed], components: [buttons] };
+    button ? await interaction.update(message) : await interaction.editReply(message);
+  }
 };

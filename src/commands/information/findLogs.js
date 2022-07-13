@@ -25,16 +25,28 @@ module.exports = {
     const months = interaction.options.getInteger('months') || 6;
     const variants = interaction.options.getString('variants');
     const checkVariants = !variants || variants.includes('variant') ? true : false;
-    const reply = buildEmbed().setDescription(`**I will dm you what I can find.**\n\nBy default I only look at tradelogs from the past 6 months!\nIf you want me to look past that use the *months* option.\n\n__**Info when searching:**__\n~ Slime boxes: combination first then *slime lockbox*\nExample: QQQ Slime Lockbox\n~ UV'd equipment: use asi / ctr + med / high / very high / max\nThe bot automatically swaps asi & ctr so you don't have to search twice.\n~ Equipment: The bot looks for the entire family tree of your item!\nSo when you lookup *brandish* it will also look for *combuster* for example\n~ Sprite pods: type out as seen in game\nExample: Drakon Pod (Divine)`);
+    const reply = buildEmbed().setTitle('Please put in at least 3 letters!');
     
     if (items[0].length > 2) {
-      reply.setTitle(`Searching for __${items[0]}__.`.slice(0,256));
-      await interaction.reply({embeds: [reply], ephemeral: true});
+      reply
+        .setTitle(`Searching for __${items[0]}__.`.slice(0,256))
+        .setDescription(
+          `**I will dm you what I can find.**\n\n` +
+          `By default I only look at tradelogs from the past 6 months!\n` +
+          `If you want me to look past that use the *months* option.\n\n` +
+          `__**Info when searching:**__\n` +
+          `~ Slime boxes: combination first then *slime lockbox*\n` +
+          `Example: QQQ Slime Lockbox\n` +
+          `~ UV'd equipment: use asi / ctr + med / high / very high / max\n` +
+          `The bot automatically swaps asi & ctr so you don't have to search twice.\n` +
+          `~ Equipment: The bot looks for the entire family tree of your item!\n` +
+          `So when you lookup *brandish* it will also look for *combuster* for example\n` +
+          `~ Sprite pods: type out as seen in game\n` + `Example: Drakon Pod (Divine)`);
+      await interaction.reply({ embeds: [reply], ephemeral: true });
       await logCommand(interaction);
       await searchLogs(interaction, items, months, checkVariants);
     } else { 
-      reply.setTitle('Please put in at least 3 letters.');
-      await interaction.reply({embeds: [reply], ephemeral: true});
+      await interaction.reply({ embeds: [reply], ephemeral: true });
     };
 	}
 };

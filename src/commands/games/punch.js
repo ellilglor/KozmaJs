@@ -29,47 +29,30 @@ module.exports = {
 
     if (interaction.channel?.id === '879297439054581770') {
       const craftUvs = craftItem(item);
-      const buttons = new MessageActionRow()
-		    .addComponents(
-			    new MessageButton()
-				  .setCustomId('recraft')
-				  .setLabel('Recraft')
-				  .setStyle('PRIMARY'),
-          new MessageButton()
-				  .setCustomId('start-punching')
-				  .setLabel('Start Rolling Uvs')
-				  .setStyle('PRIMARY'),
+      const buttons = new MessageActionRow().addComponents(
+			  new MessageButton()
+				  .setCustomId('recraft').setLabel('Recraft').setStyle('PRIMARY'),
+        new MessageButton()
+				  .setCustomId('start-punching').setLabel('Start Rolling Uvs').setStyle('PRIMARY')
 		  );
 
       const result = buildEmbed()
-        .setTitle(`You crafted: ${item}`)
         .setAuthor(punch)
+        .setTitle(`You crafted: ${item}`)
         .setThumbnail(getPunchImage(item));
 
       for (const uv in craftUvs) {
         result.addField(`UV #${parseInt(uv) + 1}`, craftUvs[uv], true);
       }
-
       result.addField('Amount crafted:', amount);
 
       reply.setTitle(`Crafting ${item}`).setDescription('3...');
-      option ? await interaction.update({embeds: [reply], components: []}) : await interaction.reply({embeds: [reply], ephemeral: true});
-      await wait(1000);
-      reply.setDescription('2...');
-      await interaction.editReply({embeds: [reply]});
-      await wait(1000);
-      reply.setDescription('1...');
-      await interaction.editReply({embeds: [reply]});
-      await wait(1000);
-      await interaction.editReply({embeds: [result], components: [buttons]});
+      const message = { embeds: [reply], components: [], ephemeral: true };
+      option ? await interaction.update(message) : await interaction.reply(message);
       
-
-
-
-
-
-
-
+      await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('2...')] });;
+      await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('1...')] });
+      await wait(1000); await interaction.editReply({ embeds: [result], components: [buttons] });
     } else { 
       reply.setTitle('This Command is not implemented yet.')
         .setDescription('An announcement will be made once its ready.'); 

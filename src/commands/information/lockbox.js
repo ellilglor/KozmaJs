@@ -57,7 +57,7 @@ module.exports = {
       reply.setTitle('Please select 1 of the given options.');
     }
 
-    await interaction.reply({embeds: [reply], ephemeral: true});
+    await interaction.reply({ embeds: [reply], ephemeral: true });
     await logCommand(interaction);
 	}
 };

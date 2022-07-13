@@ -8,15 +8,13 @@ module.exports = {
 		.setDescription('Removes all bot messages in your dms.'),
 	async execute(interaction) {
     const reply = buildEmbed().setTitle('Clearing messages.');
-		await interaction.reply({embeds: [reply], ephemeral: true});
+		await interaction.reply({ embeds: [reply], ephemeral: true });
     await logCommand(interaction);
 
     await interaction.user.createDM();
     const channel = interaction.user.dmChannel;
     await fetchAll.messages(channel).then(messages => {
-      messages.forEach(message => 
-        { if (message.author.bot) message.delete(); }
-      )
+      messages.forEach(msg => { if (msg.author.bot) msg.delete() });
     });
 	}
 };

@@ -7,6 +7,7 @@ module.exports = {
   },
   async execute (interaction) {
     if (!interaction) return;
+    
     const box = interaction.message.embeds[0].author.name;
     const amount = parseInt(interaction.message.embeds[0].fields[0].value) + 1;
     let spent = parseFloat(interaction.message.embeds[0].fields[1].value.replace("$", ""));

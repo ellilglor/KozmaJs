@@ -14,7 +14,7 @@ module.exports = {
     let reply = buildEmbed();
 
     if (newValue) {
-      if (interaction.member && (interaction.member.roles.cache.has('760222967808131092') || interaction.member.roles.cache.has('796399775959220304'))) {
+      if (interaction.member?.roles.cache.has('760222967808131092') || interaction.member?.roles.cache.has('796399775959220304')) {
         await saveRate(newValue);
         reply.setTitle(`The conversion rate has been changed to: ${newValue}.`);
       } else { 
@@ -24,10 +24,10 @@ module.exports = {
       const rate = await getRate();
       reply
         .setTitle(`The current crowns per energy rate is: ${rate}.`)
-        .setDescription('We use this rate for calculating **/convert**.');
+        .setDescription('I use this rate for calculating **/convert**.');
     }
     
-    await interaction.reply({embeds: [reply], ephemeral: true});
+    await interaction.reply({ embeds: [reply], ephemeral: true });
     await logCommand(interaction);
 	}
 };
