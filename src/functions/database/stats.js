@@ -14,7 +14,7 @@ const saveCommand = async (cmd) => {
     await commandProfile.save().catch(err => console.log(err));
   } else {
     try {
-      await command.findOneAndUpdate({ command: cmd}, { amount: commandProfile.amount += 1});
+      await command.findOneAndUpdate({ command: cmd }, { amount: commandProfile.amount += 1 });
     } catch (error) {
       console.log(error);
     }
@@ -24,9 +24,7 @@ const saveCommand = async (cmd) => {
 const getCommands = async () => {
   const result = await command.find();
 
-  result.sort((a, b) => {
-    return b.amount - a.amount;
-  });
+  result.sort((a, b) => { return b.amount - a.amount });
   
   return result;
 }
@@ -42,7 +40,7 @@ const saveSearched = async (searched) => {
     await itemProfile.save().catch(err => console.log(err));
   } else {
     try {
-      await item.findOneAndUpdate({ item: searched}, { amount: itemProfile.amount += 1});
+      await item.findOneAndUpdate({ item: searched }, { amount: itemProfile.amount += 1 });
     } catch (error) {
       console.log(error);
     }
@@ -52,9 +50,7 @@ const saveSearched = async (searched) => {
 const getSearched = async () => {
   result = await item.find();
 
-  result.sort((a, b) => {
-    return b.amount - a.amount;
-  });
+  result.sort((a, b) => { return b.amount - a.amount });
 
   return result;
 }
@@ -70,7 +66,7 @@ const saveBox = async (opened) => {
     await boxProfile.save().catch(err => console.log(err));
   } else {
     try {
-      await box.findOneAndUpdate({ box: opened}, { amount: boxProfile.amount += 1});
+      await box.findOneAndUpdate({ box: opened }, { amount: boxProfile.amount += 1 });
     } catch (error) {
       console.log(error);
     }
@@ -80,9 +76,7 @@ const saveBox = async (opened) => {
 const getBoxes = async () => {
   result = await box.find();
 
-  result.sort((a, b) => {
-    return b.amount - a.amount;
-  });
+  result.sort((a, b) => { return b.amount - a.amount });
 
   return result;
 }

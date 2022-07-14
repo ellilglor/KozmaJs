@@ -3,16 +3,14 @@ const { spreadsheet, equipmentFamilies, colorSets, channels, roses, commonFeatur
 const fs = require('fs');
 
 const searchLogs = async (interaction, items, months, checkVariants) => {
-  items[0] = contentFilter(items[0]);
-  let logsFound = false;
   const reverse = ['ultron stinks'];
   const stopHere = new Date();
-
+  let logsFound = false;
+  
+  items[0] = contentFilter(items[0]);
   stopHere.setMonth(stopHere.getMonth() - months);
 
-  if (checkVariants) {
-    items = addVariants(items);
-  }
+  if (checkVariants) items = addVariants(items);
 
   if (items[0].includes('ctr') && items[0].includes('asi')) {
     reverse.pop();
@@ -24,8 +22,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
   for (const channel of channels) {
     const messages = JSON.parse(fs.readFileSync(`src/data/tradelogs/${channel[0]}.json`));
     const matches = [];
-    let charCount = 0;
-    let firstMatch = false;
+    let charCount = 0, firstMatch = false;
 
     for (const message of messages) {
       if (Date.parse(message.date) < Date.parse(stopHere)) break; 
@@ -63,7 +60,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
       if (message.image) msg.setImage(message.image);
 
       if (matches.length === 10 || charCount >= 5900) {
-        await interaction.user.send({embeds: matches});
+        await interaction.user.send({ embeds: matches });
         matches.splice(0, matches.length);
         charCount = 0;
       } else { 
@@ -71,9 +68,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
       }
     }
 
-    if (matches.length !== 0) {
-      await interaction.user.send({embeds: matches});
-    }
+    if (matches.length !== 0) await interaction.user.send({ embeds: matches });
   }
 
   await searchFinished(interaction, logsFound, items[0]);
@@ -82,10 +77,15 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
 const searchFinished = async (interaction, logsFound, item) => {
   const message = buildEmbed()
     .setColor('#f9d49c')
-    .setDescription('By default I only look at tradelogs from the past 6 months!\nIf you want me to look past that use the *months* option.\n\nIf you notice a problem please contact @ellilglor#6866!\nDid you know we have our own discord server?\n<https://discord.gg/nGW89SHHj3>');
-
+    .setDescription(
+      'By default I only look at tradelogs from the past 6 months!\n' +
+      'If you want me to look past that use the *months* option.\n\n' +
+      'If you notice a problem please contact @ellilglor#6866!\n' +
+      'Did you know we have our own discord server?\n<https://discord.gg/nGW89SHHj3>'
+    );
+  
   if (logsFound) {
-    message.setTitle(`I couldn't find anything else for __${item}__, hope these helped!`.slice(0,256));
+    message.setTitle(`This is everything I found for __${item}__, I hope these helped!`.slice(0,256));
   } else { 
     message.setTitle(`I couldn't find any listings for __${item}__.`.slice(0,256)); 
   }
@@ -97,7 +97,7 @@ const searchFinished = async (interaction, logsFound, item) => {
     }
   }
 
-  await interaction.user.send({embeds: [message]});
+  await interaction.user.send({ embeds: [message] });
 };
 
 const addVariants = (items) => {
@@ -130,13 +130,8 @@ const addVariants = (items) => {
           }
         }
 
-        if (items[0].includes('drakon') || items[0].includes('maskeraith')) {
-          continue;
-        }
-
-        if (set.includes('snipes') && (items[0].includes('slime') || items[0].includes('plume'))) {
-          continue;
-        } 
+        if (items[0].includes('drakon') || items[0].includes('maskeraith')) continue;
+        if (set.includes('snipes') && (items[0].includes('slime') || items[0].includes('plume'))) continue;
       
         const template = items[0].replace(name, '').trim();
 
@@ -168,10 +163,10 @@ const addVariants = (items) => {
 }
 
 const uvSwap = (name) => {
-	let result = '';
 	const name_list = name.split(' ');
 	const ctr = name_list.indexOf('ctr');
 	const asi = name_list.indexOf('asi');
+  let result = '';
 
 	for (i = 0; i < Math.min(ctr, asi); i++) {
 		result += name_list[i] + ' ';

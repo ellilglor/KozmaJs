@@ -13,7 +13,7 @@ const dbBuyMute = async (member, logChannel, exp) => {
       _id: member.id,
       tag: member.tag,
       expires: expires,
-      })
+    })
     await buyProfile.save().catch(err => console.log(err));
   } else {
     await logChannel.send(`WTB - <@214787913097936896> ${member.tag} is already in the database!`);
@@ -31,7 +31,7 @@ const dbSellMute = async (member, logChannel, exp) => {
       _id: member.id,
       tag: member.tag,
       expires: expires,
-      })
+    })
     await sellProfile.save().catch(err => console.log(err));
   } else {
     await logChannel.send(`WTS - <@214787913097936896> ${member.tag} is already in the database!`);
@@ -40,11 +40,11 @@ const dbSellMute = async (member, logChannel, exp) => {
 
 const dbCheckExpiredMutes = async (client) => {
   const guild = await client.guilds.fetch('760222722919497820');
-  await guild.members.fetch();
-  
   const logChannel = client.channels.cache.get(process.env.botLogs);
   const query = { expires: { $lt: new Date() } };
   
+  await guild.members.fetch();
+
   const WTBexpired = await buy.find(query);
   if (WTBexpired.length > 0) {
     const WTBrole = guild.roles.cache.find((r) => r.name === 'WTB-Cooldown');
@@ -74,7 +74,6 @@ const removeRole = async (members, results, role, logChannel) => {
     }
     
     await member.roles.remove(role);
-
     await wait(100);
     
     if (member.roles.cache.has(role.id)) {

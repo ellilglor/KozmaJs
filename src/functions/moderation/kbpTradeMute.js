@@ -13,6 +13,7 @@ const giveBuyMute = async ({ member, guild }, logChannel) => {
   }
 
   await dbBuyMute(member.user, logChannel);
+  await guild.members.fetch();
   member.roles.add(role);
 }
 
@@ -27,6 +28,7 @@ const giveSellMute = async ({ member, guild }, logChannel) => {
   }
 
   await dbSellMute(member.user, logChannel);
+  await guild.members.fetch();
   member.roles.add(role);
 }
 
@@ -51,8 +53,8 @@ const checkOldMessages = async (client) => {
 
   const WTBchannel = client.channels.cache.get('872172994158538812');
   const WTBrole = guild.roles.cache.find((r) => r.name === 'WTB-Cooldown');
-  let WTBmentions = `WTB - ${string}`;
   const WTBids = {};
+  let WTBmentions = `WTB - ${string}`;
 
   const WTBmessages = await WTBchannel.messages.fetch({ limit: 25 });
   WTBmessages.every(msg => {
@@ -84,8 +86,8 @@ const checkOldMessages = async (client) => {
 
   const WTSchannel = client.channels.cache.get('872173055386980373');
   const WTSrole = guild.roles.cache.find((r) => r.name === 'WTS-Cooldown');
-  let WTSmentions = `WTS - ${string}`;
   const WTSids = {};
+  let WTSmentions = `WTS - ${string}`;
 
   const WTSmessages = await WTSchannel.messages.fetch({ limit: 25 });
   WTSmessages.every(msg => {

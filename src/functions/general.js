@@ -5,7 +5,10 @@ const { saveCommand, saveSearched, saveBox } = require('./database/stats');
 const buildEmbed = () => {
   const embed = new MessageEmbed()
     .setColor('#29D0FF')
-    .setFooter({ text: `Thank you for using Kozma's Backpack bot!`, iconURL: 'https://cdn.discordapp.com/attachments/713080672893534281/884813303132606474/logo.png'});
+    .setFooter({ 
+      text: `Thank you for using Kozma's Backpack bot!`, 
+      iconURL: 'https://cdn.discordapp.com/attachments/713080672893534281/884813303132606474/logo.png'
+    });
   return embed;
 };
 
@@ -33,11 +36,11 @@ const logCommand = async ({ client, options, member, user, commandName, message:
       option += ` ${opt.value}`;
     }
   }
-  if (extra) { option += ` ${extra}`; }
+  if (extra) option += ` ${extra}`;
 
   await saveData(user, command, option);
   
-  if (item) { option += ` ${item}`; }
+  if (item) option += ` ${item}`;
 
   const message = `${user.tag} used /${command}${option} in ${location}`;
   console.log(message);
@@ -63,9 +66,7 @@ const saveData = async (user, command, option) => {
 const contentFilter = (content) => {
 	result = content.replace(/['"\+\[\]()\-{},]/g, "").toLowerCase();
 
-	if (result.includes('gm')) {
-		result = result.replace('gm', '').concat(' ', 'asi vh ctr vh');
-	}
+	if (result.includes('gm')) result = result.replace('gm', '').concat(' ', 'asi vh ctr vh');
 
 	result = result
 		.replace("  ", " ")

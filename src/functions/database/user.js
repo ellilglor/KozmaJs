@@ -19,14 +19,12 @@ const saveUser = async (u, command) => {
   } else {
     try {
       if (command.includes('unbox')) {
-        await user.findOneAndUpdate({ _id: u.id}, { unboxed: userProfile.unboxed += 1});
+        await user.findOneAndUpdate({ _id: u.id}, { unboxed: userProfile.unboxed += 1 });
       } else {
-        await user.findOneAndUpdate({ _id: u.id}, { amount: userProfile.amount += 1});
+        await user.findOneAndUpdate({ _id: u.id}, { amount: userProfile.amount += 1 });
       }
       
-      if (userProfile.tag !== u.tag) {
-        await user.findOneAndUpdate({ _id: u.id}, { tag: u.tag});
-      }
+      if (userProfile.tag !== u.tag) await user.findOneAndUpdate({ _id: u.id}, { tag: u.tag });
     } catch (error) {
       console.log(error);
     }
@@ -36,9 +34,7 @@ const saveUser = async (u, command) => {
 const getUsers = async () => {
   const result = await user.find();
 
-  result.sort((a, b) => {
-    return b.amount - a.amount;
-  });
+  result.sort((a, b) => { return b.amount - a.amount });
 
   return result;
 }

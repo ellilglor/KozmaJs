@@ -20,7 +20,7 @@ module.exports = {
     const command = client.commands.get(interaction.commandName);
     const button = client.buttons.get(interaction.customId);
 
-    if (!command && !button) return await interaction.reply({embeds: [noCode], ephemeral: true});
+    if (!command && !button) return await interaction.reply({ embeds: [noCode], ephemeral: true });
     
     try {
       command ? await command.execute(interaction) : await button.execute(interaction);
@@ -30,11 +30,8 @@ module.exports = {
       await logChannel.send(`<@214787913097936896> Error while executing ${name} for ${interaction.user.tag}!\n${error}`);
       console.log(`Error while executing ${name}!`, { error });
 
-      if (!interaction.reply) {
-        await interaction.reply({embeds: [crashed], ephemeral: true});
-      } else {
-        await interaction.editReply({embeds: [crashed]});
-      }
+      const message = { embeds: [crashed], ephemeral: true };
+      interaction.reply ? await interaction.editReply(message) : await interaction.reply(message);
     };
 	},
 };

@@ -7,7 +7,6 @@ const convertLogs = async (channel, channelName, collectAll) => {
   const location = `src/data/tradelogs/${channelName}.json`;
   const filtered = collectAll ? [] : JSON.parse(fs.readFileSync(location));
   const messages = collectAll ? await fetchAll.messages(channel) : await channel.messages.fetch({ limit: 20 });
-  
   const temp = [];
 
   messages.every(message => {

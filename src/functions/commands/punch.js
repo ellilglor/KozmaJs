@@ -3,8 +3,7 @@ const fs = require('fs');
 
 const craftItem = (item) => {
   const craftRoll = roll();
-  const crafting = true;
-  const uvs = [];
+  const uvs = [], crafting = true;
 
   if (craftRoll <= 10) {
     for (let i=1; i <= 3; i++) {
@@ -27,9 +26,7 @@ const rollUv = (item, crafting, uvs) => {
   let uvType = getUvType(itemType, crafting);
 
   for (const uv of uvs) {
-    while (uv.includes(uvType)) {
-      uvType = getUvType(itemType, crafting);
-    }
+    while (uv.includes(uvType)) uvType = getUvType(itemType, crafting);
   }
   
   const result = uvType + uvGrade;
@@ -39,17 +36,13 @@ const rollUv = (item, crafting, uvs) => {
 
 const getUvGrade = (type) => {
   const gradeRoll = roll();
-  let result = '\n'
+  let result = '\n';
 
   if (gradeRoll <= 245) {
-    type.includes('weapon') ? result += 'Very High' : result += 'Maximum';
-  } else if (gradeRoll <= 732) {
-    result += 'High';
-  } else if (gradeRoll <= 2683) {
-    result += 'Medium';
+    result += type.includes('weapon') ? 'Very High' : 'Maximum';
   } else {
-    result += 'Low';
-  }
+    result += gradeRoll <= 732 ? 'High' : gradeRoll <= 2683 ? 'Medium' : 'Low';
+  } 
 
   return result;
 }
@@ -95,14 +88,7 @@ const getUvType = (type, crafting) => {
 const getItemType = (item) => {
   const weapons = ['Brandish', 'Overcharged Mixmaster'];
   const shield = 'Swiftstrike Buckler';
-
-  if (weapons.includes(item)) {
-    result = 'weapon';
-  } else if (shield.includes(item)) {
-    result = 'shield';
-  } else {
-    result = 'armor';
-  }
+  const result = weapons.includes(item) ? 'weapon' : shield.includes(item) ? 'shield' : 'armor';
 
   return result;
 }
@@ -115,9 +101,7 @@ const getPunchImage = (match) => {
   const itemList = JSON.parse(fs.readFileSync(`src/data/punch.json`));
 
   for (const item of itemList) {
-    if (match.includes(item.name)) {
-      return item.url;
-    }
+    if (match.includes(item.name)) return item.url;
   }
 }
 

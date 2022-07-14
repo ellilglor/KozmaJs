@@ -1,5 +1,7 @@
 const fs = require('fs');
 
+const bonusBoxes = ['Confection', 'Lucky'];
+
 const unbox = (box) => {
   const content = JSON.parse(fs.readFileSync(`src/data/boxes/${box}.json`));
   const roll = Math.random() * 100;
@@ -57,9 +59,7 @@ const getImage = (box, match) => {
   const content = JSON.parse(fs.readFileSync(`src/data/boxes/${box}.json`));
 
   for (const item of content) {
-    if (match.includes(item.name)) {
-      return item.url;
-    }
+    if (match.includes(item.name)) return item.url;
   }
 
   return noImage(match);
@@ -69,8 +69,6 @@ const noImage = (match) => {
   console.log(`no image found for ${match}`);
   return 'https://media3.spiralknights.com/wiki-images/8/82/Icon-alert.png';
 }
-
-const bonusBoxes = ['Confection', 'Lucky'];
 
 module.exports = {
   unbox,
