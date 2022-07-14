@@ -23,8 +23,7 @@ module.exports = {
     
     const lockButtons = new MessageActionRow().addComponents(
       new MessageButton()
-				.setCustomId('punch-lock').setEmoji('🔒').setStyle('PRIMARY')
-        .setDisabled(true),
+				.setCustomId('punch-lock').setEmoji('🔒').setStyle('PRIMARY'),
       new MessageButton()
 				.setCustomId('punch-lock1').setEmoji('1️⃣').setStyle('SECONDARY')
         .setDisabled(uvCount < 1),
@@ -38,8 +37,7 @@ module.exports = {
 
     const gambleButtons = new MessageActionRow().addComponents(
       new MessageButton()
-				.setCustomId('punch-gamble').setEmoji('🎲').setStyle('PRIMARY')
-        .setDisabled(true),
+				.setCustomId('punch-gamble').setEmoji('🎲').setStyle('PRIMARY'),
       new MessageButton()
 				.setCustomId('punch-gamble1').setEmoji('1️⃣').setStyle('SECONDARY'),
       new MessageButton()

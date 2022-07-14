@@ -106,7 +106,7 @@ const getPunchImage = (match) => {
 }
 
 const lockUv = async (interaction, uv) => {
-  const embed = new MessageEmbed(interaction.message.embeds[0]);
+  const embed = new MessageEmbed(interaction.message.embeds[0]).setDescription('');
   const buttons = interaction.message.components;
   let lockCount = 0;
 

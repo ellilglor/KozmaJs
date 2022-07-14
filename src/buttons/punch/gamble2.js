@@ -8,7 +8,7 @@ module.exports = {
   async execute (interaction) {
     if (!interaction) return;
 
-    const embed = new MessageEmbed(interaction.message.embeds[0]);
+    const embed = new MessageEmbed(interaction.message.embeds[0]).setDescription('');
     const buttons = interaction.message.components;
     const uvs = [], crafting = false;
     let lockLoc = -1, index = 0, doubleRolls = false;
