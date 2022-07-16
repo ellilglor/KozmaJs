@@ -36,11 +36,15 @@ const checkOldMessages = async (client) => {
   const logChannel = client.channels.cache.get(process.env.botLogs);
   const string = 'Checking if these people need to be muted:';
   const botId = '898505614404235266';
+  const d = new Date();
   let stop = false;
 
-  const logMessages = await logChannel.messages.fetch({ limit: 25 });
+  const logMessages = await logChannel.messages.fetch({ limit: 10 });
   logMessages.every(msg => {
-    if (msg.content.includes(string)) stop = true;
+    const time = msg.createdAt;
+    time.setHours(time.getHours() + 1);
+
+    if (msg.content.includes(string) && d < time) stop = true;
     return !stop;
   })
 
@@ -48,7 +52,6 @@ const checkOldMessages = async (client) => {
   
   const guild = await client.guilds.fetch('760222722919497820');
   await guild.members.fetch();
-  const d = new Date();
   let remind = true;
 
   const WTBchannel = client.channels.cache.get('872172994158538812');

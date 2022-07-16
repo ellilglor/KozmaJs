@@ -98,7 +98,7 @@ const roll = () => {
 }
 
 const getPunchImage = (match) => {
-  const itemList = JSON.parse(fs.readFileSync(`src/data/punch.json`));
+  const itemList = JSON.parse(fs.readFileSync(`src/data/punch/items.json`));
 
   for (const item of itemList) {
     if (match.includes(item.name)) return item.url;
@@ -138,9 +138,33 @@ const lockUv = async (interaction, uv) => {
   await interaction.update({ embeds: [embed], components: buttons });
 }
 
+const checkForGm = (embed) => {
+  const weapons = ['Brandish', 'Overcharged Mixmaster'];
+  let count = 0, result = '';
+
+  if (weapons.includes(embed.title)) {
+    for (const field of embed.fields) {
+      if (!field.value.includes('Very High')) continue;
+      if (field.value.includes('Charge') || field.value.includes('Speed')) count += 1;
+    }
+  } else {
+    for (const field of embed.fields) {
+      if (!field.value.includes('Max')) continue;
+      if (field.value.includes('Shadow') || field.value.includes('Normal') || field.value.includes('Fire')) {
+        count += 1;
+      }  
+    }
+  }
+
+  
+
+  //console.log(count)
+}
+
 module.exports = {
   craftItem,
   rollUv,
   getPunchImage,
-  lockUv
+  lockUv,
+  checkForGm
 }

@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const { rollUv } = require('../../functions/commands/punch');
+const { rollUv, checkForGm } = require('../../functions/commands/punch');
 
 module.exports = {
   data: {
@@ -62,6 +62,8 @@ module.exports = {
     }
 
     if (!tripleRolls) embed.fields.splice(index, 0, { name: 'Triple Rolls', value: '1', inline: true });
+
+    //checkForGm(embed)
 
     buttons[0].components[1].disabled = false;
     buttons[0].components[2].disabled = false;
