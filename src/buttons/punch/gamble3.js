@@ -8,7 +8,7 @@ module.exports = {
   async execute (interaction) {
     if (!interaction) return;
 
-    const embed = new MessageEmbed(interaction.message.embeds[0]).setDescription('');
+    let embed = new MessageEmbed(interaction.message.embeds[0]).setDescription('').setImage('');
     const buttons = interaction.message.components;
     const uvs = [], crafting = false;
     let lock1Loc = -1, lock2Loc = -1, index = 0, tripleRolls = false;
@@ -63,7 +63,7 @@ module.exports = {
 
     if (!tripleRolls) embed.fields.splice(index, 0, { name: 'Triple Rolls', value: '1', inline: true });
 
-    //checkForGm(embed)
+    embed = checkForGm(embed);
 
     buttons[0].components[1].disabled = false;
     buttons[0].components[2].disabled = false;

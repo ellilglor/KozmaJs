@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageActionRow, MessageButton } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
-const { craftItem, rollUv, getPunchImage } = require('../../functions/commands/punch');
+const { craftItem, rollUv, getPunchImage, checkForGm } = require('../../functions/commands/punch');
 const wait = require('util').promisify(setTimeout);
 
 const punch = {
@@ -36,7 +36,7 @@ module.exports = {
 				  .setCustomId('start-punching').setLabel('Start Rolling Uvs').setStyle('PRIMARY')
 		  );
 
-      const result = buildEmbed()
+      let result = buildEmbed()
         .setAuthor(punch)
         .setTitle(`You crafted: ${item}`)
         .setThumbnail(getPunchImage(item));
@@ -45,6 +45,8 @@ module.exports = {
         result.addField(`UV #${parseInt(uv) + 1}`, craftUvs[uv], true);
       }
       result.addField('Amount crafted:', amount);
+
+      result = checkForGm(result);
 
       reply.setTitle(`Crafting ${item}`).setDescription('3...');
       const message = { embeds: [reply], components: [], ephemeral: true };

@@ -106,7 +106,7 @@ const getPunchImage = (match) => {
 }
 
 const lockUv = async (interaction, uv) => {
-  const embed = new MessageEmbed(interaction.message.embeds[0]).setDescription('');
+  const embed = new MessageEmbed(interaction.message.embeds[0]).setDescription('').setImage('');
   const buttons = interaction.message.components;
   let lockCount = 0;
 
@@ -140,25 +140,40 @@ const lockUv = async (interaction, uv) => {
 
 const checkForGm = (embed) => {
   const weapons = ['Brandish', 'Overcharged Mixmaster'];
-  let count = 0, result = '';
+  let count = 0, won = false;
 
   if (weapons.includes(embed.title)) {
     for (const field of embed.fields) {
       if (!field.value.includes('Very High')) continue;
       if (field.value.includes('Charge') || field.value.includes('Speed')) count += 1;
+      if (count === 2) won = true;
     }
   } else {
     for (const field of embed.fields) {
       if (!field.value.includes('Max')) continue;
       if (field.value.includes('Shadow') || field.value.includes('Normal') || field.value.includes('Fire')) {
         count += 1;
-      }  
+      }
+      if (count === 3) won = true;
     }
   }
 
-  
+  if (won) embed = setImage(embed);
 
-  //console.log(count)
+  return embed;
+}
+
+const setImage = (embed) => {
+  const images = JSON.parse(fs.readFileSync(`src/data/punch/memes.json`));
+  const pos = Math.floor(Math.random() * images.length);
+
+  embed.setDescription(
+    `Congratulations! You created a GM item!\n` +
+    `As a reward you get a random Spiral Knights meme.\n` +
+    `Author: ${images[pos].author}`);
+  embed.setImage(images[pos].url);
+  
+  return embed;
 }
 
 module.exports = {
