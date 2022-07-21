@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 
 const craftItem = (item) => {
@@ -106,7 +106,7 @@ const getPunchImage = (match) => {
 }
 
 const lockUv = async (interaction, uv) => {
-  const embed = new MessageEmbed(interaction.message.embeds[0]).setDescription('').setImage('');
+  const embed = new EmbedBuilder(interaction.message.embeds[0]).setDescription('').setImage('');
   const buttons = interaction.message.components;
   let lockCount = 0;
 

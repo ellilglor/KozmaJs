@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
 const { findBox, findSlimeBox, findItem } = require('../../functions/commands/lockbox');
 const { getImage } = require('../../functions/commands/unbox');
@@ -10,16 +10,18 @@ module.exports = {
     .addStringOption(option =>
 		  option.setName('boxes')
 			.setDescription('Get the odds from a lockbox.')
-			.addChoice('Copper', 'Copper')
-      .addChoice('Steel', 'Steel')
-      .addChoice('Silver', 'Silver')
-      .addChoice('Platinum', 'Platinum')
-      .addChoice('Gold', 'Gold')
-      .addChoice('Titanium', 'Titanium')
-      .addChoice('Iron', 'Iron')
-      .addChoice('Mirrored', 'Mirrored')
-      .addChoice('Slime', 'Slime')
-      .addChoice('Colors', 'Colors'))
+      .addChoices(
+      { name: 'Copper', value: 'Copper' },
+      { name: 'Steel', value: 'Steel' },
+      { name: 'Silver', value: 'Silver' },
+      { name: 'Platinum', value: 'Platinum' },
+      { name: 'Gold', value: 'Gold' },
+      { name: 'Titanium', value: 'Titanium' },
+      { name: 'Iron', value: 'Iron' },
+      { name: 'Mirrored', value: 'Mirrored' },
+      { name: 'Slime', value: 'Slime' },
+      { name: 'Colors', value: 'Colors' }
+    ))
     .addStringOption(option =>
       option.setName('slime')
       .setDescription('Find where you can find a special themed box.'))

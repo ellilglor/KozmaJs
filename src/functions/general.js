@@ -1,9 +1,9 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { saveUser } = require('./database/user');
 const { saveCommand, saveSearched, saveBox } = require('./database/stats');
 
 const buildEmbed = () => {
-  const embed = new MessageEmbed()
+  const embed = new EmbedBuilder()
     .setColor('#29D0FF')
     .setFooter({ 
       text: `Thank you for using Kozma's Backpack bot!`, 
@@ -13,7 +13,7 @@ const buildEmbed = () => {
 };
 
 const tradelogEmbed = () => {
-  const embed = new MessageEmbed().setColor('#29D0FF');
+  const embed = new EmbedBuilder().setColor('#29D0FF');
   return embed;
 };
 

@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { buildStats } = require('../../functions/commands/stats');
 
 const embeds = [], pages = {};
@@ -22,12 +21,12 @@ module.exports = {
       await buildStats(embeds, interaction);
     }
 
-    const buttons = new MessageActionRow().addComponents(
-			new MessageButton()
-				.setCustomId('prev-stats').setLabel('◀').setStyle('PRIMARY')
+    const buttons = new ActionRowBuilder().addComponents(
+			new ButtonBuilder()
+				.setCustomId('prev-stats').setLabel('◀').setStyle('Primary')
         .setDisabled(pages[id] === 0),
-      new MessageButton()
-				.setCustomId('next-stats').setLabel('▶').setStyle('PRIMARY')
+      new ButtonBuilder()
+				.setCustomId('next-stats').setLabel('▶').setStyle('Primary')
         .setDisabled(pages[id] === embeds.length - 1),
 		);
     

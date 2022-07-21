@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
 const { getRate } = require('../../functions/database/rate');
 
@@ -9,9 +9,11 @@ module.exports = {
     .addStringOption(option =>
 		  option.setName('currency')
 			.setDescription('Currency you want to convert.')
-      .addChoice('Crowns', 'crowns')
-      .addChoice('Energy', 'energy')
-      .setRequired(true))
+      .setRequired(true)
+      .addChoices(
+      { name: 'Crowns', value: 'crowns' },
+      { name: 'Energy', value: 'energy' }
+    ))
     .addIntegerOption(option =>
 		  option.setName('amount')
 			.setDescription('Amount you want to convert.')

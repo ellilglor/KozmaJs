@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
 const fetchAll = require('discord-fetch-all');
 

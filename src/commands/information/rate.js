@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, noPermission, logCommand } = require('../../functions/general');
 const { saveRate, getRate } = require('../../functions/database/rate');
 

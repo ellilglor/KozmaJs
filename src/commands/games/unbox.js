@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
 const { unbox, getImage } = require('../../functions/commands/unbox');
 const { lockboxes, depotBoxes } = require('../../data/structures/unbox');
@@ -15,41 +14,45 @@ module.exports = {
 		  option.setName('box')
 			.setDescription('Select the box you want to open.')
       .setRequired(true)
-			.addChoice('Copper', 'Copper')
-      .addChoice('Steel', 'Steel')
-      .addChoice('Silver', 'Silver')
-      .addChoice('Platinum', 'Platinum')
-      .addChoice('Gold', 'Gold')
-      .addChoice('Titanium', 'Titanium')
-      .addChoice('Iron', 'Iron')
-      .addChoice('Mirrored', 'Mirrored')
-      .addChoice('QQQ', 'Slime')
-      .addChoice('Equinox', 'Equinox')
-      .addChoice('Confection', 'Confection')
-      .addChoice('Spritely', 'Spritely')
-      .addChoice('Lucky', 'Lucky')),
+      .addChoices(
+      { name: 'Copper', value: 'Copper' },
+      { name: 'Steel', value: 'Steel' },
+      { name: 'Silver', value: 'Silver' },
+      { name: 'Platinum', value: 'Platinum' },
+      { name: 'Gold', value: 'Gold' },
+      { name: 'Titanium', value: 'Titanium' },
+      { name: 'Iron', value: 'Iron' },
+      { name: 'Mirrored', value: 'Mirrored' },
+      { name: 'QQQ', value: 'Slime' },
+      { name: 'Equinox', value: 'Equinox' },
+      { name: 'Confection', value: 'Confection' },
+      { name: 'Spritely', value: 'Spritely' },
+      { name: 'Lucky', value: 'Lucky' }
+    )),
   async execute(interaction, showStats, choice, opened, spent) {
     const box = choice || interaction.options.getString('box');
     const id = interaction.user.id;
     const amount = opened || '1';
     const boxImage = getImage('Boxes', box);
-    let desc = '**In this session you opened:**', totalSpent = 0, money = false;
+    let desc = '**In this session you opened:**', total = 0, money = false;
 
     if (!items[id]) items[id] = {};
 
     if (lockboxes.includes(box)) {
-      totalSpent = spent || '750';
+      total = spent || '750';
     } else if (depotBoxes.includes(box)) {
-      totalSpent = spent || '3495';
+      total = spent || '3495';
     } else {
-      totalSpent = spent || '4.95';
+      total = spent || '4.95';
       money = true;
     }
 
     const result = buildEmbed()
       .setAuthor({ name: box, iconURL: boxImage})
-      .addField('Opened:', `${amount}`, true)
-      .addField('Total spent:', money ? `$${totalSpent}` : `${totalSpent} Energy`, true);
+      .addFields([
+        { name: 'Opened:', value: `${amount}`, inline: true },
+        { name: 'Total spent:', value: money ? `$${total}` : `${total} Energy`, inline: true }
+      ]);
     
     if (showStats) {
       if (!items[id][box]) {
@@ -84,11 +87,11 @@ module.exports = {
       result.setTitle('You unboxed:').setDescription(`*${desc}*`).setThumbnail(unboxed[0].url);
     }
 
-    const buttons = new MessageActionRow().addComponents(
-      new MessageButton()
-				.setCustomId('unbox-again').setEmoji('🔁').setStyle('SECONDARY'),
-      new MessageButton()
-        .setCustomId('unbox-stats').setEmoji('📘').setStyle('SECONDARY')
+    const buttons = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+				.setCustomId('unbox-again').setEmoji('🔁').setStyle('Secondary'),
+      new ButtonBuilder()
+        .setCustomId('unbox-stats').setEmoji('📘').setStyle('Secondary')
         .setDisabled(showStats)
 		);
 

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
 const { searchLogs } = require('../../functions/commands/findlogs');
 
@@ -18,8 +18,10 @@ module.exports = {
     .addStringOption(option =>
 		  option.setName('variants')
 			.setDescription('Check for color variants / item family tree. Default: yes.')
-      .addChoice('Yes', 'variant-search')
-      .addChoice('No', 'single-search')),
+      .addChoices(
+      { name: 'Yes', value: 'variant-search' },
+      { name: 'No', value: 'single-search' }
+    )),
 	async execute(interaction) {
     const items = [interaction.options.getString('item')];
     const months = interaction.options.getInteger('months') || 6;

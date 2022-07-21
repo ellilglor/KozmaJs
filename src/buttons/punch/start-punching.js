@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
   data: {
@@ -7,7 +7,7 @@ module.exports = {
   async execute (interaction) {
     if (!interaction) return;
 
-    const embed = new MessageEmbed(interaction.message.embeds[0]);
+    const embed = new EmbedBuilder(interaction.message.embeds[0]);
     const unlockEmoji = '🔓';
     let uvCount = 0;
 
@@ -21,29 +21,29 @@ module.exports = {
       }
     }
     
-    const lockButtons = new MessageActionRow().addComponents(
-      new MessageButton()
-				.setCustomId('punch-lock').setEmoji('🔒').setStyle('PRIMARY'),
-      new MessageButton()
-				.setCustomId('punch-lock1').setEmoji('1️⃣').setStyle('SECONDARY')
+    const lockButtons = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+				.setCustomId('punch-lock').setEmoji('🔒').setStyle('Primary'),
+      new ButtonBuilder()
+				.setCustomId('punch-lock1').setEmoji('1️⃣').setStyle('Secondary')
         .setDisabled(uvCount < 1),
-      new MessageButton()
-				.setCustomId('punch-lock2').setEmoji('2️⃣').setStyle('SECONDARY')
+      new ButtonBuilder()
+				.setCustomId('punch-lock2').setEmoji('2️⃣').setStyle('Secondary')
         .setDisabled(uvCount < 2),
-      new MessageButton()
-        .setCustomId('punch-lock3').setEmoji('3️⃣').setStyle('SECONDARY')
+      new ButtonBuilder()
+        .setCustomId('punch-lock3').setEmoji('3️⃣').setStyle('Secondary')
         .setDisabled(uvCount < 3)
 		);
 
-    const gambleButtons = new MessageActionRow().addComponents(
-      new MessageButton()
-				.setCustomId('punch-gamble').setEmoji('🎲').setStyle('PRIMARY'),
-      new MessageButton()
-				.setCustomId('punch-gamble1').setEmoji('1️⃣').setStyle('SECONDARY'),
-      new MessageButton()
-				.setCustomId('punch-gamble2').setEmoji('2️⃣').setStyle('SECONDARY'),
-      new MessageButton()
-        .setCustomId('punch-gamble3').setEmoji('3️⃣').setStyle('SECONDARY')
+    const gambleButtons = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+				.setCustomId('punch-gamble').setEmoji('🎲').setStyle('Primary'),
+      new ButtonBuilder()
+				.setCustomId('punch-gamble1').setEmoji('1️⃣').setStyle('Secondary'),
+      new ButtonBuilder()
+				.setCustomId('punch-gamble2').setEmoji('2️⃣').setStyle('Secondary'),
+      new ButtonBuilder()
+        .setCustomId('punch-gamble3').setEmoji('3️⃣').setStyle('Secondary')
 		);
     
     await interaction.update({ embeds: [embed], components: [lockButtons, gambleButtons] });

@@ -1,3 +1,4 @@
+const { InteractionType } = require('discord.js');
 const { buildEmbed } = require('../../functions/general');
 
 const noCode = buildEmbed().setTitle('It looks like something went wrong!');
@@ -8,7 +9,7 @@ const crashed = buildEmbed()
 module.exports = {
 	name: 'interactionCreate',
 	async execute(interaction, client) {
-		if (!interaction.isCommand() && !interaction.isButton()) return;
+    if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isButton()) return;
 
     // if (interaction.user.tag !== 'ellilglor#6866') {
     //   const maintenance = buildEmbed().setTitle('The bot is currently being worked on.\nPlease try again later.');

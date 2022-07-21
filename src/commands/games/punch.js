@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
 const { craftItem, rollUv, getPunchImage, checkForGm } = require('../../functions/commands/punch');
 const wait = require('util').promisify(setTimeout);
@@ -17,10 +16,12 @@ module.exports = {
 		  option.setName('item')
 			.setDescription('Select the item you want to craft.')
       .setRequired(true)
-			.addChoice('Brandish', 'Brandish')
-      .addChoice('Overcharged Mixmaster', 'Overcharged Mixmaster')
-      .addChoice('Swiftstrike Buckler', 'Swiftstrike Buckler')
-      .addChoice('Black Kat Cowl', 'Black Kat Cowl')),
+      .addChoices(
+      { name: 'Brandish', value: 'Brandish' },
+      { name: 'Overcharged Mixmaster', value: 'Overcharged Mixmaster' },
+      { name: 'Swiftstrike Buckler', value: 'Swiftstrike Buckler' },
+      { name: 'Black Kat Cowl', value: 'Black Kat Cowl' }
+    )),
 	async execute(interaction, option, crafted) {
     const reply = buildEmbed().setAuthor(punch);
     const item = option || interaction.options.getString('item');
@@ -29,11 +30,11 @@ module.exports = {
 
     if (interaction.channel?.id === '879297439054581770') {
       const craftUvs = craftItem(item);
-      const buttons = new MessageActionRow().addComponents(
-			  new MessageButton()
-				  .setCustomId('recraft').setLabel('Recraft').setStyle('PRIMARY'),
-        new MessageButton()
-				  .setCustomId('start-punching').setLabel('Start Rolling Uvs').setStyle('PRIMARY')
+      const buttons = new ActionRowBuilder().addComponents(
+			  new ButtonBuilder()
+				  .setCustomId('recraft').setLabel('Recraft').setStyle('Primary'),
+        new ButtonBuilder()
+				  .setCustomId('start-punching').setLabel('Start Rolling Uvs').setStyle('Primary')
 		  );
 
       let result = buildEmbed()
@@ -42,11 +43,11 @@ module.exports = {
         .setThumbnail(getPunchImage(item));
 
       for (const uv in craftUvs) {
-        result.addField(`UV #${parseInt(uv) + 1}`, craftUvs[uv], true);
+        result.addFields([{ name: `UV #${parseInt(uv) + 1}`, value: craftUvs[uv], inline: true }]);
       }
-      result.addField('Amount crafted:', amount);
+      result.addFields([{ name: 'Amount crafted:', value: amount }]);
 
-      result = checkForGm(result);
+      //result = checkForGm(result);
 
       reply.setTitle(`Crafting ${item}`).setDescription('3...');
       const message = { embeds: [reply], components: [], ephemeral: true };

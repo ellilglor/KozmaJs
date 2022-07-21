@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
 const { convertLogs, saveStats } = require('../../functions/commands/update');
 const { channels } = require('../../data/structures/findlogs');

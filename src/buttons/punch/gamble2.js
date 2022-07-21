@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { rollUv, checkForGm } = require('../../functions/commands/punch');
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
   async execute (interaction) {
     if (!interaction) return;
 
-    let embed = new MessageEmbed(interaction.message.embeds[0]).setDescription('').setImage('');
+    let embed = new EmbedBuilder(interaction.message.embeds[0]).setDescription('').setImage('');
     const buttons = interaction.message.components;
     const uvs = [], crafting = false;
     let lockLoc = -1, index = 0, doubleRolls = false;
