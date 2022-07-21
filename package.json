@@ -1,7 +1,7 @@
 {
   "name": "Kozmajs",
   "version": "2.0.0",
-  "main": "index.js",
+  "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/bot.js"
@@ -10,17 +10,25 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/builders": "^0.12.0",
-    "@discordjs/rest": "^0.3.0",
-    "discord-api-types": "^0.27.3",
+    "17": "0.0.0",
+    "@discordjs/rest": "^1.0.0",
+    "discord-api-types": "^0.36.3",
     "discord-fetch-all": "^3.0.2",
-    "discord.js": "^13.8.1",
+    "discord.js": "^14.0.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "mongoose": "^6.4.1"
+    "mongoose": "^6.4.6"
   },
   "devDependencies": {
     "node": "^17.9.1"
   },
-  "description": ""
+  "description": "A Discord bot for the [Spiral Knights](https://store.steampowered.com/app/99900/Spiral_Knights/) community.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ellilglor/KozmaJs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ellilglor/KozmaJs/issues"
+  },
+  "homepage": "https://github.com/ellilglor/KozmaJs#readme"
 }
