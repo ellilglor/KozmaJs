@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const fs = require('fs');
 
 const craftItem = (item) => {
@@ -106,50 +106,51 @@ const getPunchImage = (match) => {
 }
 
 const lockUv = async (interaction, uv) => {
-  const embed = new EmbedBuilder(interaction.message.embeds[0]).setDescription('').setImage('');
-  const buttons = interaction.message.components;
+  const embed = EmbedBuilder.from(interaction.message.embeds[0]).setDescription(null);
+  const lockButtons = ActionRowBuilder.from(interaction.message.components[0]);
+  const gambleButtons = ActionRowBuilder.from(interaction.message.components[1]);
   let lockCount = 0;
 
-  embed.fields[uv - 1].name = embed.fields[uv - 1].name.includes('🔒') ? `🔓 UV #${uv}` : `🔒 UV #${uv}`;
+  embed.data.fields[uv - 1].name = embed.data.fields[uv - 1].name.includes('🔒') ? `🔓 UV #${uv}` : `🔒 UV #${uv}`;
 
-  for (const field of embed.fields) {
+  for (const field of embed.data.fields) {
     if (field.name.includes('🔒')) lockCount += 1;
   }
 
   switch(lockCount) {
     case 3:
-      buttons[1].components[3].disabled = true;
+      gambleButtons.components[3].setDisabled(true);
       break;
     case 2:
-      buttons[1].components[2].disabled = true;
-      buttons[1].components[3].disabled = false;
+      gambleButtons.components[2].setDisabled(true);
+      gambleButtons.components[3].setDisabled(false);
       break;
     case 1:
-      buttons[1].components[1].disabled = true;
-      buttons[1].components[2].disabled = false;
-      buttons[1].components[3].disabled = false;
+      gambleButtons.components[1].setDisabled(true);
+      gambleButtons.components[2].setDisabled(false);
+      gambleButtons.components[3].setDisabled(false);
       break;
     default:
-      buttons[1].components[1].disabled = false;
-      buttons[1].components[2].disabled = false;
-      buttons[1].components[3].disabled = false;
+      gambleButtons.components[1].setDisabled(false);
+      gambleButtons.components[2].setDisabled(false);
+      gambleButtons.components[3].setDisabled(false);
   } 
 
-  await interaction.update({ embeds: [embed], components: buttons });
+  await interaction.update({ embeds: [embed], components: [lockButtons, gambleButtons] });
 }
 
 const checkForGm = (embed) => {
   const weapons = ['Brandish', 'Overcharged Mixmaster'];
   let count = 0, won = false;
 
-  if (weapons.includes(embed.title)) {
-    for (const field of embed.fields) {
+  if (weapons.includes(embed.data.title)) {
+    for (const field of embed.data.fields) {
       if (!field.value.includes('Very High')) continue;
       if (field.value.includes('Charge') || field.value.includes('Speed')) count += 1;
       if (count === 2) won = true;
     }
   } else {
-    for (const field of embed.fields) {
+    for (const field of embed.data.fields) {
       if (!field.value.includes('Max')) continue;
       if (field.value.includes('Shadow') || field.value.includes('Normal') || field.value.includes('Fire')) {
         count += 1;
@@ -157,10 +158,8 @@ const checkForGm = (embed) => {
       if (count === 3) won = true;
     }
   }
-
-  if (won) embed = setImage(embed);
-
-  return embed;
+  
+  return won && !embed.data.image ? setImage(embed) : won ? embed : embed.setImage(null);
 }
 
 const setImage = (embed) => {

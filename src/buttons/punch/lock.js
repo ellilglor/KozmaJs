@@ -7,8 +7,8 @@ module.exports = {
   async execute (interaction) {
     if (!interaction) return;
 
-    const embed = new EmbedBuilder(interaction.message.embeds[0]).setImage('');
-    embed.setDescription('*These buttons let you lock/unlock a Unique Variant*')
+    const embed = EmbedBuilder.from(interaction.message.embeds[0]).setImage(null);
+    embed.setDescription('*These buttons let you lock/unlock a Unique Variant*');
 
     await interaction.update({ embeds: [embed] });
   }

@@ -39,6 +39,7 @@ module.exports = {
 
       let result = buildEmbed()
         .setAuthor(punch)
+        //.setDescription(null)
         .setTitle(`You crafted: ${item}`)
         .setThumbnail(getPunchImage(item));
 
@@ -47,7 +48,7 @@ module.exports = {
       }
       result.addFields([{ name: 'Amount crafted:', value: amount }]);
 
-      //result = checkForGm(result);
+      result = checkForGm(result);
 
       reply.setTitle(`Crafting ${item}`).setDescription('3...');
       const message = { embeds: [reply], components: [], ephemeral: true };

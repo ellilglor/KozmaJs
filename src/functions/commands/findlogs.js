@@ -92,7 +92,7 @@ const searchFinished = async (interaction, logsFound, item) => {
 
   for (const equipment of spreadsheet) {
     if (item.includes(equipment)) {
-      message.addField('** **', `__${item}__ can be found on the merchant sheet:\n https://docs.google.com/spreadsheets/d/1h-SoyMn3kVla27PRW_kQQO6WefXPmLZYy7lPGNUNW7M/htmlview#`, false);
+      message.addFields([{ name: '** **', value: `__${item}__ can be found on the merchant sheet:\n https://docs.google.com/spreadsheets/d/1h-SoyMn3kVla27PRW_kQQO6WefXPmLZYy7lPGNUNW7M/htmlview#` }]);
       break;
     }
   }

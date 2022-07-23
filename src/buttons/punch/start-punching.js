@@ -7,14 +7,14 @@ module.exports = {
   async execute (interaction) {
     if (!interaction) return;
 
-    const embed = new EmbedBuilder(interaction.message.embeds[0]);
+    const embed = EmbedBuilder.from(interaction.message.embeds[0]);
     const unlockEmoji = '🔓';
     let uvCount = 0;
 
-    embed.title = embed.title.replace('You crafted: ', '');
-    embed.fields[embed.fields.length - 1] = { name: 'Crowns Spent', value: '0' };
+    embed.setTitle(embed.data.title.replace('You crafted: ', ''));
+    embed.data.fields[embed.data.fields.length - 1] = { name: 'Crowns Spent', value: '0' };
 
-    for (const field of embed.fields) {
+    for (const field of embed.data.fields) {
       if (field.name.includes('UV #')) {
         field.name = unlockEmoji.concat(' ', field.name);
         uvCount += 1;
