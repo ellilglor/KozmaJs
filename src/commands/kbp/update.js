@@ -10,20 +10,19 @@ module.exports = {
     .setDefaultPermission(false),
 	async execute(interaction) {
     const reply = buildEmbed().setTitle('Executing /update');
-    const stats = [];
+    const stats = [], collectAll = true;
     await interaction.reply({ embeds: [reply], ephemeral: true });
 
     for (const channel of channels) {
       const chnl = interaction.guild.channels.cache.get(channel[1]);
-      stats.push(await convertLogs(chnl, channel[0], true));
+      stats.push(await convertLogs(chnl, channel[0], collectAll));
       reply.setTitle(`Finished ${channel[0]}`);
       await interaction.editReply({ embeds: [reply] });
     }
     
     saveStats(stats);
 
-    reply.setTitle('Update completed!');
-    await interaction.editReply({ embeds: [reply] });
+    await interaction.editReply({ embeds: [reply.setTitle('Update completed!')] });
     console.log('Update Completed!');
 	}
 };

@@ -33,6 +33,7 @@ module.exports = {
         embed.data.fields.unshift({ name: '🔓 UV #2', value: rollUv(item, crafting, []), inline: true });
         embed.data.fields.unshift({ name: '🔓 UV #1', value: rollUv(item, crafting, [embed.data.fields[0].value]), inline: true });
       } else if (!embed.data.fields[1].name.includes('UV')) {
+        embed.data.fields[0].value = rollUv(item, crafting, []);
         embed.data.fields.splice(1, 0, { name: '🔓 UV #2', value: rollUv(item, crafting, [embed.data.fields[0].value]), inline: true });
       } else {
         embed.data.fields[0].value = rollUv(item, crafting, []);

@@ -24,7 +24,7 @@ module.exports = {
     if (!command && !button) return await interaction.reply({ embeds: [noCode], ephemeral: true });
     
     try {
-      command ? await command.execute(interaction) : await button.execute(interaction);
+      await command ? command.execute(interaction) : button.execute(interaction);
     } catch (error) {
       const logChannel = client.channels.cache.get(process.env.botLogs);
       const name = interaction.commandName || interaction.customId;
@@ -32,7 +32,7 @@ module.exports = {
       console.log(`Error while executing ${name}!`, { error });
 
       const message = { embeds: [crashed], ephemeral: true };
-      interaction.reply ? await interaction.editReply(message) : await interaction.reply(message);
+      await interaction.reply ? interaction.editReply(message) : interaction.reply(message);
     };
 	},
 };

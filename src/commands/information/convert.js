@@ -30,10 +30,10 @@ module.exports = {
     const reply = buildEmbed().setDescription(`Used conversion rate: **${rate}** crowns per energy.`);
 
     if (currency === 'crowns') {
-      const converted = parseInt(amount/parseInt(rate)).toLocaleString('en');
+      const converted = Math.round(amount/rate).toLocaleString('en');
       reply.setTitle(`${amount.toLocaleString('en')} Crowns is equal to roughly ${converted} Energy.`).setColor('#f9d49c');
     } else {
-      const converted = parseInt(amount*parseInt(rate)).toLocaleString('en');
+      const converted = Math.round(amount*rate).toLocaleString('en');
       reply.setTitle(`${amount.toLocaleString('en')} Energy is equal to roughly ${converted} Crowns.`);
     }
     

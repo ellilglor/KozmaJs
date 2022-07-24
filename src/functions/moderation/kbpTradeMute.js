@@ -4,11 +4,12 @@ const staffIds = ['214787913097936896', '922921889347817483', '28299209583545548
 
 const giveBuyMute = async ({ member, guild }, logChannel) => {
   if (staffIds.includes(member.user.id)) return;
-  
-  const role = guild.roles.cache.find((r) => r.name === 'WTB-Cooldown');
+
+  const name = 'WTB-Cooldown';
+  const role = guild.roles.cache.find((r) => r.name === name);
 
   if (!role) {
-    await logChannel.send(`<@214787913097936896> no role with the name 'WTB-Cooldown' was found`);
+    await logChannel.send(`<@214787913097936896> no role with the name ${name} was found`);
     return;
   }
 
@@ -19,11 +20,12 @@ const giveBuyMute = async ({ member, guild }, logChannel) => {
 
 const giveSellMute = async ({ member, guild }, logChannel) => {
   if (staffIds.includes(member.user.id)) return;
-  
-  const role = guild.roles.cache.find((r) => r.name === 'WTS-Cooldown');
+
+  const name = 'WTS-Cooldown';
+  const role = guild.roles.cache.find((r) => r.name === name);
 
   if (!role) {
-    await logChannel.send(`<@214787913097936896> no role with the name 'WTS-Cooldown' was found`);
+    await logChannel.send(`<@214787913097936896> no role with the name ${name} was found`);
     return;
   }
 

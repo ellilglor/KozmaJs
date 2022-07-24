@@ -1,6 +1,8 @@
 const { giveBuyMute, giveSellMute } = require('../../functions/moderation/kbpTradeMute')
 const kbpId = '760222722919497820';
 const botId = '898505614404235266';
+const wtbChnl = '872172994158538812';
+const wtsChnl = '872173055386980373';
 
 module.exports = {
 	name: 'messageCreate',
@@ -11,9 +13,9 @@ module.exports = {
     const logChannel = client.channels.cache.get(process.env.botLogs);
 
     try {
-      if (message.channelId === '872172994158538812') { 
+      if (message.channelId === wtbChnl) { 
         await giveBuyMute(message, logChannel);
-      } else if (message.channelId === '872173055386980373') { 
+      } else if (message.channelId === wtsChnl) { 
         await giveSellMute(message, logChannel);
       }
     } catch (error) {

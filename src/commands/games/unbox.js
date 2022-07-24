@@ -101,7 +101,7 @@ module.exports = {
         .setDescription('3...')
         .setAuthor({ name: box, iconURL: boxImage});
       const message = { embeds: [reply], components: [], ephemeral: true };
-      choice ? await interaction.update(message) : await interaction.reply(message);
+      await choice ? interaction.update(message) : interaction.reply(message);
 
       await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('2...')] });
       await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('1...')] });

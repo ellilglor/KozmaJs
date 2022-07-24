@@ -25,13 +25,11 @@ const rollUv = (item, crafting, uvs) => {
   const uvGrade = getUvGrade(itemType);
   let uvType = getUvType(itemType, crafting);
 
-  for (const uv of uvs) {
+  uvs.forEach(uv => {
     while (uv.includes(uvType)) uvType = getUvType(itemType, crafting);
-  }
-  
-  const result = uvType + uvGrade;
+  });
 
-  return result;
+  return uvType + uvGrade;
 }
 
 const getUvGrade = (type) => {
@@ -113,9 +111,7 @@ const lockUv = async (interaction, uv) => {
 
   embed.data.fields[uv - 1].name = embed.data.fields[uv - 1].name.includes('🔒') ? `🔓 UV #${uv}` : `🔒 UV #${uv}`;
 
-  for (const field of embed.data.fields) {
-    if (field.name.includes('🔒')) lockCount += 1;
-  }
+  embed.data.fields.forEach(f => { if (f.name.includes('🔒')) lockCount += 1 });
 
   switch(lockCount) {
     case 3:
@@ -144,19 +140,17 @@ const checkForGm = (embed) => {
   let count = 0, won = false;
 
   if (weapons.includes(embed.data.title)) {
-    for (const field of embed.data.fields) {
-      if (!field.value.includes('Very High')) continue;
-      if (field.value.includes('Charge') || field.value.includes('Speed')) count += 1;
+    embed.data.fields.forEach(f => {
+      if (!f.value.includes('Very High')) return;
+      if (f.value.includes('Charge') || f.value.includes('Speed')) count += 1;
       if (count === 2) won = true;
-    }
+    });
   } else {
-    for (const field of embed.data.fields) {
-      if (!field.value.includes('Max')) continue;
-      if (field.value.includes('Shadow') || field.value.includes('Normal') || field.value.includes('Fire')) {
-        count += 1;
-      }
+    embed.data.fields.forEach(f => {
+      if (!f.value.includes('Max')) return;
+      if (f.value.includes('Shadow') || f.value.includes('Normal') || f.value.includes('Fire')) count += 1;
       if (count === 3) won = true;
-    }
+    });
   }
   
   return won && !embed.data.image ? setImage(embed) : won ? embed : embed.setImage(null);

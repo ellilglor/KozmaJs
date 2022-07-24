@@ -24,10 +24,14 @@ module.exports = {
     ))
     .addStringOption(option =>
       option.setName('slime')
-      .setDescription('Find where you can find a special themed box.'))
+      .setDescription('Find where you can find a special themed box.')
+      .setMinLength(3)
+      .setMaxLength(69))
     .addStringOption(option =>
       option.setName('item')
-      .setDescription('Find which lockbox drops your item.')),
+      .setDescription('Find which lockbox drops your item.')
+      .setMinLength(3)
+      .setMaxLength(69)),
 	async execute(interaction) {
     let box = interaction.options.getString('boxes');
     const slime = interaction.options.getString('slime');
@@ -42,19 +46,11 @@ module.exports = {
       }
       reply.setTitle(`${box.toUpperCase()}:`).setDescription(match);
     } else if (slime) {
-      if (slime.length > 2) {
         const match = findSlimeBox(slime);
-        reply.setTitle(match || `I didn't find a match for __${slime}__.`.slice(0,256));
-      } else { 
-        reply.setTitle(`Please put in at least 3 letters.`); 
-      }
+        reply.setTitle(match || `I didn't find a match for __${slime}__.`);
     } else if (item) {
-      if (item.length > 2) {
         const match = findItem(item);
-        match ? reply.setTitle(`These lockboxes contain __${item}__:`).setDescription(match) : reply.setTitle(`I didn't find a box containing __${item}__.`.slice(0,256));
-      } else { 
-        reply.setTitle(`Please put in at least 3 letters.`); 
-      }
+        match ? reply.setTitle(`These lockboxes contain __${item}__:`).setDescription(match) : reply.setTitle(`I didn't find a box containing __${item}__.`);
     } else {
       reply.setTitle('Please select 1 of the given options.');
     }

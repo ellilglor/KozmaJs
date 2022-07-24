@@ -30,8 +30,7 @@ module.exports = {
         .setDisabled(pages[id] === embeds.length - 1),
 		);
     
-    const embed = embeds[pages[id]];
-    const message = { embeds: [embed], components: [buttons] };
-    button ? await interaction.update(message) : await interaction.editReply(message);
+    const message = { embeds: [embeds[pages[id]]], components: [buttons] };
+    await button ? interaction.update(message) : interaction.editReply(message);
   }
 };

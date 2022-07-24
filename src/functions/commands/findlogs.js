@@ -1,11 +1,10 @@
 const { tradelogEmbed, buildEmbed, contentFilter } = require('../../functions/general');
-const { spreadsheet, equipmentFamilies, colorSets, channels, roses, commonFeatured } = require('../../data/structures/findlogs');
+const { spreadsheet, equipmentFamilies, colorSets, channels, roses, commonFeatured, gemExceptions } = require('../../data/structures/findlogs');
 const fs = require('fs');
 
 const searchLogs = async (interaction, items, months, checkVariants) => {
-  const reverse = ['ultron stinks'];
   const stopHere = new Date();
-  let logsFound = false;
+  let reverse = ['ultron stinks'], logsFound = false;
   
   items[0] = contentFilter(items[0]);
   stopHere.setMonth(stopHere.getMonth() - months);
@@ -13,10 +12,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
   if (checkVariants) items = addVariants(items);
 
   if (items[0].includes('ctr') && items[0].includes('asi')) {
-    reverse.pop();
-    for (const item of items) {
-      reverse.push(uvSwap(item))
-    }
+    reverse = items.map(item => { return uvSwap(item) });
   }
 
   for (const channel of channels) {
@@ -76,6 +72,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
 
 const searchFinished = async (interaction, logsFound, item) => {
   const message = buildEmbed()
+    .setTitle(`This is everything I found for __${item}__, I hope these helped!`)
     .setColor('#f9d49c')
     .setDescription(
       'By default I only look at tradelogs from the past 6 months!\n' +
@@ -83,12 +80,8 @@ const searchFinished = async (interaction, logsFound, item) => {
       'If you notice a problem please contact @ellilglor#6866!\n' +
       'Did you know we have our own discord server?\n<https://discord.gg/nGW89SHHj3>'
     );
-  
-  if (logsFound) {
-    message.setTitle(`This is everything I found for __${item}__, I hope these helped!`.slice(0,256));
-  } else { 
-    message.setTitle(`I couldn't find any listings for __${item}__.`.slice(0,256)); 
-  }
+
+  if (!logsFound) message.setTitle(`I couldn't find any listings for __${item}__.`); 
 
   for (const equipment of spreadsheet) {
     if (item.includes(equipment)) {
@@ -102,6 +95,8 @@ const searchFinished = async (interaction, logsFound, item) => {
 
 const addVariants = (items) => {
   let check = true;
+
+  if (items[0].includes('drakon') || items[0].includes('maskeraith')) check = false;
   
   itemFamilyLoop:
   for (const family in equipmentFamilies) {
@@ -110,9 +105,7 @@ const addVariants = (items) => {
       
       const uvs = ' ' + items[0].replace(name, '').trim();
       items.pop();
-      for (const item of equipmentFamilies[family]) {
-        items.push(`${item}${uvs}`.trim());
-      }
+      equipmentFamilies[family].forEach(item => { items.push(`${item}${uvs}`.trim()) });
       check = false;
       break itemFamilyLoop;
     }
@@ -125,33 +118,31 @@ const addVariants = (items) => {
         if (!items[0].includes(name)) continue;
 
         if (set.includes('gems')) {
-          if (items[0].includes('bout') || items[0].includes('rose') || items[0].includes('tabard') || items[0].includes('chapeau') || items[0].includes('buckled') || items[0].includes('clover') || items[0].includes('pipe') || items[0].includes('lumberfell')) {
-            continue;
-          }
+          let stop = false;
+
+          gemExceptions.every(ex => {
+            if (items[0].includes(ex)) stop = true;
+            return !stop;
+          });
+
+          if (stop) continue colorLoop;
         }
 
-        if (items[0].includes('drakon') || items[0].includes('maskeraith')) continue;
-        if (set.includes('snipes') && (items[0].includes('slime') || items[0].includes('plume'))) continue;
+        if (set.includes('snipes') && (items[0].includes('slime') || items[0].includes('plume'))) continue colorLoop;
       
         const template = items[0].replace(name, '').trim();
 
         if (set.includes('snipes') && name.includes('rose')) {
           if (roses.includes(template) || template.includes('tabard') || template.includes('chapeau')) {
-            continue;
+            continue colorLoop;
           }
         }
 
         items.pop();
         if (set.includes('obsidian') || set.includes('rose')) {
-          for (const color of colorSets[set]) {
-            const variant = `${template} ${color}`;
-            items.push(variant.trim());
-          }
+          colorSets[set].forEach(color => { items.push(`${template} ${color}`.trim()) });
         } else {
-          for (const color of colorSets[set]) {
-            const variant = `${color} ${template}`;
-            items.push(variant.trim());
-          }
+          colorSets[set].forEach(color => { items.push(`${color} ${template}`.trim()) });
         }
         
         break colorLoop;
@@ -178,8 +169,7 @@ const uvSwap = (name) => {
 		result += name_list[i] + ' ';
 	}
 
-	result = result.slice(0, -1);
-	return result;
+	return result.trim();
 };
 
 module.exports = {

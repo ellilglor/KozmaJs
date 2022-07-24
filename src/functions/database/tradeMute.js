@@ -83,9 +83,7 @@ const removeRole = async (members, results, role, logChannel) => {
 }
 
 const getMentions = (results, mentions) => {
-  for (const result of results) {
-    mentions = mentions.concat(' ', `<@${result._id}>`);
-  }
+  results.forEach(r => { mentions = mentions.concat(' ', `<@${r._id}>`) });
 
   console.log(mentions);
   return mentions;

@@ -2,7 +2,8 @@ const express = require("express");
 const server = express();
 
 server.all("/", (req, res) => {
-  res.send("Bot is running");
+  const d = new Date().toUTCString().slice(0,25);
+  res.send(`Bot is running since ${d}`);
 })
 
 module.exports = (client) => {
