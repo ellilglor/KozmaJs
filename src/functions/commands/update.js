@@ -43,18 +43,19 @@ const checkForNewLogs = async (client) => {
   if (stop) return;
 
   await logChannel.send(string);
-  const stats = [];
+  const stats = [], collectAll = false;
   
   for (const channel of channels) {
-    let chnl = client.channels.cache.get(channel[1]);
+    const chnl = client.channels.cache.get(channel[1]);
 
-    // if (chnl.type === 'GUILD_PUBLIC_THREAD') {
-    //   await chnl.setArchived(true);
-    //   await chnl.setArchived(false);
-    // }
-    if (!chnl) return;
+    if (!chnl) continue;
+
+    if (chnl.isThread()) {
+      await chnl.setArchived(true);
+      await chnl.setArchived(false);
+    }
     
-    stats.push(await convertLogs(chnl, channel[0], false));
+    stats.push(await convertLogs(chnl, channel[0], collectAll));
   }
 
   saveStats(stats);

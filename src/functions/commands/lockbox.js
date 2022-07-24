@@ -13,17 +13,17 @@ const findItem = (item) => {
   let result = "";
   item = item.replace(replace,"").toLowerCase();
 
-  boxes.forEach ((value, key) => {
-    if (!value.toLowerCase().replace(replace,"").includes(item)) return;
+  boxes.forEach((content, box) => {
+    if (!content.toLowerCase().replace(replace,"").includes(item)) return;
     
-    result += `\n\n__**${key.toUpperCase()} LOCKBOX:**__\n`;
+    result += `\n\n__**${box.toUpperCase()} LOCKBOX:**__\n`;
 
-    if (key === 'Iron') {
-      const pools = value.replace(replace,"").toLowerCase().split('80%');
+    if (box === 'Iron') {
+      const pools = content.replace(replace,"").toLowerCase().split('80%');
       result += pools[0].includes(item) ? '**Inside 20% pool:**\n' : '**Inside 80% pool:**\n';
     }
 
-    const lines = value.split('\n');
+    const lines = content.split('\n');
     lines.forEach(line => {
       if (line.replace(replace,"").toLowerCase().includes(item)) result += `${line}\n`;
     });

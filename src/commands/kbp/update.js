@@ -16,8 +16,7 @@ module.exports = {
     for (const channel of channels) {
       const chnl = interaction.guild.channels.cache.get(channel[1]);
       stats.push(await convertLogs(chnl, channel[0], collectAll));
-      reply.setTitle(`Finished ${channel[0]}`);
-      await interaction.editReply({ embeds: [reply] });
+      await interaction.editReply({ embeds: [reply.setTitle(`Finished ${channel[0]}`)] });
     }
     
     saveStats(stats);
