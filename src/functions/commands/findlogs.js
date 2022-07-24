@@ -56,7 +56,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
       if (message.image) msg.setImage(message.image);
 
       if (matches.length === 10 || charCount >= 5900) {
-        await interaction.user.send({ embeds: matches });
+        await interaction.user.send({ embeds: matches }).catch(error => error);
         matches.splice(0, matches.length);
         charCount = 0;
       } else { 
@@ -64,7 +64,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
       }
     }
 
-    if (matches.length !== 0) await interaction.user.send({ embeds: matches });
+    if (matches.length !== 0) await interaction.user.send({ embeds: matches }).catch(error => error);
   }
 
   await searchFinished(interaction, logsFound, items[0]);
@@ -78,8 +78,7 @@ const searchFinished = async (interaction, logsFound, item) => {
       'By default I only look at tradelogs from the past 6 months!\n' +
       'If you want me to look past that use the *months* option.\n\n' +
       'If you notice a problem please contact @ellilglor#6866!\n' +
-      'Did you know we have our own discord server?\n<https://discord.gg/nGW89SHHj3>'
-    );
+      'Did you know we have our own discord server?\n<https://discord.gg/nGW89SHHj3>');
 
   if (!logsFound) message.setTitle(`I couldn't find any listings for __${item}__.`); 
 
@@ -90,7 +89,17 @@ const searchFinished = async (interaction, logsFound, item) => {
     }
   }
 
-  await interaction.user.send({ embeds: [message] });
+  try {
+    await interaction.user.send({ embeds: [message] });
+  } catch (error) {
+    const embed = buildEmbed()
+      .setTitle(`I can't send you any messages!`)
+      .setColor('#e74c3c')
+      .setDescription(`Make sure you have the following enabled:\n ` +
+      `*Allow direct messages from server members* in User Settings > Privacy & Safety\n\n` +
+      `And Don't block me!`);
+    await interaction.editReply({ embeds: [embed] });
+  }
 };
 
 const addVariants = (items) => {
