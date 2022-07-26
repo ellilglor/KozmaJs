@@ -11,12 +11,13 @@ module.exports = {
 	async execute(interaction) {
     const reply = buildEmbed().setTitle('Executing /update');
     const stats = [], collectAll = true;
+    
     await interaction.reply({ embeds: [reply], ephemeral: true });
 
-    for (const channel of channels) {
-      const chnl = interaction.guild.channels.cache.get(channel[1]);
-      stats.push(await convertLogs(chnl, channel[0], collectAll));
-      await interaction.editReply({ embeds: [reply.setTitle(`Finished ${channel[0]}`)] });
+    for (const [name, id] of channels) {
+      const chnl = interaction.guild.channels.cache.get(id);
+      stats.push(await convertLogs(chnl, name, collectAll));
+      await interaction.editReply({ embeds: [reply.setTitle(`Finished ${name}`)] });
     }
     
     saveStats(stats);

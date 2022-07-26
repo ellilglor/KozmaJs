@@ -1,16 +1,14 @@
-const { giveBuyMute, giveSellMute } = require('../../functions/moderation/kbpTradeMute')
-const kbpId = '760222722919497820';
-const botId = '898505614404235266';
-const wtbChnl = '872172994158538812';
-const wtsChnl = '872173055386980373';
+const { giveBuyMute, giveSellMute } = require('../../functions/moderation/kbpTradeMute');
 
 module.exports = {
 	name: 'messageCreate',
 	async execute(message, client) {
-    if (message.guildId !== kbpId) return
-    if (message.author.id === botId) return
+    const kbpId = '760222722919497820', botId = '898505614404235266';
+    
+    if (message.guildId !== kbpId || message.author.id === botId) return
 
     const logChannel = client.channels.cache.get(process.env.botLogs);
+    const wtbChnl = '872172994158538812', wtsChnl = '872173055386980373';
 
     try {
       if (message.channelId === wtbChnl) { 

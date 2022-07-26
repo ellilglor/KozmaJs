@@ -25,9 +25,7 @@ const rollUv = (item, crafting, uvs) => {
   const uvGrade = getUvGrade(itemType);
   let uvType = getUvType(itemType, crafting);
 
-  uvs.forEach(uv => {
-    while (uv.includes(uvType)) uvType = getUvType(itemType, crafting);
-  });
+  uvs.forEach(uv => { while (uv.includes(uvType)) uvType = getUvType(itemType, crafting) });
 
   return uvType + uvGrade;
 }
@@ -48,6 +46,7 @@ const getUvGrade = (type) => {
 const getUvType = (type, crafting) => {
   if (type.includes('weapon')) {
     const weaponRoll = Math.floor(Math.random() * 8);
+    
     switch (weaponRoll) {
       case 0: result = 'Attack Speed Increase:'; break;
       case 1: result = 'Charge Time Reduction:'; break;
@@ -59,11 +58,8 @@ const getUvType = (type, crafting) => {
       case 7: result = 'Damage Bonus vs Slime:';
     }
   } else {
-    if (type.includes('armor') || (type.includes('shield') && crafting)) {
-      armorRoll = Math.floor(Math.random() * 11);
-    } else {
-      armorRoll = Math.floor(Math.random() * 4);
-    }
+    const num = type.includes('armor') || (type.includes('shield') && crafting) ? 11 : 4;
+    const armorRoll = Math.floor(Math.random() * num);
     
     switch (armorRoll) {
       case 0: result = 'Increased Normal Defense:'; break;
@@ -95,12 +91,10 @@ const roll = () => {
   return Math.floor(Math.random() * 10001);
 }
 
-const getPunchImage = (match) => {
+const getPunchImage = (item) => {
   const itemList = JSON.parse(fs.readFileSync(`src/data/punch/items.json`));
 
-  for (const item of itemList) {
-    if (match.includes(item.name)) return item.url;
-  }
+  return itemList.find(i => { return item.includes(i.name) }).url;
 }
 
 const lockUv = async (interaction, uv) => {

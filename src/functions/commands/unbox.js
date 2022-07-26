@@ -55,19 +55,10 @@ const bonusRoll = (box, content, roll, unboxed) => {
   return result;
 }
 
-const getImage = (box, match) => {
+const getImage = (box, item) => {
   const content = JSON.parse(fs.readFileSync(`src/data/boxes/${box}.json`));
-
-  for (const item of content) {
-    if (match.includes(item.name)) return item.url;
-  }
-
-  return noImage(match);
-}
-
-const noImage = (match) => {
-  console.log(`no image found for ${match}`);
-  return 'https://media3.spiralknights.com/wiki-images/8/82/Icon-alert.png';
+  
+  return result = content.find(i => { return item.includes(i.name) }).url;
 }
 
 module.exports = {

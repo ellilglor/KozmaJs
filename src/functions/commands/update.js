@@ -38,15 +38,15 @@ const checkForNewLogs = async (client) => {
   logMessages.every(msg => {
     if (msg.content.includes(string)) stop = true;
     return !stop;
-  })
+  });
 
   if (stop) return;
 
   await logChannel.send(string);
   const stats = [], collectAll = false;
   
-  for (const channel of channels) {
-    const chnl = client.channels.cache.get(channel[1]);
+  for (const [name, id] of channels) {
+    const chnl = client.channels.cache.get(id);
 
     if (!chnl) continue;
 
@@ -55,7 +55,7 @@ const checkForNewLogs = async (client) => {
       await chnl.setArchived(false);
     }
     
-    stats.push(await convertLogs(chnl, channel[0], collectAll));
+    stats.push(await convertLogs(chnl, id, collectAll));
   }
 
   saveStats(stats);

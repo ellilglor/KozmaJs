@@ -36,7 +36,7 @@ module.exports = {
     let box = interaction.options.getString('boxes');
     const slime = interaction.options.getString('slime');
     const item = interaction.options.getString('item');
-    const reply = buildEmbed();
+    const reply = buildEmbed().setTitle('Please select 1 of the given options.');
 
     if (box) {
       const match = findBox(box);
@@ -46,14 +46,12 @@ module.exports = {
       }
       reply.setTitle(`${box.toUpperCase()}:`).setDescription(match);
     } else if (slime) {
-        const match = findSlimeBox(slime);
-        reply.setTitle(match || `I didn't find a match for __${slime}__.`);
+      const match = findSlimeBox(slime);
+      reply.setTitle(match || `I didn't find a match for __${slime}__.`);
     } else if (item) {
-        const match = findItem(item);
-        match ? reply.setTitle(`These lockboxes contain __${item}__:`).setDescription(match) : reply.setTitle(`I didn't find a box containing __${item}__.`);
-    } else {
-      reply.setTitle('Please select 1 of the given options.');
-    }
+      const match = findItem(item);
+      match ? reply.setTitle(`These lockboxes contain __${item}__:`).setDescription(match) : reply.setTitle(`I didn't find a box containing __${item}__.`);
+    } 
 
     await interaction.reply({ embeds: [reply], ephemeral: true });
     await logCommand(interaction);

@@ -31,6 +31,6 @@ module.exports = {
 		);
     
     const message = { embeds: [embeds[pages[id]]], components: [buttons] };
-    await button ? interaction.update(message) : interaction.editReply(message);
+    button ? await interaction.update(message) : await interaction.editReply(message);
   }
 };

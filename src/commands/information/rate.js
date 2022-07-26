@@ -22,9 +22,7 @@ module.exports = {
       }
     } else {
       const rate = await getRate();
-      reply
-        .setTitle(`The current crowns per energy rate is: ${rate}.`)
-        .setDescription('I use this rate for calculating **/convert**.');
+      reply.setTitle(`The current crowns per energy rate is: ${rate}.`).setDescription('I use this rate for calculating **/convert**.');
     }
     
     await interaction.reply({ embeds: [reply], ephemeral: true });

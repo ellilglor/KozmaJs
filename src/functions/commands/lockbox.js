@@ -24,9 +24,7 @@ const findItem = (item) => {
     }
 
     const lines = content.split('\n');
-    lines.forEach(line => {
-      if (line.replace(replace,"").toLowerCase().includes(item)) result += `${line}\n`;
-    });
+    lines.forEach(l => { if (l.replace(replace,"").toLowerCase().includes(item)) result += `${l}\n` });
   });
 
   return result;

@@ -31,9 +31,9 @@ module.exports = {
     )),
   async execute(interaction, showStats, choice, opened, spent) {
     const box = choice || interaction.options.getString('box');
+    const author = { name: box, iconURL: getImage('Boxes', box)};
     const id = interaction.user.id;
     const amount = opened || '1';
-    const boxImage = getImage('Boxes', box);
     let desc = '**In this session you opened:**', total = 0, money = false;
 
     if (!items[id]) items[id] = {};
@@ -48,7 +48,7 @@ module.exports = {
     }
 
     const result = buildEmbed()
-      .setAuthor({ name: box, iconURL: boxImage})
+      .setAuthor(author)
       .addFields([
         { name: 'Opened:', value: `${amount}`, inline: true },
         { name: 'Total spent:', value: money ? `$${total}` : `${total} Energy`, inline: true }
@@ -63,27 +63,22 @@ module.exports = {
           Object.entries(items[id][box]).sort(([,a],[,b]) => b-a)
         );
 
-        for (const key in items[id][box]) {
-          desc = desc.concat('\n',`${key} : ${items[id][box][key]}`);
-          if (desc.length >= 4030) {
-            desc = desc.concat('\n',`**I have reached the character limit!**`);
-            break;
-          }
-        }
+        Object.entries(items[id][box]).every(([item, amount]) => {
+          desc = desc.concat('\n', desc.length < 4030 ? `${item} : ${amount}` : `**I have reached the character limit!**`);
+          return desc.length < 4030 ? true : false;
+        });
 
         result.setDescription(desc);
       }
     } else {
       const unboxed = unbox(box);
-      desc = unboxed.map(item => { return item.name; }).toString().replace(/,/g, ' & ');
+      desc = unboxed.map(item => { return item.name }).toString().replace(/,/g, ' & ');
       
       await logCommand(interaction, choice, desc);
 
       if (!items[id][box] || !choice) items[id][box] = {};
-      for (const item of unboxed) {
-        items[id][box][item.name] = items[id][box][item.name] + 1 || 1;
-      }
-
+      unboxed.forEach(item => { items[id][box][item.name] = items[id][box][item.name] + 1 || 1 });
+      
       result.setTitle('You unboxed:').setDescription(`*${desc}*`).setThumbnail(unboxed[0].url);
     }
 
@@ -96,13 +91,10 @@ module.exports = {
 		);
 
     if (!showStats) {
-      const reply = buildEmbed()
-        .setTitle(`Opening your box`)
-        .setDescription('3...')
-        .setAuthor({ name: box, iconURL: boxImage});
+      const reply = buildEmbed().setTitle(`Opening your box`).setDescription('3...').setAuthor(author);
       const message = { embeds: [reply], components: [], ephemeral: true };
-      await choice ? interaction.update(message) : interaction.reply(message);
-
+      
+      choice ? await interaction.update(message) : await interaction.reply(message);
       await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('2...')] });
       await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('1...')] });
       await wait(1000); await interaction.editReply({ embeds: [result], components: [buttons] });

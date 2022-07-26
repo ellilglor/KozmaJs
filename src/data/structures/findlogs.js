@@ -167,7 +167,7 @@ const channels = new Map([
 
 const roses = ['black', 'red', 'white', 'blue', 'gold', 'green', 'coral', 'violet', 'moonstone', 'malachite', 'garnet', 'amethyst', 'citrine', 'prismatic', 'aquamarine', 'turquoise'];
 
-const commonFeatured = ['prismatic gloweyes', 'divine valkyrie wings', 'volcanic valkyrie wings', 'shadow valkyrie wings', 'scissor blades', 'prismatic wings', 'tabard of the coral rose', 'chapeau of the coral rose', 'prime bombhead mask', 'tabard of the violet rose', 'chapeau of the violet rose', 'volcanic wings', 'divine wings', 'shadow wings', 'medieval war helm', 'overcharged mixmaster', 'imperial tricorne', 'shadow dragon wings'];
+const commonFeatured = ['gloweyes', 'divine valkyrie', 'volcanic valkyrie', 'shadow valkyrie', 'scissor', 'prismatic wings', 'tabard of the coral', 'chapeau of the coral', 'prime bombhead', 'tabard of the violet', 'chapeau of the violet', 'volcanic wings', 'divine wings', 'shadow wings', 'medieval war', 'mixmaster', 'tricorne', 'shadow dragon wing'];
 
 const gemExceptions = ['bout', 'rose', 'tabard', 'chaeau', 'buckled', 'clover', 'pipe', 'lumberfell'];
 

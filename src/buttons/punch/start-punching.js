@@ -14,12 +14,12 @@ module.exports = {
     embed.setTitle(embed.data.title.replace('You crafted: ', ''));
     embed.data.fields[embed.data.fields.length - 1] = { name: 'Crowns Spent', value: '0' };
 
-    for (const field of embed.data.fields) {
-      if (field.name.includes('UV #')) {
-        field.name = unlockEmoji.concat(' ', field.name);
+    embed.data.fields.forEach(f => {
+      if (f.name.includes('UV #')) {
+        f.name = unlockEmoji.concat(' ', f.name);
         uvCount += 1;
       }
-    }
+    });
     
     const lockButtons = new ActionRowBuilder().addComponents(
       new ButtonBuilder()

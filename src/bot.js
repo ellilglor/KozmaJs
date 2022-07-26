@@ -1,10 +1,8 @@
-const { Client, GatewayIntentBits, Collection } = require('discord.js');
+const { Client, GatewayIntentBits : Int, Collection } = require('discord.js');
 const fs = require('fs');
 require('dotenv').config();
 
-const client = new Client({ 
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers] 
-});
+const client = new Client({ intents: [Int.Guilds, Int.GuildMessages, Int.GuildMembers] });
 client.commands = new Collection();
 client.buttons = new Collection();
 
@@ -15,9 +13,7 @@ const commandFolders = fs.readdirSync('./src/commands');
 const buttonFolders = fs.readdirSync('./src/buttons');
 
 (async () => {
-  for (file of handlerFiles) {
-    require(`./functions/handlers/${file}`)(client);
-  }
+  handlerFiles.forEach(f => { require(`./functions/handlers/${f}`)(client) });
 
   client.handleEvents(botEventFiles);
   client.handleCommands(commandFolders);

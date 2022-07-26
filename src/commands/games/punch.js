@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
-const { craftItem, rollUv, getPunchImage, checkForGm } = require('../../functions/commands/punch');
+const { craftItem, getPunchImage, checkForGm } = require('../../functions/commands/punch');
 const wait = require('util').promisify(setTimeout);
 
 const punch = {
@@ -38,17 +38,13 @@ module.exports = {
 		  );
 
       let result = buildEmbed().setAuthor(punch).setTitle(`You crafted: ${item}`).setThumbnail(getPunchImage(item));
-
-      for (const uv in craftUvs) {
-        result.addFields([{ name: `UV #${parseInt(uv) + 1}`, value: craftUvs[uv], inline: true }]);
-      }
+      craftUvs.forEach((uv, ind) => { result.addFields([{ name: `UV #${ind + 1}`, value: uv, inline: true }]) });
       result.addFields([{ name: 'Amount crafted:', value: amount }]);
-
       result = checkForGm(result);
 
       const message = { embeds: [reply], components: [], ephemeral: true };
-      await option ? interaction.update(message) : interaction.reply(message);
       
+      option ? await interaction.update(message) : await interaction.reply(message);
       await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('2...')] });;
       await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('1...')] });
       await wait(1000); await interaction.editReply({ embeds: [result], components: [buttons] });
@@ -58,7 +54,7 @@ module.exports = {
 
       console.log(interaction.user.tag)
 
-      await interaction.reply({embeds: [reply], ephemeral: true});
+      await interaction.reply({ embeds: [reply], ephemeral: true });
     }
 	}
 };

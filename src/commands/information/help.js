@@ -17,6 +17,7 @@ module.exports = {
         `**/rate** Tells you the crowns per energy rate currently in use.\n\n` +
         `**/unbox** Simulate opening a box and be disappointed for free.\n\n` +
         `*If you notice a problem please contact @ellilglor#6866!*`);
+    
 		await interaction.reply({ embeds: [reply], ephemeral: true });
     await logCommand(interaction);
 	}

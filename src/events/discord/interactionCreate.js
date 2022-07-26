@@ -1,11 +1,6 @@
 const { InteractionType } = require('discord.js');
 const { buildEmbed } = require('../../functions/general');
 
-const noCode = buildEmbed().setTitle('It looks like something went wrong!');
-const crashed = buildEmbed()
-  .setTitle('There was an error while executing this command!')
-  .setDescription('@ellilglor#6866 has been notified.');
-
 module.exports = {
 	name: 'interactionCreate',
 	async execute(interaction, client) {
@@ -20,19 +15,24 @@ module.exports = {
     
     const command = client.commands.get(interaction.commandName);
     const button = client.buttons.get(interaction.customId);
+    const noCode = buildEmbed().setTitle('It looks like something went wrong!');
 
     if (!command && !button) return await interaction.reply({ embeds: [noCode], ephemeral: true });
     
     try {
-      await command ? command.execute(interaction) : button.execute(interaction);
+      command ? await command.execute(interaction) : await button.execute(interaction);
     } catch (error) {
       const logChannel = client.channels.cache.get(process.env.botLogs);
       const name = interaction.commandName || interaction.customId;
+      const crashed = buildEmbed()
+        .setTitle('There was an error while executing this command!')
+        .setDescription('@ellilglor#6866 has been notified.');
+      
       await logChannel.send(`<@214787913097936896> Error while executing ${name} for ${interaction.user.tag}!\n${error}`);
       console.log(`Error while executing ${name}!`, { error });
 
       const message = { embeds: [crashed], ephemeral: true };
-      await interaction.reply ? interaction.editReply(message) : interaction.reply(message);
+      interaction.reply ? await interaction.editReply(message) : await interaction.reply(message);
     };
 	},
 };

@@ -48,7 +48,7 @@ const checkOldMessages = async (client) => {
 
     if (msg.content.includes(string) && d < time) stop = true;
     return !stop;
-  })
+  });
 
   if (stop) return;
   

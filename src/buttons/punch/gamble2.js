@@ -12,14 +12,12 @@ module.exports = {
     const lockButtons = ActionRowBuilder.from(interaction.message.components[0]);
     const gambleButtons = ActionRowBuilder.from(interaction.message.components[1]);
     const uvs = [], crafting = false, item = embed.data.title;
-    let lockLoc = -1, index = 0, doubleRolls = false;
+    let lockLoc = -1, index = 3, doubleRolls = false;
 
-    for (const f in embed.data.fields) {
-      if (embed.data.fields[f].name.includes('🔒')) {
-        lockLoc = f;
-        break;
-      }
-    }
+    embed.data.fields.every((f, ind) => {
+      if (f.name.includes('🔒')) lockLoc = ind;
+      return lockLoc < 0 ? true : false;
+    });
 
     if (lockLoc > -1) {
       embed.data.fields[0] = { name: '🔒 UV #1', value: embed.data.fields[lockLoc].value, inline: true };
@@ -33,21 +31,13 @@ module.exports = {
     embed.data.fields[1].name.includes('UV') ? embed.data.fields[1] = field : embed.data.fields.splice(1, 0, field);
     embed.data.fields = embed.data.fields.filter(f => { return !f.name.includes('UV #3') });
 
-    for (const f in embed.data.fields) {
-      switch(embed.data.fields[f].name) {
-        case 'Crowns Spent':
-          embed.data.fields[f].value = (parseInt(embed.data.fields[f].value.replace(/,/g, '')) + 75000).toLocaleString('en');
-          index = parseInt(f) + 1;
-          break;
-        case 'Single Rolls':
-          index = parseInt(f) + 1;
-          break;
-        case 'Double Rolls':
-          embed.data.fields[f].value = (parseInt(embed.data.fields[f].value.replace(/,/g, '')) + 1).toLocaleString('en');
-          doubleRolls = true;
-      }
-    }
-
+    embed.data.fields[2].value = (parseInt(embed.data.fields[2].value.replace(/,/g, '')) + 75000).toLocaleString('en');
+    embed.data.fields.forEach(f => {
+      switch(f.name) {
+        case 'Single Rolls': index += 1; break;
+        case 'Double Rolls': f.value = (parseInt(f.value.replace(/,/g, '')) + 1).toLocaleString('en'); doubleRolls = true;
+      } 
+    });
     if (!doubleRolls) embed.data.fields.splice(index, 0, { name: 'Double Rolls', value: '1', inline: true });
 
     embed = checkForGm(embed);

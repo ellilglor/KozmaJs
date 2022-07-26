@@ -42,6 +42,7 @@ module.exports = {
         `~ Equipment: The bot looks for the entire family tree of your item!\n` +
         `So when you lookup *brandish* it will also look for *combuster* for example\n` +
         `~ Sprite pods: type out as seen in game\n` + `Example: Drakon Pod (Divine)`);
+    
       await interaction.reply({ embeds: [reply], ephemeral: true });
       await logCommand(interaction);
       await searchLogs(interaction, items, months, checkVariants);

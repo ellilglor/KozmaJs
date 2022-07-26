@@ -12,11 +12,12 @@ module.exports = {
     const lockButtons = ActionRowBuilder.from(interaction.message.components[0]);
     const gambleButtons = ActionRowBuilder.from(interaction.message.components[1]);
     const uvs = [], crafting = false, item = embed.data.title;
-    let lock1Loc = -1, lock2Loc = -1, index = 0, tripleRolls = false;
+    let lock1Loc = -1, lock2Loc = -1, index = 4, tripleRolls = false;
 
-    for (const f in embed.data.fields) {
-      if (embed.data.fields[f].name.includes('🔒')) lock1Loc < 0 ? lock1Loc = f : lock2Loc = f;
-    }
+    embed.data.fields.every((f, ind) => {
+      if (f.name.includes('🔒')) lock1Loc < 0 ? lock1Loc = ind : lock2Loc = ind;
+      return lock2Loc < 0 ? true : false;
+    });
 
     if (lock1Loc > -1) {
       embed.data.fields[0] = { name: '🔒 UV #1', value: embed.data.fields[lock1Loc].value, inline: true };
@@ -45,24 +46,14 @@ module.exports = {
     const field = { name: '🔓 UV #3', value: rollUv(item, crafting, uvs), inline: true };
     embed.data.fields[2].name.includes('UV') ? embed.data.fields[2] = field : embed.data.fields.splice(2, 0, field);
 
-    for (const f in embed.data.fields) {
-      switch(embed.data.fields[f].name) {
-        case 'Crowns Spent':
-          embed.data.fields[f].value = (parseInt(embed.data.fields[f].value.replace(/,/g, '')) + 225000).toLocaleString('en');
-          index = parseInt(f) + 1;
-          break;
-        case 'Single Rolls':
-          index = parseInt(f) + 1;
-          break;
-        case 'Double Rolls':
-          index = parseInt(f) + 1;
-          break;
-        case 'Triple Rolls':
-          embed.data.fields[f].value = (parseInt(embed.data.fields[f].value.replace(/,/g, '')) + 1).toLocaleString('en');
-          tripleRolls = true;
-      }
-    }
-
+    embed.data.fields[3].value = (parseInt(embed.data.fields[3].value.replace(/,/g, '')) + 225000).toLocaleString('en');
+    embed.data.fields.forEach(f => {
+      switch(f.name) {
+        case 'Single Rolls': index += 1; break;
+        case 'Double Rolls': index += 1; break;
+        case 'Triple Rolls': f.value = (parseInt(f.value.replace(/,/g, '')) + 1).toLocaleString('en'); tripleRolls = true;
+      } 
+    });
     if (!tripleRolls) embed.data.fields.splice(index, 0, { name: 'Triple Rolls', value: '1', inline: true });
 
     embed = checkForGm(embed);

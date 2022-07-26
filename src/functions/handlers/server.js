@@ -1,8 +1,8 @@
 const express = require("express");
 const server = express();
+const d = new Date().toUTCString().slice(0,25);
 
 server.all("/", (req, res) => {
-  const d = new Date().toUTCString().slice(0,25);
   res.send(`Bot is running since ${d}`);
 })
 
