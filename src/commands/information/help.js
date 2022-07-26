@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
 
 module.exports = {
@@ -17,8 +17,15 @@ module.exports = {
         `**/rate** Tells you the crowns per energy rate currently in use.\n\n` +
         `**/unbox** Simulate opening a box and be disappointed for free.\n\n` +
         `*If you notice a problem please contact @ellilglor#6866!*`);
+
+    const buttons = new ActionRowBuilder().addComponents(
+			new ButtonBuilder()
+				.setURL('https://github.com/ellilglor/KozmaJs').setLabel('Github').setStyle('Link'),
+      new ButtonBuilder()
+				.setURL('https://discord.gg/7tX9hxezvZ').setLabel('Discord server').setStyle('Link')
+		);
     
-		await interaction.reply({ embeds: [reply], ephemeral: true });
+		await interaction.reply({ embeds: [reply], components: [buttons], ephemeral: true });
     await logCommand(interaction);
 	}
 };

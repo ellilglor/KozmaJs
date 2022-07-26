@@ -55,7 +55,7 @@ const checkForNewLogs = async (client) => {
       await chnl.setArchived(false);
     }
     
-    stats.push(await convertLogs(chnl, id, collectAll));
+    stats.push(await convertLogs(chnl, name, collectAll));
   }
 
   saveStats(stats);

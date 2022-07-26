@@ -69,8 +69,8 @@ const searchFinished = async (interaction, logsFound, item) => {
       'By default I only look at tradelogs from the past 6 months!\n' +
       'If you want me to look past that use the *months* option.\n\n' +
       'If you notice a problem please contact @ellilglor#6866!\n' +
-      'Did you know we have our own ' +
-      `[**Discord server**](https://discord.gg/nGW89SHHj3 'Kozma's Backpack Discord server')?`);
+      'Did you know we have our own [**Discord server**]' +
+      `(https://discord.gg/7tX9hxezvZ 'Kozma's Backpack Discord server')?`);
 
   if (!logsFound) message.setTitle(`I couldn't find any listings for __${item}__.`); 
 
@@ -78,8 +78,8 @@ const searchFinished = async (interaction, logsFound, item) => {
     if (item.includes(equipment)) {
       message.addFields([{ 
         name: '** **', 
-        value: `__${item}__ can be found on the ` +
-          `[**merchant sheet**](https://docs.google.com/spreadsheets/d/1h-SoyMn3kVla27PRW_kQQO6WefXPmLZYy7lPGNUNW7M/htmlview#).` 
+        value: `__${item}__ can be found on the [**merchant sheet**]` +
+          `(https://docs.google.com/spreadsheets/d/1h-SoyMn3kVla27PRW_kQQO6WefXPmLZYy7lPGNUNW7M/htmlview#).` 
       }]);
     }
     return message.data.fields ? false : true;
