@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('../../functions/general');
 const { findBox, findSlimeBox, findItem } = require('../../functions/commands/lockbox');
 const { getImage } = require('../../functions/commands/unbox');
@@ -50,10 +50,19 @@ module.exports = {
       reply.setTitle(match || `I didn't find a match for __${slime}__.`);
     } else if (item) {
       const match = findItem(item);
-      match ? reply.setTitle(`These lockboxes contain __${item}__:`).setDescription(match) : reply.setTitle(`I didn't find a box containing __${item}__.`);
+      reply.setTitle(match ? `These lockboxes contain __${item}__:` : `I didn't find a box containing __${item}__.`).setDescription(match || null);
     } 
 
-    await interaction.reply({ embeds: [reply], ephemeral: true });
+    const buttons = new ActionRowBuilder().addComponents(
+			new ButtonBuilder()
+				.setURL('https://docs.google.com/spreadsheets/d/14FQWsNevL-7Uiiy-Q3brif8FaEaH7zGGR2Lv_JkOyr8/htmlview')
+        .setLabel('Lockboxes').setStyle('Link'),
+      new ButtonBuilder()
+				.setURL('https://docs.google.com/spreadsheets/d/1f9KQlDcQcoK3K2z6hc7ZTWD_SnrikdTkTXGppneq0YU/htmlview')
+        .setLabel('Slime Lockboxes').setStyle('Link')
+		);
+
+    await interaction.reply({ embeds: [reply], components: [buttons], ephemeral: true });
     await logCommand(interaction);
 	}
 };

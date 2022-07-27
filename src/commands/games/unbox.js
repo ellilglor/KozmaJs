@@ -90,6 +90,12 @@ module.exports = {
         .setDisabled(showStats)
 		);
 
+    if (amount === '69') {
+      buttons.addComponents(
+        new ButtonBuilder().setURL('https://www.gamblersanonymous.org/ga/').setEmoji('💰').setStyle('Link')
+      );
+    }
+
     if (!showStats) {
       const reply = buildEmbed().setTitle(`Opening your box`).setDescription('3...').setAuthor(author);
       const message = { embeds: [reply], components: [], ephemeral: true };

@@ -10,12 +10,12 @@ const findSlimeBox = (name) => {
 
 const findItem = (item) => {
   const replace = /['"\+\[\]()\-{},]/g;
-  let result = "";
+  let result = '';
   item = item.replace(replace,"").toLowerCase();
 
   boxes.forEach((content, box) => {
     if (!content.toLowerCase().replace(replace,"").includes(item)) return;
-    
+
     result += `\n\n__**${box.toUpperCase()} LOCKBOX:**__\n`;
 
     if (box === 'Iron') {
