@@ -1,8 +1,10 @@
+const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { tradelogEmbed, buildEmbed, contentFilter } = require('../../functions/general');
 const structures = require('../../data/structures/findlogs');
 const fs = require('fs');
 
 const searchLogs = async (interaction, items, months, checkVariants) => {
+  const unedited = items[0];
   const stopHere = new Date();
   let reverse = ['ultron stinks'], logsFound = false;
   
@@ -58,12 +60,12 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
     if (matches.length !== 0) await interaction.user.send({ embeds: matches }).catch(error => error);
   }
 
-  await searchFinished(interaction, logsFound, items[0]);
+  await searchFinished(interaction, logsFound, items[0], unedited, months, checkVariants);
 };
 
-const searchFinished = async (interaction, logsFound, item) => {
-  const message = buildEmbed()
-    .setTitle(`This is everything I found for __${item}__, I hope these helped!`)
+const searchFinished = async (interaction, logsFound, item, unedited, months, checkVar) => {
+  const embed = buildEmbed()
+    .setTitle(`This is everything I found for __${unedited}__, I hope these helped!`)
     .setColor('#f9d49c')
     .setDescription(
       'By default I only look at tradelogs from the past 6 months!\n' +
@@ -72,29 +74,35 @@ const searchFinished = async (interaction, logsFound, item) => {
       'Did you know we have our own [**Discord server**]' +
       `(https://discord.gg/7tX9hxezvZ 'Kozma's Backpack Discord server')?`);
 
-  if (!logsFound) message.setTitle(`I couldn't find any listings for __${item}__.`); 
+  if (!logsFound) embed.setTitle(`I couldn't find any listings for __${unedited}__.`); 
 
   structures.spreadsheet.every(equipment => {
     if (item.includes(equipment)) {
-      message.addFields([{ 
+      embed.addFields([{ 
         name: '** **', 
-        value: `__${item}__ can be found on the [**merchant sheet**]` +
+        value: `__${unedited}__ can be found on the [**merchant sheet**]` +
           `(https://docs.google.com/spreadsheets/d/1h-SoyMn3kVla27PRW_kQQO6WefXPmLZYy7lPGNUNW7M/htmlview#).` 
       }]);
     }
-    return message.data.fields ? false : true;
+    return embed.data.fields ? false : true;
   });
 
+  const button = new ActionRowBuilder().addComponents(
+		new ButtonBuilder()
+      .setCustomId(`research${checkVar ? '-var' : ''}`).setLabel('Search all tradelogs').setStyle('Primary')
+  );
+
   try {
-    await interaction.user.send({ embeds: [message] });
+    const message = months < 24 ? { embeds: [embed], components: [button] } : { embeds: [embed] };
+    await interaction.user.send(message);
   } catch (error) {
-    const embed = buildEmbed()
+    const errorEmbed = buildEmbed()
       .setTitle(`I can't send you any messages!`)
       .setColor('#e74c3c')
       .setDescription(`Make sure you have the following enabled:\n ` +
       `*Allow direct messages from server members* in User Settings > Privacy & Safety\n\n` +
       `And Don't block me!`);
-    await interaction.editReply({ embeds: [embed] });
+    await interaction.editReply({ embeds: [errorEmbed] });
   }
 };
 

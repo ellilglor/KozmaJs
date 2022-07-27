@@ -15,7 +15,7 @@ module.exports = {
     
     const command = client.commands.get(interaction.commandName);
     const button = client.buttons.get(interaction.customId);
-    const noCode = buildEmbed().setTitle('It looks like something went wrong!');
+    const noCode = buildEmbed().setTitle('It looks like this command is missing!');
 
     if (!command && !button) return await interaction.reply({ embeds: [noCode], ephemeral: true });
     
