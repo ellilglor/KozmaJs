@@ -46,72 +46,65 @@ const checkOldMessages = async (client) => {
   if (stop) return;
   
   const guild = await client.guilds.fetch(globals.serverId);
-  let remind = true;
-  
-  await guild.members.fetch();
-  await logChannel.send(string);
-  console.log(string)
-
-  const WTBrole = guild.roles.cache.find(r => r.name.includes(globals.wtbRole));
   const WTBchannel = client.channels.cache.get(globals.wtbChannelId);
-  const WTBmessages = await WTBchannel.messages.fetch({ limit: 25 });
-  
-  WTBmessages.every(async (msg) => {
-    const expires = msg.createdAt;
-    expires.setHours(expires.getHours() + 22);
-    if (globals.date > expires) return false;
-
-    if (msg.author.id === globals.botId) {
-      remind = false;
-      return true;
-    }
-
-    const member = msg.member;
-    if (member.roles.cache.has(WTBrole.id)) return true;
-    if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) return true;
-
-    member.roles.add(WTBrole);
-    await dbBuyMute(member.user, logChannel, msg.createdAt);
-    
-    return true;
-  });
-
-  const WTSrole = guild.roles.cache.find(r => r.name.includes(globals.wtsRole));
   const WTSchannel = client.channels.cache.get(globals.wtsChannelId);
-  const WTSmessages = await WTSchannel.messages.fetch({ limit: 25 });
-  
-  WTSmessages.every(async (msg) => {
-    const expires = msg.createdAt;
-    expires.setHours(expires.getHours() + 22);
-    if (globals.date > expires) return false;
+  const WTBrole = guild.roles.cache.find(r => r.name.includes(globals.wtbRole));
+  const WTSrole = guild.roles.cache.find(r => r.name.includes(globals.wtsRole));
 
-    if (msg.author.id === globals.botId) {
-      remind = false;
-      return true;
-    }
-
-    const member = msg.member;
-    if (member.roles.cache.has(WTSrole.id)) return true;
-    if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) return true;
-
-    member.roles.add(WTSrole);
-    await dbSellMute(member.user, logChannel, msg.createdAt);
-    
-    return true;
-  });
-
-  if ((globals.date.getDate() % 3) === 0 && remind) await sendReminder(WTBchannel, WTSchannel);
+  console.log(string);
+  await logChannel.send(string);
+  await guild.members.fetch();
+  await checkTradeMessages(WTBchannel, WTBrole, logChannel);
+  await checkTradeMessages(WTSchannel, WTSrole, logChannel);
 }
 
-const sendReminder = async (WTBchannel, WTSchannel) => {
+const checkTradeMessages = async (channel, role, logChannel) => {
+  const messages = await channel.messages.fetch({ limit: 25 });
+  let remind = true;
+  
+  messages.every(async (msg) => {
+    const expires = msg.createdAt;
+    expires.setHours(expires.getHours() + 22);
+    if (globals.date > expires) return false;
+
+    if (msg.author.bot) remind = false;
+
+    const member = msg.member;
+    if (!member) return true;
+    if (member.roles.cache.has(role.id)) return true;
+    if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) return true;
+
+    member.roles.add(role);
+
+    switch (role.name) {
+      case globals.wtbRole: await dbBuyMute(member.user, logChannel, msg.createdAt); break;
+      case globals.wtsRole: await dbSellMute(member.user, logChannel, msg.createdAt); break;
+    }
+    
+    return true;
+  });
+
+  if ((globals.date.getDate() % 3) === 0 && remind) await sendReminder(channel);
+}
+
+const sendReminder = async (channel) => {
   const reminder = tradelogEmbed()
     .setTitle('This message is a reminder of the __22 hour slowmode__ in this channel!')
     .setDescription('Editing your message is not possible due to how we handle this slowmode.\n' +
                     'We apologise for any inconvenience this may cause.');
   
-  await WTBchannel.send({ embeds: [reminder] });
-  await WTSchannel.send({ embeds: [reminder] });
+  await channel.send({ embeds: [reminder] });
 }
+
+// const sendReminder = async (WTBchannel, WTSchannel) => {
+//   const reminder = tradelogEmbed()
+//     .setTitle('This message is a reminder of the __22 hour slowmode__ in this channel!')
+//     .setDescription('Editing your message is not possible due to how we handle this slowmode.\n' +
+//                     'We apologise for any inconvenience this may cause.');
+  
+//   await WTBchannel.send({ embeds: [reminder] });
+//   await WTSchannel.send({ embeds: [reminder] });
+// }
 
 module.exports = {
   giveBuyMute,

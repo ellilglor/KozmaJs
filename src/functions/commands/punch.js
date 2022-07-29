@@ -107,7 +107,7 @@ const lockUv = async (interaction, uv) => {
 
   embed.data.fields.forEach(f => { if (f.name.includes('🔒')) lockCount += 1 });
 
-  switch(lockCount) {
+  switch (lockCount) {
     case 3:
       gambleButtons.components[3].setDisabled(true);
       break;

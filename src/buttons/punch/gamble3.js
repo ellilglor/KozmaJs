@@ -48,7 +48,7 @@ module.exports = {
 
     embed.data.fields[3].value = (parseInt(embed.data.fields[3].value.replace(/,/g, '')) + 225000).toLocaleString('en');
     embed.data.fields.forEach(f => {
-      switch(f.name) {
+      switch (f.name) {
         case 'Single Rolls': index += 1; break;
         case 'Double Rolls': index += 1; break;
         case 'Triple Rolls': f.value = (parseInt(f.value.replace(/,/g, '')) + 1).toLocaleString('en'); tripleRolls = true;
