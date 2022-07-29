@@ -26,17 +26,12 @@ const noPermission = (embed) => {
 };
 
 const logCommand = async ({ client, options, member, user, commandName, message: msg }, extra, item) => {
-  if (user.tag === globals.ownerTag) return
+  if (user.tag === globals.ownerTag) return;
   const logChannel = client.channels.cache.get(globals.botLogsChannelId);
-  const location = member ? member.guild.name : 'DM';
+  const location = member?.guild.name || 'DM';
   const command = commandName || msg.interaction.commandName || msg.interaction.name;
 
-  let option = '';
-  if (options) {
-    for (const opt of options._hoistedOptions) {
-      option += ` ${opt.value}`;
-    }
-  }
+  let option = options?._hoistedOptions.map(opt => { return ` ${opt.value}` }).toString() || '';
   if (extra) option += ` ${extra}`;
 
   await saveData(user, command, option);
@@ -60,7 +55,7 @@ const saveData = async (user, command, option) => {
 
     await saveSearched(option);
   } else if (command.includes('unbox')) {
-    await saveBox(option);
+    await saveBox(option.trim());
   }
 }
 

@@ -2,29 +2,17 @@ const { dbBuyMute, dbSellMute } = require('../database/tradeMute');
 const { globals } = require('../../data/variables');
 const { tradelogEmbed } = require('../general');
 
+const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => {
+  const name = channelId.includes(globals.wtbChannelId) ? globals.wtbRole : globals.wtsRole;
+  const role = guild.roles.cache.find(r => r.name.includes(name));
 
-const giveBuyMute = async ({ member, guild, createdAt }, logChannel) => {
-  const role = guild.roles.cache.find(r => r.name.includes(globals.wtbRole));
+  if (!role) return await logChannel.send(`<@${globals.ownerId}> no role "${name}" was found`);
 
-  if (!role) {
-    await logChannel.send(`<@${globals.ownerTag}> no role with the name ${globals.wtbRole} was found`);
-    return;
+  switch (name) {
+    case globals.wtbRole: await dbBuyMute(member.user, logChannel, createdAt); break;
+    case globals.wtsRole: await dbSellMute(member.user, logChannel, createdAt); break;
   }
 
-  await dbBuyMute(member.user, logChannel, createdAt);
-  await guild.members.fetch();
-  member.roles.add(role);
-}
-
-const giveSellMute = async ({ member, guild, createdAt }, logChannel) => {
-  const role = guild.roles.cache.find(r => r.name.includes(globals.wtsRole));
-
-  if (!role) {
-    await logChannel.send(`<@${globals.ownerTag}> no role with the name ${globals.wtsRole} was found`);
-    return;
-  }
-
-  await dbSellMute(member.user, logChannel, createdAt);
   await guild.members.fetch();
   member.roles.add(role);
 }
@@ -96,18 +84,7 @@ const sendReminder = async (channel) => {
   await channel.send({ embeds: [reminder] });
 }
 
-// const sendReminder = async (WTBchannel, WTSchannel) => {
-//   const reminder = tradelogEmbed()
-//     .setTitle('This message is a reminder of the __22 hour slowmode__ in this channel!')
-//     .setDescription('Editing your message is not possible due to how we handle this slowmode.\n' +
-//                     'We apologise for any inconvenience this may cause.');
-  
-//   await WTBchannel.send({ embeds: [reminder] });
-//   await WTSchannel.send({ embeds: [reminder] });
-// }
-
 module.exports = {
-  giveBuyMute,
-  giveSellMute,
+  giveMute,
   checkOldMessages
 }

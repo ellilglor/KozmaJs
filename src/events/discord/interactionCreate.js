@@ -33,7 +33,7 @@ module.exports = {
       console.log(`Error while executing ${name}!`, { error });
 
       const message = { embeds: [crashed], ephemeral: true };
-      interaction.reply ? await interaction.editReply(message) : await interaction.reply(message);
+      interaction.replied || interaction.deferred ? await interaction.editReply(message) : await interaction.reply(message);
     };
 	},
 };
