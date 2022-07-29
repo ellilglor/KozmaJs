@@ -4,8 +4,7 @@ const { globals } = require('../../data/variables');
 module.exports = {
 	name: 'messageCreate',
 	async execute(message, client) {
-    if (message.guildId !== globals.serverId || message.author.id === globals.botId) return;
-    if (message.channelId.includes(globals.serverLogsChannelId)) return;
+    if (message.guildId !== globals.serverId || message.author.bot) return;
 
     const logChannel = client.channels.cache.get(globals.botLogsChannelId);
 

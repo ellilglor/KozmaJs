@@ -6,7 +6,6 @@ const globals = {
   adminId: '760222967808131092',
   modId: '796399775959220304',
   botLogsChannelId: '938857270899523604',
-  serverLogsChannelId: '824371721003991050',
   wtbChannelId: '872172994158538812',
   wtsChannelId: '872173055386980373',
   wtbRole: 'WTB-Cooldown',
