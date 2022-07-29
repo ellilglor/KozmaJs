@@ -74,7 +74,7 @@ const removeRole = async (members, results, role, logChannel) => {
       continue;
     }
     
-    await member.roles.remove(role);
+    member.roles.remove(role);
     await wait(100);
     
     if (member.roles.cache.has(role.id)) {
