@@ -1,5 +1,5 @@
 const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+const { Routes } = require('discord-api-types/v10');
 const { globals } = require('../../data/variables');
 const fs = require('fs');
 
@@ -17,7 +17,7 @@ const deployCommands = async (globalCommands, kozmaCommands) => {
     // await rest.put(
     //   Routes.applicationGuildCommands(globals.botId, globals.serverId),
     //   { body: kozmaCommands }
-    // )
+    // );
 
     //unregister guild commands
     // rest.get(Routes.applicationGuildCommands(globals.botId, globals.serverId))
