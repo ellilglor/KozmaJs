@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, noPermission, logCommand } = require('../../functions/general');
 const { saveRate, getRate } = require('../../functions/database/rate');
+const { globals } = require('../../data/variables');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -14,7 +15,7 @@ module.exports = {
     let reply = buildEmbed();
 
     if (newValue) {
-      if (interaction.member?.roles.cache.has('760222967808131092') || interaction.member?.roles.cache.has('796399775959220304')) {
+      if (interaction.member?.roles.cache.has(globals.adminId) || interaction.member?.roles.cache.has(globals.modId)) {
         await saveRate(newValue);
         reply.setTitle(`The conversion rate has been changed to: ${newValue}.`);
       } else { 

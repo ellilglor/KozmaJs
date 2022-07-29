@@ -1,9 +1,8 @@
 const fs = require('fs');
 
-const bonusBoxes = ['Confection', 'Lucky'];
-
 const unbox = (box) => {
   const content = JSON.parse(fs.readFileSync(`src/data/boxes/${box}.json`));
+  const bonusBoxes = ['Confection', 'Lucky'];
   const roll = Math.random() * 100;
   const result = [content[0]];
   let prevOdds = 0;
@@ -58,7 +57,7 @@ const bonusRoll = (box, content, roll, unboxed) => {
 const getImage = (box, item) => {
   const content = JSON.parse(fs.readFileSync(`src/data/boxes/${box}.json`));
   
-  return result = content.find(i => { return item.includes(i.name) }).url;
+  return result = content.find(i => item.includes(i.name)).url;
 }
 
 module.exports = {

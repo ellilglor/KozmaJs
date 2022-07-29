@@ -1,5 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { tradelogEmbed, buildEmbed, contentFilter } = require('../../functions/general');
+const { globals } = require('../../data/variables');
 const structures = require('../../data/structures/findlogs');
 const fs = require('fs');
 
@@ -70,9 +71,9 @@ const searchFinished = async (interaction, logsFound, item, unedited, months, ch
     .setDescription(
       'By default I only look at tradelogs from the past 6 months!\n' +
       'If you want me to look past that use the *months* option.\n\n' +
-      'If you notice a problem please contact @ellilglor#6866!\n' +
+      `If you notice a problem please contact @${globals.ownerTag}!\n` +
       'Did you know we have our own [**Discord server**]' +
-      `(https://discord.gg/7tX9hxezvZ 'Kozma's Backpack Discord server')?`);
+      `(${globals.serverInvite} 'Kozma's Backpack Discord server')?`);
 
   if (!logsFound) embed.setTitle(`I couldn't find any listings for __${unedited}__.`); 
 

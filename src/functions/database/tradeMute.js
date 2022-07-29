@@ -1,12 +1,12 @@
 const buy = require('../../data/schemas/moderation/buyMute');
 const sell = require('../../data/schemas/moderation/sellMute');
 const wait = require('util').promisify(setTimeout);
+const { globals } = require('../../data/variables');
 
-const dbBuyMute = async (member, logChannel, exp) => {
+const dbBuyMute = async (member, logChannel, expires) => {
   let buyProfile = await buy.findOne({ _id: member.id });
 
   if (!buyProfile) {
-    const expires = exp || new Date();
     expires.setHours(expires.getHours() + 22);
     
     buyProfile = await new buy({
@@ -16,15 +16,14 @@ const dbBuyMute = async (member, logChannel, exp) => {
     })
     await buyProfile.save().catch(err => console.log(err));
   } else {
-    await logChannel.send(`WTB - <@214787913097936896> ${member.tag} is already in the database!`);
+    await logChannel.send(`WTB - <@${globals.ownerId}> ${member.tag} is already in the database!`);
   }
 }
 
-const dbSellMute = async (member, logChannel, exp) => {
+const dbSellMute = async (member, logChannel, expires) => {
   let sellProfile = await sell.findOne({ _id: member.id });
 
   if (!sellProfile) {
-    const expires = exp || new Date();
     expires.setHours(expires.getHours() + 22);
     
     sellProfile = await new sell({
@@ -34,21 +33,22 @@ const dbSellMute = async (member, logChannel, exp) => {
     })
     await sellProfile.save().catch(err => console.log(err));
   } else {
-    await logChannel.send(`WTS - <@214787913097936896> ${member.tag} is already in the database!`);
+    await logChannel.send(`WTS - <@${globals.ownerId}> ${member.tag} is already in the database!`);
   }
 }
 
 const dbCheckExpiredMutes = async (client) => {
-  const guild = await client.guilds.fetch('760222722919497820');
-  const logChannel = client.channels.cache.get(process.env.botLogs);
+  const guild = await client.guilds.fetch(globals.serverId);
+  const logChannel = client.channels.cache.get(globals.botLogsChannelId);
   const query = { expires: { $lt: new Date() } };
   
   await guild.members.fetch();
 
   const WTBexpired = await buy.find(query);
   if (WTBexpired.length > 0) {
-    const WTBrole = guild.roles.cache.find((r) => r.name === 'WTB-Cooldown');
+    const WTBrole = guild.roles.cache.find((r) => r.name === globals.wtbRole);
     let WTBmentions = 'WTB - Unmuting:';
+    
     await logChannel.send(getMentions(WTBexpired, WTBmentions));
     await removeRole(guild.members, WTBexpired, WTBrole, logChannel);
   }
@@ -56,8 +56,9 @@ const dbCheckExpiredMutes = async (client) => {
   
   const WTSexpired = await sell.find(query);
   if (WTSexpired.length > 0) {
-    const WTSrole = guild.roles.cache.find((r) => r.name === 'WTS-Cooldown');
+    const WTSrole = guild.roles.cache.find((r) => r.name === globals.wtsRole);
     let WTSmentions = 'WTS - Unmuting:';
+    
     await logChannel.send(getMentions(WTSexpired, WTSmentions));
     await removeRole(guild.members, WTSexpired, WTSrole, logChannel);
   }
@@ -69,7 +70,7 @@ const removeRole = async (members, results, role, logChannel) => {
     const member = members.cache.get(result._id);
     
     if (!member) {
-      await logChannel.send(`<@214787913097936896> Failed to find <@${result._id}>`);
+      await logChannel.send(`<@${globals.ownerId}> Failed to find <@${result._id}>`);
       continue;
     }
     
@@ -77,7 +78,7 @@ const removeRole = async (members, results, role, logChannel) => {
     await wait(100);
     
     if (member.roles.cache.has(role.id)) {
-      await logChannel.send(`<@214787913097936896> Failed to remove ${role.name} from <@${result._id}>`);
+      await logChannel.send(`<@${globals.ownerId}> Failed to remove ${role.name} from <@${result._id}>`);
     }
   }
 }

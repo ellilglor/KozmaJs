@@ -1,9 +1,9 @@
+const { globals } = require('../../data/variables');
 const express = require("express");
 const server = express();
-const d = new Date().toUTCString().slice(0,25);
 
 server.all("/", (req, res) => {
-  res.send(`Bot is running since ${d}`);
+  res.send(`Bot is running since ${globals.date.toUTCString().slice(0,25)}`);
 })
 
 module.exports = (client) => {

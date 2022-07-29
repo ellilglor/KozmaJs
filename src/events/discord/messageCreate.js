@@ -1,28 +1,29 @@
 const { giveBuyMute, giveSellMute } = require('../../functions/moderation/kbpTradeMute');
+const { globals } = require('../../data/variables');
 
 module.exports = {
 	name: 'messageCreate',
 	async execute(message, client) {
-    const kbpId = '760222722919497820', botId = '898505614404235266';
-    
-    if (message.guildId !== kbpId || message.author.id === botId) return;
-    if (message.channelId.includes('824371721003991050')) return;
+    if (message.guildId !== globals.serverId || message.author.id === globals.botId) return;
+    if (message.channelId.includes(globals.serverLogsChannelId)) return;
 
-    const logChannel = client.channels.cache.get(process.env.botLogs);
-    const wtbChnl = '872172994158538812', wtsChnl = '872173055386980373';
+    const logChannel = client.channels.cache.get(globals.botLogsChannelId);
 
     try {
-      const admin = '760222967808131092', mod = '796399775959220304';
+      if (!message.member) {
+        await logChannel.send(`<@${globals.ownerId}> no member was found for ${message.url}`);
+        return;
+      }
 
-      if (message.member.roles.cache.has(admin) || message.member.roles.cache.has(mod)) return;
+      if (message.member.roles.cache.has(globals.adminId) || message.member.roles.cache.has(globals.modId)) return;
       
-      if (message.channelId === wtbChnl) { 
+      if (message.channelId.includes(globals.wtbChannelId)) { 
         await giveBuyMute(message, logChannel);
-      } else if (message.channelId === wtsChnl) { 
+      } else if (message.channelId.includes(globals.wtsChannelId)) { 
         await giveSellMute(message, logChannel);
       }
     } catch (error) {
-      await logChannel.send(`<@214787913097936896> Error on msgCreate!\n${error}`);
+      await logChannel.send(`<@${globals.ownerId}> Error on msgCreate!\n${error}`);
       console.log(`Error on msgCreate!`, { error });
     };
 	},

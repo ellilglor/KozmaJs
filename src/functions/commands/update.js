@@ -1,6 +1,7 @@
 const fetchAll = require('discord-fetch-all');
 const fs = require('fs');
 const { contentFilter } = require('../general');
+const { globals } = require('../../data/variables');
 const { channels } = require('../../data/structures/findlogs');
 
 const convertLogs = async (channel, channelName, collectAll) => {
@@ -30,11 +31,11 @@ const convertLogs = async (channel, channelName, collectAll) => {
 };
 
 const checkForNewLogs = async (client) => {
-  const logChannel = client.channels.cache.get(process.env.botLogs);
+  const logChannel = client.channels.cache.get(globals.botLogsChannelId);
   const string = 'Checking for new tradelogs.';
   let stop = false;
 
-  const logMessages = await logChannel.messages.fetch({ limit: 25 });
+  const logMessages = await logChannel.messages.fetch({ limit: 20 });
   logMessages.every(msg => {
     if (msg.content.includes(string)) stop = true;
     return !stop;
@@ -42,6 +43,7 @@ const checkForNewLogs = async (client) => {
 
   if (stop) return;
 
+  console.log(string);
   await logChannel.send(string);
   const stats = [], collectAll = false;
   
@@ -78,7 +80,7 @@ const messageSnipper = (msg) => {
 };
 
 const saveStats = (stats) => {
-  fs.writeFileSync(`src/data/tradelogs.json`, JSON.stringify(stats));
+  fs.writeFileSync(`src/data/tradelogs/tradelogs.json`, JSON.stringify(stats));
 }
 
 module.exports = {

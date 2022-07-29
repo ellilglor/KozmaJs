@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
 const { saveUser } = require('./database/user');
 const { saveCommand, saveSearched, saveBox } = require('./database/stats');
+const { globals } = require('../data/variables');
 
 const buildEmbed = () => {
   const embed = new EmbedBuilder()
@@ -25,8 +26,8 @@ const noPermission = (embed) => {
 };
 
 const logCommand = async ({ client, options, member, user, commandName, message: msg }, extra, item) => {
-  if (user.tag === 'ellilglor#6866') return
-  const logChannel = client.channels.cache.get(process.env.botLogs);
+  if (user.tag === globals.ownerTag) return
+  const logChannel = client.channels.cache.get(globals.botLogsChannelId);
   const location = member ? member.guild.name : 'DM';
   const command = commandName || msg.interaction.commandName || msg.interaction.name;
 

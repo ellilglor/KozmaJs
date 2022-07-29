@@ -67,7 +67,7 @@ const buildStats = async (embeds, interaction) => {
 
   //Amount of tradelogs
   const logStats = buildEmbed().setTitle('These are the amount of tradelogs:');
-  const channels = JSON.parse(fs.readFileSync(`src/data/tradelogs.json`));
+  const channels = JSON.parse(fs.readFileSync(`src/data/tradelogs/tradelogs.json`));
   let logSum = 0, logsDesc = '';
 
   channels.forEach(chnl => {
