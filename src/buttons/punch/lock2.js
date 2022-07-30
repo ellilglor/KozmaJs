@@ -1,4 +1,4 @@
-const { lockUv } = require('../../functions/commands/punch');
+const { lockUv } = require('@functions/commands/punch');
 
 module.exports = {
   data: {

@@ -1,8 +1,8 @@
-const { buildEmbed } = require('../../functions/general');
-const { getCommands, getSearched, getBoxes } = require('../database/stats');
-const { getUsers } = require('../database/user');
-const { globals } = require('../../data/variables');
-const { version } = require('../../../package.json');
+const { buildEmbed } = require('@functions/general');
+const { getCommands, getSearched, getBoxes } = require('@functions/database/stats');
+const { getUsers } = require('@functions/database/user');
+const { version } = require('@root/package.json');
+const { globals } = require('@data/variables');
 const fs = require('fs');
 
 const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {

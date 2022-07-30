@@ -1,4 +1,4 @@
-const command = require(`../../commands/games/punch`);
+const command = require(`@commands/games/punch`);
 
 module.exports = {
   data: {

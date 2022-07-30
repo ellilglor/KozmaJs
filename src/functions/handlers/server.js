@@ -1,4 +1,4 @@
-const { globals } = require('../../data/variables');
+const { globals } = require('@data/variables');
 const express = require("express");
 const server = express();
 

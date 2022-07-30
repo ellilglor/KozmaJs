@@ -1,4 +1,4 @@
-const command = require(`../../commands/games/unbox`);
+const command = require(`@commands/games/unbox`);
 
 module.exports = {
   data: {

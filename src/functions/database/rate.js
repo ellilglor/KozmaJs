@@ -1,4 +1,4 @@
-const rate = require('../../data/schemas/commands/rate');
+const rate = require('@schemas/commands/rate');
 
 const saveRate = async (r) => {
   try {

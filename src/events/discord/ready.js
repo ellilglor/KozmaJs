@@ -1,7 +1,7 @@
 const { ActivityType } = require('discord.js');
-const { dbCheckExpiredMutes } = require('../../functions/database/tradeMute');
-const { checkOldMessages } = require('../../functions/moderation/kbpTradeMute');
-const { checkForNewLogs } = require('../../functions/commands/update');
+const { checkOldMessages } = require('@functions/moderation/kbpTradeMute');
+const { dbCheckExpiredMutes } = require('@functions/database/tradeMute');
+const { checkForNewLogs } = require('@functions/commands/update');
 
 module.exports = {
 	name: 'ready',

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { buildEmbed, logCommand } = require('../../functions/general');
-const { craftItem, getPunchImage, checkForGm } = require('../../functions/commands/punch');
+const { craftItem, getPunchImage, checkForGm } = require('@functions/commands/punch');
+const { buildEmbed, logCommand } = require('@functions/general');
 const wait = require('util').promisify(setTimeout);
 
 const punch = {

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const command = require('../../data/schemas/stats/command');
-const item = require('../../data/schemas/stats/findlogs');
-const box = require('../../data/schemas/stats/unbox');
+const command = require('@schemas/stats/command');
+const item = require('@schemas/stats/findlogs');
+const box = require('@schemas/stats/unbox');
 
 const saveCommand = async (cmd) => {
   let commandProfile = await command.findOne({ command: cmd });

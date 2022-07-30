@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { buildEmbed, logCommand } = require('../../functions/general');
-const { searchLogs } = require('../../functions/commands/findlogs');
+const { buildEmbed, logCommand } = require('@functions/general');
+const { searchLogs } = require('@functions/commands/findlogs');
 
 module.exports = {
 	data: new SlashCommandBuilder()

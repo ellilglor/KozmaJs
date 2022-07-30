@@ -1,5 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
-const { rollUv, checkForGm } = require('../../functions/commands/punch');
+const { rollUv, checkForGm } = require('@functions/commands/punch');
 
 module.exports = {
   data: {

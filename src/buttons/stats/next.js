@@ -1,4 +1,4 @@
-const command = require(`../../commands/kbp/stats`);
+const command = require(`@commands/kbp/stats`);
 
 module.exports = {
   data: {

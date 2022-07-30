@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const buyMuteSchema = new mongoose.Schema({
   _id: String,
   tag: String,

@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
-const { saveUser } = require('./database/user');
-const { saveCommand, saveSearched, saveBox } = require('./database/stats');
-const { globals } = require('../data/variables');
+const { saveCommand, saveSearched, saveBox } = require('@functions/database/stats');
+const { saveUser } = require('@functions/database/user');
+const { globals } = require('@data/variables');
 
 const buildEmbed = () => {
   const embed = new EmbedBuilder()

@@ -1,4 +1,4 @@
-const user = require('../../data/schemas/stats/user');
+const user = require('@schemas/stats/user');
 
 const saveUser = async (u, command) => {
   let userProfile = await user.findOne({ _id: u.id });

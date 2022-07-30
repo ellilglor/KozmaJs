@@ -1,5 +1,5 @@
-const { giveMute } = require('../../functions/moderation/kbpTradeMute');
-const { globals } = require('../../data/variables');
+const { giveMute } = require('@functions/moderation/kbpTradeMute');
+const { globals } = require('@data/variables');
 
 module.exports = {
 	name: 'messageCreate',

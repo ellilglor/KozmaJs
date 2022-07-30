@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { buildEmbed, logCommand } = require('../../functions/general');
-const { findBox, findSlimeBox, findItem } = require('../../functions/commands/lockbox');
-const { getImage } = require('../../functions/commands/unbox');
+const { findBox, findSlimeBox, findItem } = require('@functions/commands/lockbox');
+const { buildEmbed, logCommand } = require('@functions/general');
+const { getImage } = require('@functions/commands/unbox');
 
 module.exports = {
 	data: new SlashCommandBuilder()

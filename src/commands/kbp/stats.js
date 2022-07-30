@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { buildStats } = require('../../functions/commands/stats');
+const { buildStats } = require('@functions/commands/stats');
 
 const embeds = [], pages = {};
 

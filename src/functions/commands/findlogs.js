@@ -1,7 +1,7 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { tradelogEmbed, buildEmbed, contentFilter } = require('../../functions/general');
-const { globals } = require('../../data/variables');
-const structures = require('../../data/structures/findlogs');
+const { tradelogEmbed, buildEmbed, contentFilter } = require('@functions/general');
+const structures = require('@structures/findlogs');
+const { globals } = require('@data/variables');
 const fs = require('fs');
 
 const searchLogs = async (interaction, items, months, checkVariants) => {

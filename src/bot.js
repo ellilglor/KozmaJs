@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits: Int, Collection } = require('discord.js');
 const fs = require('fs');
+require('module-alias/register');
 require('dotenv').config();
 
 const client = new Client({ intents: [Int.Guilds, Int.GuildMessages, Int.GuildMembers] });

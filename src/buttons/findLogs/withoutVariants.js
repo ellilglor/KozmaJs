@@ -1,4 +1,4 @@
-const { searchLogs } = require('../../functions/commands/findlogs');
+const { searchLogs } = require('@functions/commands/findlogs');
 
 module.exports = {
   data: {

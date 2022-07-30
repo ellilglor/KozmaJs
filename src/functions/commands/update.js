@@ -1,8 +1,8 @@
+const { contentFilter } = require('@functions/general');
+const { channels } = require('@structures/findlogs');
+const { globals } = require('@data/variables');
 const fetchAll = require('discord-fetch-all');
 const fs = require('fs');
-const { contentFilter } = require('../general');
-const { globals } = require('../../data/variables');
-const { channels } = require('../../data/structures/findlogs');
 
 const convertLogs = async (channel, channelName, collectAll) => {
   const location = `src/data/tradelogs/${channelName}.json`;

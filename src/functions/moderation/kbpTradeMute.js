@@ -1,6 +1,6 @@
-const { dbBuyMute, dbSellMute } = require('../database/tradeMute');
-const { globals } = require('../../data/variables');
-const { tradelogEmbed } = require('../general');
+const { dbBuyMute, dbSellMute } = require('@functions/database/tradeMute');
+const { tradelogEmbed } = require('@functions/general');
+const { globals } = require('@data/variables');
 
 const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => {
   const name = channelId.includes(globals.wtbChannelId) ? globals.wtbRole : globals.wtsRole;

@@ -1,6 +1,6 @@
-const { Routes } = require('discord.js');
+const { globals } = require('@data/variables');
 const { REST } = require('@discordjs/rest');
-const { globals } = require('../../data/variables');
+const { Routes } = require('discord.js');
 const fs = require('fs');
 
 const deployCommands = async (globalCommands, kozmaCommands) => {
