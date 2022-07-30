@@ -1,9 +1,11 @@
 const { buildEmbed } = require('../../functions/general');
 const { getCommands, getSearched, getBoxes } = require('../database/stats');
-const { getUsers } = require('../database/user')
+const { getUsers } = require('../database/user');
+const { globals } = require('../../data/variables');
+const { version } = require('../../../package.json');
 const fs = require('fs');
 
-const buildStats = async (embeds, interaction) => {
+const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
   //bot usage
   const userStats = buildEmbed().setTitle('Top 20 bot users:');
   const users = await getUsers();
@@ -22,30 +24,23 @@ const buildStats = async (embeds, interaction) => {
   //Servers the bot is in
   const servers = buildEmbed().setTitle('I am in these servers:');
   const serverArray = [];
-  let serverSum = 0, serversDesc = '';
+  let serversDesc = '';
   
-  interaction.client.guilds.cache.forEach(guild => {
-    serverArray.push({ name: guild.name, members: guild.memberCount });
-  });
+  client.guilds.cache.forEach(g => serverArray.push({ name: g.name, members: g.memberCount }));
   serverArray.sort((a, b) => { return b.members - a.members });
-  serverArray.forEach(server => {
-    serversDesc = serversDesc.concat('', `**${server.name}** | ${server.members} members\n`);
-    serverSum += 1;
-  });
+  serverArray.forEach(s => serversDesc = serversDesc.concat('', `**${s.name}** | ${s.members} members\n`));
   
-  serversDesc = serversDesc.concat('', `\nTotal amount: ${serverSum}`);
+  serversDesc = serversDesc.concat('', `\nTotal amount: ${client.guilds.cache.size}`);
   servers.setDescription(serversDesc);
   embeds.push(servers);
 
   //Command usage
   const commandStats = buildEmbed().setTitle('How much each command has been used:');
   const commands = await getCommands();
-  let commandSum = 0, commandDesc = '';
+  const commandSum = commands.reduce((total, cmd) => cmd.amount + total, 0);
+  let commandDesc = '';
 
-  commands.forEach(cmd => {
-    commandDesc = commandDesc.concat('', `**${cmd.command}** | ${cmd.amount}\n`);
-    commandSum += cmd.amount;
-  });
+  commands.forEach(cmd => commandDesc = commandDesc.concat('', `**${cmd.command}** | ${cmd.amount}\n`));
   
   commandDesc = commandDesc.concat('', `\nTotal amount: ${commandSum}`);
   commandStats.setDescription(commandDesc);
@@ -54,12 +49,10 @@ const buildStats = async (embeds, interaction) => {
   //unbox command stats
   const unboxStats = buildEmbed().setTitle('How much each box has been opened:');
   const boxes = await getBoxes();
-  let unboxSum = 0, unboxDesc = '';
+  const unboxSum = boxes.reduce((total, box) => box.amount + total, 0);
+  let unboxDesc = '';
 
-  boxes.forEach(box => {
-    unboxDesc = unboxDesc.concat('', `**${box.box}** | ${box.amount}\n`);
-    unboxSum += box.amount;
-  });
+  boxes.forEach(box => unboxDesc = unboxDesc.concat('', `**${box.box}** | ${box.amount}\n`));
   
   unboxDesc = unboxDesc.concat('', `\nTotal opened: ${unboxSum}`);
   unboxStats.setDescription(unboxDesc);
@@ -68,12 +61,10 @@ const buildStats = async (embeds, interaction) => {
   //Amount of tradelogs
   const logStats = buildEmbed().setTitle('These are the amount of tradelogs:');
   const channels = JSON.parse(fs.readFileSync(`src/data/tradelogs/tradelogs.json`));
-  let logSum = 0, logsDesc = '';
+  const logSum = channels.reduce((total, chnl) => chnl.amount + total, 0);
+  let logsDesc = '';
 
-  channels.forEach(chnl => {
-    logsDesc = logsDesc.concat('', `**${chnl.name}** | ${chnl.amount}\n`);
-    logSum += chnl.amount;
-  });
+  channels.forEach(chnl => logsDesc = logsDesc.concat('', `**${chnl.name}** | ${chnl.amount}\n`));
   
   logsDesc = logsDesc.concat('', `\nTotal amount: ${logSum}`);
   logStats.setDescription(logsDesc);
@@ -92,6 +83,29 @@ const buildStats = async (embeds, interaction) => {
   
   searchStats.setDescription(searchDesc);
   embeds.push(searchStats);
+
+  //general info
+  const info = buildEmbed().setTitle(`General info about ${client.user.username}:`);
+  const guild = await client.guilds.fetch(globals.serverId);
+  const latency = defer.createdTimestamp - createdTimestamp;
+  const timestamp = Math.round(client.readyTimestamp/1000);
+
+  info.addFields([
+    { name: 'Bot tag:', value: client.user.tag, inline: true },
+    { name: 'Bot id:', value: client.user.id, inline: true },
+    { name: 'Version:', value: version, inline: true },
+    { name: 'Running since:', value: `<t:${timestamp}:f>`, inline: true },
+    { name: 'Websocket heartbeat:', value: `${client.ws.ping}ms`, inline: true },
+    { name: 'Roundtrip latency:', value: `${latency}ms`, inline: true },
+    { name: 'Unique users:', value: users.length.toString(), inline: true },
+    { name: 'Total servers:', value: client.guilds.cache.size.toString(), inline: true },
+    { name: 'Commands used:', value: commandSum.toString(), inline: true },
+    { name: 'Server members:', value: guild.memberCount.toString(), inline: true },
+    { name: 'Amount of tradelogs:', value: logSum.toString(), inline: true },
+    { name: '\u200B', value: '\u200B', inline: true }
+  ]);
+
+  embeds.unshift(info)
 
   return embeds;
 }

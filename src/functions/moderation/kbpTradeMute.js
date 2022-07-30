@@ -59,8 +59,10 @@ const checkTradeMessages = async (channel, role, logChannel) => {
 
     const member = msg.member;
     if (!member) return true;
-    if (member.roles.cache.has(role.id)) return true;
-    if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) return true;
+    if (member.roles.cache.some(r => r.id === role.id)) return true;
+    if (member.roles.cache.some(r => r.id === globals.adminId || r.id === globals.modId)) return true;
+    //if (member.roles.cache.has(role.id)) return true;
+    //if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) return true;
 
     member.roles.add(role);
 

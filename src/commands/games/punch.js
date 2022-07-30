@@ -39,7 +39,7 @@ module.exports = {
 
       let result = buildEmbed().setAuthor(punch).setTitle(`You crafted: ${item}`).setThumbnail(getPunchImage(item));
       craftUvs.forEach((uv, ind) => { result.addFields([{ name: `UV #${ind + 1}`, value: uv, inline: true }]) });
-      result.addFields([{ name: 'Amount crafted:', value: amount }]);
+      result.addFields([{ name: 'Amount crafted', value: amount }]);
       result = checkForGm(result);
 
       const message = { embeds: [reply], components: [], ephemeral: true };

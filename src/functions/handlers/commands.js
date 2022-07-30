@@ -1,23 +1,17 @@
+const { Routes } = require('discord.js');
 const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v10');
 const { globals } = require('../../data/variables');
 const fs = require('fs');
 
 const deployCommands = async (globalCommands, kozmaCommands) => {
-  const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
+  const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
   try {
     console.log('Started refreshing application (/) commands.');
     
-    await rest.put(
-      Routes.applicationCommands(globals.botId),
-      { body: globalCommands },
-    );
+    await rest.put(Routes.applicationCommands(globals.botId), { body: globalCommands });
 
-    // await rest.put(
-    //   Routes.applicationGuildCommands(globals.botId, globals.serverId),
-    //   { body: kozmaCommands }
-    // );
+    //await rest.put(Routes.applicationGuildCommands(globals.botId, globals.serverId), { body: kozmaCommands });
 
     //unregister guild commands
     // rest.get(Routes.applicationGuildCommands(globals.botId, globals.serverId))
@@ -57,10 +51,9 @@ module.exports = (client) => {
 	      const command = require(`../../commands/${folder}/${file}`);
 	      client.commands.set(command.data.name, command);
 
-        if (folder.includes('kbp')) {
-          kozmaCommands.push(command.data.toJSON());
-        } else {
-          globalCommands.push(command.data.toJSON());
+        switch (folder) {
+          case 'kbp': kozmaCommands.push(command.data.toJSON()); break;
+          default: globalCommands.push(command.data.toJSON());
         }
       }
     }

@@ -16,9 +16,9 @@ module.exports = {
       if (embeds.length === 0) await buildStats(embeds, interaction);
       button.includes('next') ? ++pages[id] : --pages[id];
     } else {
-      await interaction.deferReply({ ephemeral: true });
+      const defer = await interaction.deferReply({ ephemeral: true, fetchReply: true });
       embeds.splice(0, embeds.length);
-      await buildStats(embeds, interaction);
+      await buildStats(interaction, embeds, defer);
     }
 
     const buttons = new ActionRowBuilder().addComponents(
