@@ -14,7 +14,7 @@ module.exports = {
         return;
       }
 
-      if (message.member.roles.cache.has(globals.adminId) || message.member.roles.cache.has(globals.modId)) return;
+      if (message.member.roles.cache.some(r => r.id === globals.adminId || r.id === globals.modId)) return;
 
       switch (message.channelId) {
         case globals.wtbChannelId: await giveMute(message, logChannel); break;
@@ -23,7 +23,7 @@ module.exports = {
       
     } catch (error) {
       await logChannel.send(`<@${globals.ownerId}> Error on msgCreate!\n${error}`);
-      console.log(`Error on msgCreate!`, { error });
+      console.log('\u001b[31mError on msgCreate!\n\u001b[0m', { error });
     };
 	},
 };

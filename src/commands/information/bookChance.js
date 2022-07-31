@@ -12,8 +12,7 @@ module.exports = {
       .setRequired(true)),
 	async execute(interaction) {
     const kats = interaction.options.getInteger('kats');
-    let chance = (1-Math.pow((1-1/250), kats)) * 100;
-    if (chance > 99.99) chance = 99.99;
+    const chance = kats < 2471 ? (1-Math.pow((1-1/250), kats)) * 100 : 99.99;
 
     const reply = buildEmbed()
       .setThumbnail('https://media3.spiralknights.com/wiki-images/9/91/Crafting-Book_of_Dark_Rituals.png')

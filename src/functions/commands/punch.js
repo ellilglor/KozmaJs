@@ -25,7 +25,17 @@ const rollUv = (item, crafting, uvs) => {
   const uvGrade = getUvGrade(itemType);
   let uvType = getUvType(itemType, crafting);
 
-  uvs.forEach(uv => { while (uv.includes(uvType)) uvType = getUvType(itemType, crafting) });
+  switch (uvs.length) {
+    case 2:
+      while (uvs[0].includes(uvType) || uvs[1].includes(uvType)) {
+        uvType = getUvType(itemType, crafting);
+      }
+      break;
+    case 1:
+      while (uvs[0].includes(uvType)) {
+        uvType = getUvType(itemType, crafting);
+      }
+  }
 
   return uvType + uvGrade;
 }
@@ -35,7 +45,7 @@ const getUvGrade = (type) => {
   let result = '\n';
 
   if (gradeRoll <= 245) {
-    result += type.includes('weapon') ? 'Very High' : 'Maximum';
+    result += type === 'weapon' ? 'Very High' : 'Maximum';
   } else {
     result += gradeRoll <= 732 ? 'High' : gradeRoll <= 2683 ? 'Medium' : 'Low';
   } 
@@ -44,7 +54,7 @@ const getUvGrade = (type) => {
 }
 
 const getUvType = (type, crafting) => {
-  if (type.includes('weapon')) {
+  if (type === 'weapon') {
     const weaponRoll = Math.floor(Math.random() * 8);
     
     switch (weaponRoll) {
@@ -58,7 +68,7 @@ const getUvType = (type, crafting) => {
       case 7: result = 'Damage Bonus vs Slime:';
     }
   } else {
-    const num = type.includes('armor') || (type.includes('shield') && crafting) ? 11 : 4;
+    const num = type === 'armor' || (type === 'shield' && crafting) ? 11 : 4;
     const armorRoll = Math.floor(Math.random() * num);
     
     switch (armorRoll) {
@@ -82,9 +92,8 @@ const getUvType = (type, crafting) => {
 const getItemType = (item) => {
   const weapons = ['Brandish', 'Overcharged Mixmaster'];
   const shield = 'Swiftstrike Buckler';
-  const result = weapons.includes(item) ? 'weapon' : shield.includes(item) ? 'shield' : 'armor';
-
-  return result;
+  
+  return weapons.includes(item) ? 'weapon' : shield === item ? 'shield' : 'armor';
 }
 
 const roll = () => {
@@ -94,7 +103,7 @@ const roll = () => {
 const getPunchImage = (item) => {
   const itemList = JSON.parse(fs.readFileSync(`src/data/punch/items.json`));
 
-  return itemList.find(i => { return item.includes(i.name) }).url;
+  return itemList.find(i => item === i.name).url;
 }
 
 const lockUv = async (interaction, uv) => {

@@ -26,10 +26,10 @@ const unbox = (box) => {
 const bonusRoll = (box, content, roll, unboxed) => {
   let result = '';
   
-  if (box.includes('Confection')) {
+  if (box === 'Confection') {
     const bRoll = Math.random() * 100;
     if (bRoll <= 1) result = { name: 'Sprinkle Aura' };
-  } else if (box.includes('Lucky') && roll <= 32) {
+  } else if (box === 'Lucky' && roll <= 32) {
     let finished = false;
     while (!finished) {
       const bRoll = Math.random() * 32;

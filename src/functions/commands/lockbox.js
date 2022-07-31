@@ -11,6 +11,7 @@ const findSlimeBox = (name) => {
 const findItem = (item) => {
   const replace = /['"\+\[\]()\-{},]/g;
   let result = '';
+  
   item = item.replace(replace,"").toLowerCase();
 
   boxes.forEach((content, box) => {

@@ -30,7 +30,7 @@ module.exports = {
         .setDescription(`@${globals.ownerTag} has been notified.`);
       
       await logChannel.send(`<@${globals.ownerId}> Error while executing ${name} for ${interaction.user.tag}!\n${error}`);
-      console.log(`Error while executing ${name}!`, { error });
+      console.log(`\u001b[31mError while executing ${name}!\n\u001b[0m`, { error });
 
       const message = { embeds: [crashed], ephemeral: true };
       interaction.replied || interaction.deferred ? await interaction.editReply(message) : await interaction.reply(message);

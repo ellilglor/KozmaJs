@@ -3,8 +3,8 @@ const { tradelogEmbed } = require('@functions/general');
 const { globals } = require('@data/variables');
 
 const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => {
-  const name = channelId.includes(globals.wtbChannelId) ? globals.wtbRole : globals.wtsRole;
-  const role = guild.roles.cache.find(r => r.name.includes(name));
+  const name = channelId === globals.wtbChannelId ? globals.wtbRole : globals.wtsRole;
+  const role = guild.roles.cache.find(r => r.name === name);
 
   if (!role) return await logChannel.send(`<@${globals.ownerId}> no role "${name}" was found`);
 
@@ -14,7 +14,7 @@ const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => 
   }
 
   await guild.members.fetch();
-  member.roles.add(role);
+  await member.roles.add(role);
 }
 
 const checkOldMessages = async (client) => {
@@ -27,7 +27,7 @@ const checkOldMessages = async (client) => {
     const time = msg.createdAt;
     time.setHours(time.getHours() + 1);
 
-    if (msg.content.includes(string) && globals.date < time) stop = true;
+    if (msg.content === string && globals.date < time) stop = true;
     return !stop;
   });
 
@@ -36,8 +36,8 @@ const checkOldMessages = async (client) => {
   const guild = await client.guilds.fetch(globals.serverId);
   const WTBchannel = client.channels.cache.get(globals.wtbChannelId);
   const WTSchannel = client.channels.cache.get(globals.wtsChannelId);
-  const WTBrole = guild.roles.cache.find(r => r.name.includes(globals.wtbRole));
-  const WTSrole = guild.roles.cache.find(r => r.name.includes(globals.wtsRole));
+  const WTBrole = guild.roles.cache.find(r => r.name === globals.wtbRole);
+  const WTSrole = guild.roles.cache.find(r => r.name === globals.wtsRole);
 
   console.log(string);
   await logChannel.send(string);
@@ -61,10 +61,8 @@ const checkTradeMessages = async (channel, role, logChannel) => {
     if (!member) return true;
     if (member.roles.cache.some(r => r.id === role.id)) return true;
     if (member.roles.cache.some(r => r.id === globals.adminId || r.id === globals.modId)) return true;
-    //if (member.roles.cache.has(role.id)) return true;
-    //if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) return true;
 
-    member.roles.add(role);
+    await member.roles.add(role);
 
     switch (role.name) {
       case globals.wtbRole: await dbBuyMute(member.user, logChannel, msg.createdAt); break;

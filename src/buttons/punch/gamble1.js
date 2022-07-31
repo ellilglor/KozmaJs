@@ -18,7 +18,7 @@ module.exports = {
     embed.data.fields = embed.data.fields.filter(f => { return (!f.name.includes('UV #2') && !f.name.includes('UV #3')) });
 
     embed.data.fields[1].value = (parseInt(embed.data.fields[1].value.replace(/,/g, '')) + 20000).toLocaleString('en');
-    if (embed.data.fields[2]?.name.includes('Single Rolls')) {
+    if (embed.data.fields[2]?.name === 'Single Rolls') {
       embed.data.fields[2].value = (parseInt(embed.data.fields[2].value.replace(/,/g, '')) + 1).toLocaleString('en');
     } else {
       embed.data.fields.splice(2, 0, { name: 'Single Rolls', value: '1', inline: true });

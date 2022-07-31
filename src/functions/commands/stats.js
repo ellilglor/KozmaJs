@@ -9,40 +9,55 @@ const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
   //bot usage
   const userStats = buildEmbed().setTitle('Top 20 bot users:');
   const users = await getUsers();
-  let userCount = 0, userDesc = '**Discord tag | Commands used | Boxes opened**\n';
+  let tags = '', used = '', gambled = '';
 
-  users.every(u => {
-    userCount += 1;
-    userDesc = userDesc.concat('',`**${userCount}. ${u.tag}** | ${u.amount} | ${u.unboxed}\n`);
-    return userCount > 19 ? false : true;
+  users.every((u, index) => {
+    tags = tags.concat('', `**${index + 1}. ${u.tag}**\n`);
+    used = used.concat('', `${u.amount}\n`);
+    gambled = gambled.concat('', `${u.unboxed}\n`);
+    return index > 18 ? false : true;
   });
   
-  userDesc = userDesc.concat('',`\nTotal amount of users: ${users.length}`);
-  userStats.setDescription(userDesc);
+  userStats.addFields([
+    { name: 'Discord tag:', value: tags, inline: true },
+    { name: 'Commands used:', value: used, inline: true },
+    { name: 'Boxes opened:', value: gambled, inline: true },
+    { name: 'Total amount of users:', value: users.length.toString() }
+  ]);
   embeds.push(userStats);
   
   //Servers the bot is in
-  const servers = buildEmbed().setTitle('I am in these servers:');
-  const serverArray = [];
-  let serversDesc = '';
+  const serverStats = buildEmbed().setTitle('I am in these servers:');
+  const servers = client.guilds.cache.map(g => { return { name: g.name, members: g.memberCount } });
+  servers.sort((a, b) => { return b.members - a.members });
+  let serverField1 = '', serverField2 = '', totalMembers = 0;
+
+  servers.forEach((s, ind) => {
+    const nr = ind + 1;
+    if (ind % 2 === 0) {
+      serverField1 = serverField1.concat('', `**${nr}. ${s.name}** - ${s.members}\n`);
+    } else {
+      serverField2 = serverField2.concat('', `**${nr}. ${s.name}** - ${s.members}\n`);
+    }
+    totalMembers += s.members;
+  });
   
-  client.guilds.cache.forEach(g => serverArray.push({ name: g.name, members: g.memberCount }));
-  serverArray.sort((a, b) => { return b.members - a.members });
-  serverArray.forEach(s => serversDesc = serversDesc.concat('', `**${s.name}** | ${s.members} members\n`));
-  
-  serversDesc = serversDesc.concat('', `\nTotal amount: ${client.guilds.cache.size}`);
-  servers.setDescription(serversDesc);
-  embeds.push(servers);
+  serverStats.addFields([
+    { name: '\u200B', value: serverField1, inline: true },
+    { name: '\u200B', value: serverField2, inline: true },
+    { name: '\u200B', value: '\u200B', inline: true },
+    { name: 'Total amount of servers:', value: client.guilds.cache.size.toString(), inline: true },
+    { name: 'Total available users:', value: totalMembers.toString(), inline: true }
+  ]);
+  embeds.push(serverStats);
 
   //Command usage
   const commandStats = buildEmbed().setTitle('How much each command has been used:');
   const commands = await getCommands();
   const commandSum = commands.reduce((total, cmd) => cmd.amount + total, 0);
-  let commandDesc = '';
-
-  commands.forEach(cmd => commandDesc = commandDesc.concat('', `**${cmd.command}** | ${cmd.amount}\n`));
+  const commandDesc = commands.reduce((desc, c) => desc.concat('', `**${c.command}** - ${c.amount}\n`), '');
   
-  commandDesc = commandDesc.concat('', `\nTotal amount: ${commandSum}`);
+  commandStats.addFields([{ name: 'Total used:', value: commandSum.toString() }]);
   commandStats.setDescription(commandDesc);
   embeds.push(commandStats);
 
@@ -50,11 +65,9 @@ const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
   const unboxStats = buildEmbed().setTitle('How much each box has been opened:');
   const boxes = await getBoxes();
   const unboxSum = boxes.reduce((total, box) => box.amount + total, 0);
-  let unboxDesc = '';
-
-  boxes.forEach(box => unboxDesc = unboxDesc.concat('', `**${box.box}** | ${box.amount}\n`));
+  const unboxDesc = boxes.reduce((desc, box) => desc.concat('', `**${box.box}** - ${box.amount}\n`), '');
   
-  unboxDesc = unboxDesc.concat('', `\nTotal opened: ${unboxSum}`);
+  unboxStats.addFields([{ name: 'Total opened:', value: unboxSum.toString() }]);
   unboxStats.setDescription(unboxDesc);
   embeds.push(unboxStats);
 
@@ -62,23 +75,20 @@ const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
   const logStats = buildEmbed().setTitle('These are the amount of tradelogs:');
   const channels = JSON.parse(fs.readFileSync(`src/data/tradelogs/tradelogs.json`));
   const logSum = channels.reduce((total, chnl) => chnl.amount + total, 0);
-  let logsDesc = '';
+  const logsDesc = channels.reduce((desc, c) => desc.concat('', `**${c.name}** - ${c.amount}\n`), '');
 
-  channels.forEach(chnl => logsDesc = logsDesc.concat('', `**${chnl.name}** | ${chnl.amount}\n`));
-  
-  logsDesc = logsDesc.concat('', `\nTotal amount: ${logSum}`);
+  logStats.addFields([{ name: 'Total amount:', value: logSum.toString() }]);
   logStats.setDescription(logsDesc);
   embeds.push(logStats);
 
   //findlogs command stats
   const searchStats = buildEmbed().setTitle('Top 20 searched items:');
   const items = await getSearched();
-  let itemCount = 0, searchDesc = '';
+  let searchDesc = '';
 
-  items.every(item => {
-    itemCount += 1;
-    searchDesc = searchDesc.concat('', `**${itemCount}. ${item.item}** | ${item.amount}\n`);
-    return itemCount > 19 ? false : true;
+  items.every((item, index) => {
+    searchDesc = searchDesc.concat('', `**${index + 1}. ${item.item}** - ${item.amount}\n`);
+    return index > 18 ? false : true;
   });
   
   searchStats.setDescription(searchDesc);
@@ -97,12 +107,13 @@ const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
     { name: 'Running since:', value: `<t:${timestamp}:f>`, inline: true },
     { name: 'Websocket heartbeat:', value: `${client.ws.ping}ms`, inline: true },
     { name: 'Roundtrip latency:', value: `${latency}ms`, inline: true },
-    { name: 'Unique users:', value: users.length.toString(), inline: true },
+    { name: 'Unique bot users:', value: users.length.toString(), inline: true },
     { name: 'Total servers:', value: client.guilds.cache.size.toString(), inline: true },
+    { name: 'Available users:', value: totalMembers.toString(), inline: true },
     { name: 'Commands used:', value: commandSum.toString(), inline: true },
-    { name: 'Server members:', value: guild.memberCount.toString(), inline: true },
     { name: 'Amount of tradelogs:', value: logSum.toString(), inline: true },
-    { name: '\u200B', value: '\u200B', inline: true }
+    { name: 'Items searched:', value: items.length.toString(), inline: true },
+    { name: 'Server members:', value: guild.memberCount.toString(), inline: true }
   ]);
 
   embeds.unshift(info)

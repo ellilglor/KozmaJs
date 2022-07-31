@@ -4,25 +4,16 @@ const { saveUser } = require('@functions/database/user');
 const { globals } = require('@data/variables');
 
 const buildEmbed = () => {
-  const embed = new EmbedBuilder()
+  return new EmbedBuilder()
     .setColor('#29D0FF')
     .setFooter({ 
       text: `Thank you for using Kozma's Backpack bot!`, 
       iconURL: 'https://cdn.discordapp.com/attachments/713080672893534281/884813303132606474/logo.png'
     });
-  return embed;
 };
 
 const tradelogEmbed = () => {
-  const embed = new EmbedBuilder().setColor('#29D0FF');
-  return embed;
-};
-
-const noPermission = (embed) => {
-  embed
-    .setTitle(`You don't have permission to use this command!`)
-    .setColor('#e74c3c');
-  return embed;
+  return new EmbedBuilder().setColor('#29D0FF');
 };
 
 const logCommand = async ({ client, options, member, user, commandName, message: msg }, extra, item) => {
@@ -47,15 +38,13 @@ const saveData = async (user, command, option) => {
   await saveUser(user, command);
   await saveCommand(command);
 
-  if (command.includes('findlogs')) {
-    option = option.replace(/[0-9]/g, '')
-      .replace(' variant-search', '')
-      .replace(' single-search', '');
-    option = contentFilter(option);
-
-    await saveSearched(option);
-  } else if (command.includes('unbox')) {
-    await saveBox(option.trim());
+  switch (command) {
+    case 'findlogs':
+      option = option.replace(/[0-9]/g, '').replace(' variant-search', '').replace(' single-search', '');
+      option = contentFilter(option);
+      await saveSearched(option); break;
+    case 'unbox':
+      await saveBox(option.trim()); break;
   }
 }
 
@@ -79,7 +68,6 @@ const contentFilter = (content) => {
 module.exports = {
   buildEmbed,
   tradelogEmbed,
-  noPermission,
   logCommand,
   contentFilter
 };

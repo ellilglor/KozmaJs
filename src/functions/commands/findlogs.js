@@ -45,7 +45,10 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
 
       charCount += message.content.length;
 
-      const embed = tradelogEmbed().setTitle(message.date).setURL(message.messageUrl).setDescription(message.content.slice(0,4096));
+      const embed = tradelogEmbed()
+        .setTitle(message.date)
+        .setURL(message.messageUrl)
+        .setDescription(message.content.slice(0,4096));
 
       if (message.image) embed.setImage(message.image);
 
@@ -119,7 +122,7 @@ const addVariants = (items) => {
       
       const uvs = ' ' + items[0].replace(name, '').trim();
       items.pop();
-      structures.equipmentFamilies[family].forEach(item => { items.push(`${item}${uvs}`.trim()) });
+      structures.equipmentFamilies[family].forEach(item => items.push(`${item}${uvs}`.trim()));
       check = false;
       break itemFamilyLoop;
     }
@@ -131,7 +134,7 @@ const addVariants = (items) => {
       for (const name of structures.colorSets[set]) {
         if (!items[0].includes(name)) continue;
 
-        if (set.includes('gems')) {
+        if (set === 'gems') {
           let stop = false;
 
           structures.gemExceptions.every(ex => {
@@ -142,11 +145,11 @@ const addVariants = (items) => {
           if (stop) continue colorLoop;
         }
 
-        if (set.includes('snipes') && (items[0].includes('slime') || items[0].includes('plume'))) continue colorLoop;
+        if (set === 'snipes' && (items[0].includes('slime') || items[0].includes('plume'))) continue colorLoop;
       
         const template = items[0].replace(name, '').trim();
 
-        if (set.includes('snipes') && name.includes('rose')) {
+        if (set === 'snipes' && name ==='rose') {
           if (structures.roses.includes(template) || template.includes('tabard') || template.includes('chapeau')) {
             continue colorLoop;
           }
@@ -154,10 +157,10 @@ const addVariants = (items) => {
 
         items.pop();
         
-        if (set.includes('obsidian') || set.includes('rose')) {
-          structures.colorSets[set].forEach(color => { items.push(`${template} ${color}`.trim()) });
+        if (set === 'obsidian' || set.includes('rose')) {
+          structures.colorSets[set].forEach(color => items.push(`${template} ${color}`.trim()));
         } else {
-          structures.colorSets[set].forEach(color => { items.push(`${color} ${template}`.trim()) });
+          structures.colorSets[set].forEach(color => items.push(`${color} ${template}`.trim()));
         }
         
         break colorLoop;

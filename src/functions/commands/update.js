@@ -37,7 +37,7 @@ const checkForNewLogs = async (client) => {
 
   const logMessages = await logChannel.messages.fetch({ limit: 20 });
   logMessages.every(msg => {
-    if (msg.content.includes(string)) stop = true;
+    if (msg.content === string) stop = true;
     return !stop;
   });
 
