@@ -1,0 +1,45 @@
+{
+  "punch": {
+    "title1": "Craftando",
+    "title2": "Hai craftato",
+    "crafted": "Quantità craftate",
+    "recraftBtn": "Ricrafta",
+    "startBtn": "Inizia a rollare UVs",
+    "spent": "Crowns Spesi",
+    "lockDesc": "*Questi pulsanti ti consentono di bloccare/sbloccare gli UVs ottenuti.*",
+    "gambleDesc": "*Questi pulsanti ti consentono di ottenere UVs aggiuntivi.*",
+    "single": "Roll Singoli",
+    "double": "Roll Doppi",
+    "triple": "Roll Tripli",
+    "reward1": "Congratulazioni! Hai creato un item GM.",
+    "reward2": "Come ricompensa riceverai un meme di Spiral Knights a caso.",
+    "author": "Author"
+  },
+  "unbox": {
+    
+  },
+  "bookChance": {
+    
+  },
+  "convert": {
+    
+  },
+  "findLogs": {
+    
+  },
+  "help": {
+    
+  },
+  "lockbox": {
+    
+  },
+  "rate": {
+    
+  },
+  "clear": {
+    
+  },
+  "error": {
+    
+  }
+}

@@ -12,7 +12,7 @@ module.exports = {
     let spent = interaction.message.embeds[0].fields[1].value;
     const showStats = true;
 
-    spent = spent.includes('Energy') ? parseInt(spent) : parseFloat(spent.replace("$", "")).toFixed(2);
+    spent = spent.includes('$') ? parseFloat(spent.replace("$", "")).toFixed(2) : parseInt(spent);
     
     await command.execute(interaction, showStats, box, amount, String(spent));
   }

@@ -1,5 +1,5 @@
 const { InteractionType } = require('discord.js');
-const { buildEmbed } = require('@functions/general');
+const { buildEmbed, getLanguage } = require('@functions/general');
 const { globals } = require('@data/variables');
 
 module.exports = {
@@ -13,10 +13,11 @@ module.exports = {
     //   console.log(interaction.user.tag);
     //   return;
     // }
-    
+
+    const lan = getLanguage('temp').error;
     const command = client.commands.get(interaction.commandName);
     const button = client.buttons.get(interaction.customId);
-    const noCode = buildEmbed().setTitle('It looks like this command is missing!');
+    const noCode = buildEmbed().setTitle(lan.missing);
 
     if (!command && !button) return await interaction.reply({ embeds: [noCode], ephemeral: true });
     
@@ -26,8 +27,8 @@ module.exports = {
       const logChannel = client.channels.cache.get(globals.botLogsChannelId);
       const name = interaction.commandName || interaction.customId;
       const crashed = buildEmbed()
-        .setTitle('There was an error while executing this command!')
-        .setDescription(`@${globals.ownerTag} has been notified.`);
+        .setTitle(lan.error)
+        .setDescription(`@${globals.ownerTag} ${lan.notified}`);
       
       await logChannel.send(`<@${globals.ownerId}> Error while executing ${name} for ${interaction.user.tag}!\n${error}`);
       console.log(`\u001b[31mError while executing ${name}!\n\u001b[0m`, { error });

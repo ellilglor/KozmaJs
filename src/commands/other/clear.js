@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { buildEmbed, logCommand } = require('@functions/general');
+const { buildEmbed, logCommand, getLanguage } = require('@functions/general');
 const fetchAll = require('discord-fetch-all');
 
 module.exports = {
@@ -7,7 +7,8 @@ module.exports = {
 		.setName('clear')
 		.setDescription('Removes all bot messages in your dms.'),
 	async execute(interaction) {
-    const reply = buildEmbed().setTitle('Clearing messages.');
+    const lan = getLanguage('temp').clear;
+    const reply = buildEmbed().setTitle(lan.title);
     
 		await interaction.reply({ embeds: [reply], ephemeral: true });
     await logCommand(interaction);

@@ -16,8 +16,9 @@ const buttonFolders = fs.readdirSync('./src/buttons');
 (async () => {
   handlerFiles.forEach(f => { require(`./functions/handlers/${f}`)(client) });
 
-  //testing to auto restart on ratelimit
-  client.rest.on('ratelimited', data => { if (data.timeout > 1000) process.kill(1) });
+  //testing to auto restart on ratelimit - remains to be broken
+  //client.rest.on('ratelimited', data => { if (data.timeout > 1000) process.kill(1) });
+  client.rest.on('ratelimited', data => { console.log("ratelimited") });
 
   client.handleEvents(botEventFiles);
   client.handleCommands(commandFolders);

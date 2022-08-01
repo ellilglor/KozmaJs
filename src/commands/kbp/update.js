@@ -6,8 +6,7 @@ const { channels } = require('@structures/findlogs');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('update')
-		.setDescription(`Kozma's Backpack staff only.`)
-    .setDefaultPermission(false),
+		.setDescription(`Kozma's Backpack staff only.`),
 	async execute(interaction) {
     const reply = buildEmbed().setTitle('Executing /update');
     const stats = [], collectAll = true;

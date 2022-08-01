@@ -2,6 +2,7 @@ const { EmbedBuilder } = require('discord.js');
 const { saveCommand, saveSearched, saveBox } = require('@functions/database/stats');
 const { saveUser } = require('@functions/database/user');
 const { globals } = require('@data/variables');
+const fs = require('fs');
 
 const buildEmbed = () => {
   return new EmbedBuilder()
@@ -22,7 +23,7 @@ const logCommand = async ({ client, options, member, user, commandName, message:
   const location = member?.guild.name || 'DM';
   const command = commandName || msg.interaction.commandName || msg.interaction.name;
 
-  let option = options?._hoistedOptions.map(opt => { return ` ${opt.value}` }).toString() || '';
+  let option = options?._hoistedOptions.reduce((s, opt) => s.concat(' ', opt.value), '') || '';
   if (extra) option += ` ${extra}`;
 
   await saveData(user, command, option);
@@ -48,6 +49,14 @@ const saveData = async (user, command, option) => {
   }
 }
 
+const getLanguage = (locale) => {
+  switch (locale) {
+    case 'it': return JSON.parse(fs.readFileSync(`src/data/languages/italian.json`));
+    case 'nl': return JSON.parse(fs.readFileSync(`src/data/languages/dutch.json`));
+    default: return JSON.parse(fs.readFileSync(`src/data/languages/english.json`));
+  }
+}
+
 const contentFilter = (content) => {
 	result = content.replace(/['"\+\[\]()\-{},]/g, "").toLowerCase();
 
@@ -69,5 +78,6 @@ module.exports = {
   buildEmbed,
   tradelogEmbed,
   logCommand,
+  getLanguage,
   contentFilter
 };

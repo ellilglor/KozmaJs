@@ -1,0 +1,99 @@
+{
+  "punch": {
+    "title1": "Crafting",
+    "title2": "You crafted",
+    "crafted": "Amount crafted",
+    "recraftBtn": "Recraft",
+    "startBtn": "Start Rolling Uvs",
+    "spent": "Crowns Spent",
+    "lockDesc": "*These buttons let you lock/unlock a Unique Variant.*",
+    "gambleDesc": "*These buttons let you roll for additional Unique Variants.*",
+    "single": "Single Rolls",
+    "double": "Double Rolls",
+    "triple": "Triple Rolls",
+    "reward1": "Congratulations! You created a GM item.",
+    "reward2": "As a reward you get a random Spiral Knights meme.",
+    "author": "Author"
+  },
+  "unbox": {
+    "statDesc": "**In this session you opened:**",
+    "opened": "Opened:",
+    "spent": "Total spent:",
+    "lost": "The bot has restarted and this data is lost!",
+    "limit": "**I have reached the character limit!**",
+    "title": "You unboxed:",
+    "opening": "Opening your box"
+  },
+  "bookChance": {
+    "title1": "After killing",
+    "title2": "Black Kats you have a",
+    "title3": "chance of getting at least 1 Book of Dark Rituals.",
+    "desc": "*Disclaimer: The chance to get a book stays the same for each kat, so killing 250 kats does not guarantee a drop.*",
+    "spawn": "Black Kat spawn:",
+    "drop": "Book drop:",
+    "chance": "Overal chance per Kat:",
+    "or": "or"
+  },
+  "convert": {
+    "desc1": "Used conversion rate:",
+    "desc2": "Crowns per Energy.",
+    "equal": "is equal to roughly"
+  },
+  "findLogs": {
+    "title": "Searching for",
+    "desc1": "**I will dm you what I can find.**",
+    "desc2": "By default I only look at tradelogs from the past 6 months!",
+    "desc3": "If you want me to look past that use the *months* option.",
+    "desc4": "__**Info when searching:**__",
+    "desc5": "~ Slime boxes: combination first then *slime lockbox*\nExample: QQQ Slime Lockbox",
+    "desc6": "~ UV'd equipment: use asi / ctr + med / high / very high / max",
+    "desc7": "The bot automatically swaps asi & ctr so you don't have to search twice.",
+    "desc8": "~ Equipment: The bot looks for the entire family tree of your item!",
+    "desc9": "So when you lookup *brandish* it will also look for *combuster* for example",
+    "desc10": "~ Sprite pods: type out as seen in game\nExample: Drakon Pod (Divine)",
+    "channel": "I found these posts in",
+    "everything": "This is everything I found for",
+    "helped": "I hope these helped!",
+    "finDesc1": "By default I only look at tradelogs from the past 6 months!",
+    "finDesc2": "If you want me to look past that use the *months* option.",
+    "finDesc3": "If you notice a problem please contact",
+    "finDesc4": "Did you know we have our own [**Discord server**]",
+    "noLogs": "I couldn't find any listings for",
+    "sheet": "can be found on the [**merchant sheet**]",
+    "button": "Search all tradelogs",
+    "errorTitle": "I can't send you any messages!",
+    "errorDesc1": "Make sure you have the following enabled:",
+    "errorDesc2": "*Allow direct messages from server members* in User Settings > Privacy & Safety",
+    "errorDesc3": "And Don't block me!"
+  },
+  "help": {
+    "title": "Here are all my commands:",
+    "desc": "If you notice a problem please contact",
+    "bookChance": "Get the % chance you have of getting at least 1 Book of Dark Rituals.",
+    "clear": "Deletes all the messages the bot has sent you.",
+    "convert": "Convert your currency. (glorified calculator)",
+    "findLogs": "Makes the bot search the database for your item.",
+    "lockbox": "Gives information about a lockbox or tells you what box drops your item.",
+    "rate": "Tells you the crowns per energy rate currently in use.",
+    "unbox": "Simulate opening a box and be disappointed for free."
+  },
+  "lockbox": {
+    "title": "Please select 1 of the given options.",
+    "noMatch": "I didn't find a match for",
+    "item": "These lockboxes contain",
+    "noItem": "I didn't find a box containing"
+  },
+  "rate": {
+    "desc": "I use this rate for calculating **/convert**.",
+    "noPerm": "You don't have permission to set a new rate!",
+    "rate": "The current crowns per energy rate is:"
+  },
+  "clear": {
+    "title": "Clearing messages."
+  },
+  "error": {
+    "missing": "It looks like this command is missing!",
+    "error": "There was an error while executing this command!",
+    "notified": "has been notified."
+  }
+}

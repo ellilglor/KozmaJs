@@ -6,8 +6,7 @@ const embeds = [], pages = {};
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('stats')
-		.setDescription(`Kozma's Backpack staff only.`)
-    .setDefaultPermission(false),
+		.setDescription(`Kozma's Backpack staff only.`),
 	async execute(interaction, button) {
     const id = interaction.user.id;
     pages[id] = pages[id] || 0;

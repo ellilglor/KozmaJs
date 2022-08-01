@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { findBox, findSlimeBox, findItem } = require('@functions/commands/lockbox');
-const { buildEmbed, logCommand } = require('@functions/general');
+const { buildEmbed, logCommand, getLanguage } = require('@functions/general');
 const { getImage } = require('@functions/commands/unbox');
 
 module.exports = {
@@ -33,10 +33,11 @@ module.exports = {
       .setMinLength(3)
       .setMaxLength(69)),
 	async execute(interaction) {
+    const lan = getLanguage('temp').lockbox;
     let box = interaction.options.getString('boxes');
     const slime = interaction.options.getString('slime');
     const item = interaction.options.getString('item');
-    const reply = buildEmbed().setTitle('Please select 1 of the given options.');
+    const reply = buildEmbed().setTitle(lan.title);
 
     if (box) {
       const match = findBox(box);
@@ -47,10 +48,10 @@ module.exports = {
       reply.setTitle(`${box.toUpperCase()}:`).setDescription(match);
     } else if (slime) {
       const match = findSlimeBox(slime);
-      reply.setTitle(match || `I didn't find a match for __${slime}__.`);
+      reply.setTitle(match || `${lan.noMatch} __${slime}__.`);
     } else if (item) {
       const match = findItem(item);
-      reply.setTitle(match ? `These lockboxes contain __${item}__:` : `I didn't find a box containing __${item}__.`).setDescription(match || null);
+      reply.setTitle(match ? `${lan.item} __${item}__:` : `${lan.noItem} __${item}__.`).setDescription(match || null);
     } 
 
     const buttons = new ActionRowBuilder().addComponents(

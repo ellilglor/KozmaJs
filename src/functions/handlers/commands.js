@@ -9,9 +9,9 @@ const deployCommands = async (globalCommands, kozmaCommands) => {
   try {
     console.log('Started refreshing application (/) commands.');
     
-    await rest.put(Routes.applicationCommands(globals.botId), { body: globalCommands });
+    //await rest.put(Routes.applicationCommands(globals.botId), { body: globalCommands });
 
-    //await rest.put(Routes.applicationGuildCommands(globals.botId, globals.serverId), { body: kozmaCommands });
+    await rest.put(Routes.applicationGuildCommands(globals.botId, globals.serverId), { body: kozmaCommands });
 
     //unregister guild commands
     // rest.get(Routes.applicationGuildCommands(globals.botId, globals.serverId))

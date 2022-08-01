@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { buildEmbed, logCommand } = require('@functions/general');
+const { buildEmbed, logCommand, getLanguage } = require('@functions/general');
 const { globals } = require('@data/variables');
 
 module.exports = {
@@ -7,17 +7,19 @@ module.exports = {
 		.setName('help')
 		.setDescription('Explains all commands.'),
 	async execute(interaction) {
+    const lan = getLanguage('temp').help;
     const reply = buildEmbed()
-      .setTitle('Here are all my commands:')
-      .setDescription(
-        '**/bookchance** Get the % chance you have of getting at least 1 Book of Dark Rituals.\n\n' + 
-        '**/clear** Deletes all the messages the bot has sent you.\n\n' + 
-        '**/convert** Convert your currency. (glorified calculator)\n\n' +
-        '**/findlogs** Makes the bot search the database for your item.\n\n' +
-        '**/lockbox** Gives information about a lockbox or tells you what box drops your item.\n\n' +
-        '**/rate** Tells you the crowns per energy rate currently in use.\n\n' +
-        '**/unbox** Simulate opening a box and be disappointed for free.\n\n' +
-        `*If you notice a problem please contact @${globals.ownerTag}*`);
+      .setTitle(lan.title)
+      .setDescription(`*${lan.desc} @${globals.ownerTag}*`)
+      .addFields([
+        { name: '/bookchance', value: lan.bookChance },
+        { name: '/clear', value: lan.clear },
+        { name: '/convert', value: lan.convert },
+        { name: '/findlogs', value: lan.findLogs },
+        { name: '/lockbox', value: lan.lockbox },
+        { name: '/rate', value: lan.rate },
+        { name: '/unbox', value: lan.unbox },
+    ]);
 
     const buttons = new ActionRowBuilder().addComponents(
 			new ButtonBuilder()

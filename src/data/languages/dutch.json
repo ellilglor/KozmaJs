@@ -1,0 +1,45 @@
+{
+  "punch": {
+    "title1": "aan het maken",
+    "title2": "Je hebt gemaakt",
+    "crafted": "Aantal gemaakt",
+    "recraftBtn": "Hermaken",
+    "startBtn": "Start Rollen van Uvs",
+    "spent": "Crowns Gespendeerd",
+    "lockDesc": "*Deze knoppen staan je toe UVs te blokkeren/vrij te maken.*",
+    "gambleDesc": "*Deze knoppen staan je toe additionele UVs toe te voegen.*",
+    "single": "Enkele Rollen",
+    "double": "Dubbel Rollen",
+    "triple": "Tripel Rollen",
+    "reward1": "Proficiat! Je hebt een GM item gemaakt.",
+    "reward2": "Als een beloning krijg je een willekeurige Spiral Knights meme.",
+    "author": "Auteur"
+  },
+  "unbox": {
+    
+  },
+  "bookChance": {
+    
+  },
+  "convert": {
+    
+  },
+  "findLogs": {
+    
+  },
+  "help": {
+    
+  },
+  "lockbox": {
+    
+  },
+  "rate": {
+    
+  },
+  "clear": {
+    
+  },
+  "error": {
+    
+  }
+}

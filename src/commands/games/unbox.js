@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { buildEmbed, logCommand } = require('@functions/general');
+const { buildEmbed, logCommand, getLanguage } = require('@functions/general');
 const { unbox, getImage } = require('@functions/commands/unbox');
 const { lockboxes, depotBoxes } = require('@structures/unbox');
 const wait = require('util').promisify(setTimeout);
@@ -30,11 +30,12 @@ module.exports = {
       { name: 'Lucky', value: 'Lucky' }
     )),
   async execute(interaction, showStats, choice, opened, spent) {
+    const lan = getLanguage('temp').unbox;
     const box = choice || interaction.options.getString('box');
     const author = { name: box, iconURL: getImage('Boxes', box)};
     const id = interaction.user.id;
     const amount = opened || '1';
-    let desc = '**In this session you opened:**', total = 0, money = false;
+    let desc = lan.statDesc, total = 0, money = false;
 
     if (!items[id]) items[id] = {};
 
@@ -50,13 +51,13 @@ module.exports = {
     const result = buildEmbed()
       .setAuthor(author)
       .addFields([
-        { name: 'Opened:', value: `${amount}`, inline: true },
-        { name: 'Total spent:', value: money ? `$${total}` : `${total} Energy`, inline: true }
+        { name: lan.opened, value: amount.toString(), inline: true },
+        { name: lan.spent, value: money ? `$${total}` : `${total} Energy`, inline: true }
       ]);
     
     if (showStats) {
       if (!items[id][box]) {
-        result.setDescription(`The bot has restarted and this data is lost!`);
+        result.setDescription(lan.lost);
       } else {
         // sort items from most to least opened
         items[id][box] = Object.fromEntries(
@@ -64,7 +65,7 @@ module.exports = {
         );
 
         Object.entries(items[id][box]).every(([item, amount]) => {
-          desc = desc.concat('\n', desc.length < 4030 ? `${item} : ${amount}` : `**I have reached the character limit!**`);
+          desc = desc.concat('\n', desc.length < 4030 ? `${item} : ${amount}` : lan.limit);
           return desc.length < 4030 ? true : false;
         });
 
@@ -72,14 +73,14 @@ module.exports = {
       }
     } else {
       const unboxed = unbox(box);
-      desc = unboxed.map(item => { return item.name }).toString().replace(/,/g, ' & ');
+      desc = unboxed.reduce((d, item) => d.concat(' & ', item.name), '').replace(' & ', '');
       
       await logCommand(interaction, choice, desc);
 
       if (!items[id][box] || !choice) items[id][box] = {};
       unboxed.forEach(item => { items[id][box][item.name] = items[id][box][item.name] + 1 || 1 });
       
-      result.setTitle('You unboxed:').setDescription(`*${desc}*`).setThumbnail(unboxed[0].url);
+      result.setTitle(lan.title).setDescription(`*${desc}*`).setThumbnail(unboxed[0].url);
     }
 
     const buttons = new ActionRowBuilder().addComponents(
@@ -97,7 +98,7 @@ module.exports = {
     }
 
     if (!showStats) {
-      const reply = buildEmbed().setTitle(`Opening your box`).setDescription('3...').setAuthor(author);
+      const reply = buildEmbed().setTitle(lan.opening).setDescription('3...').setAuthor(author);
       const message = { embeds: [reply], components: [], ephemeral: true };
       
       choice ? await interaction.update(message) : await interaction.reply(message);
