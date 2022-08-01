@@ -18,7 +18,6 @@ const buttonFolders = fs.readdirSync('./src/buttons');
 
   //testing to auto restart on ratelimit - remains to be broken
   //client.rest.on('ratelimited', data => { if (data.timeout > 1000) process.kill(1) });
-  client.rest.on('ratelimited', data => { console.log("ratelimited") });
 
   client.handleEvents(botEventFiles);
   client.handleCommands(commandFolders);
