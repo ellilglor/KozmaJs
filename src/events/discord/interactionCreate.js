@@ -1,11 +1,11 @@
-const { InteractionType } = require('discord.js');
+const { InteractionType: type } = require('discord.js');
 const { buildEmbed, getLanguage } = require('@functions/general');
 const { globals } = require('@data/variables');
 
 module.exports = {
 	name: 'interactionCreate',
 	async execute(interaction, client) {
-    if (interaction.type !== InteractionType.ApplicationCommand && !interaction.isButton()) return;
+    if (interaction.type !== type.ApplicationCommand && interaction.type !== type.MessageComponent) return;
 
     // if (interaction.user.tag !== globals.ownerTag) {
     //   const maintenance = buildEmbed().setTitle('The bot is currently being worked on.\nPlease try again later.');
@@ -32,9 +32,11 @@ module.exports = {
       
       await logChannel.send(`<@${globals.ownerId}> Error while executing ${name} for ${interaction.user.tag}!\n${error}`);
       console.log(`\u001b[31mError while executing ${name}!\n\u001b[0m`, { error });
-
-      const message = { embeds: [crashed], ephemeral: true };
-      interaction.replied || interaction.deferred ? await interaction.editReply(message) : await interaction.reply(message);
+      
+      if (error.name !== 'DiscordAPIError[10062]') {
+        const message = { embeds: [crashed], ephemeral: true };
+        interaction.replied || interaction.deferred ? await interaction.editReply(message) : await interaction.reply(message);
+      }
     };
 	},
 };
