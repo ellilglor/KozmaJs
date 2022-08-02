@@ -8,7 +8,7 @@ module.exports = {
 		.setDescription('Explains all commands.'),
 	async execute(interaction) {
     const lan = getLanguage('temp').help;
-    const reply = buildEmbed()
+    const reply = buildEmbed(interaction)
       .setTitle(lan.title)
       .setDescription(`*${lan.desc} @${globals.ownerTag}*`)
       .addFields([

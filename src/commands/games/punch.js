@@ -25,7 +25,7 @@ module.exports = {
 	async execute(interaction, option, crafted) {
     const lan = getLanguage(interaction.locale).punch;
     const item = option || interaction.options.getString('item');
-    const reply = buildEmbed().setAuthor(punch).setTitle(`${lan.title1} ${item}`).setDescription('3...');
+    const reply = buildEmbed(interaction).setAuthor(punch).setTitle(`${lan.title1} ${item}`).setDescription('3...');
     const amount = crafted || '1';
     //await logCommand(interaction, option);
 
@@ -38,7 +38,7 @@ module.exports = {
 				  .setCustomId('start-punching').setLabel(lan.startBtn).setStyle('Primary')
 		  );
 
-      let result = buildEmbed().setAuthor(punch).setTitle(`${lan.title2}: ${item}`).setThumbnail(getPunchImage(item));
+      let result = buildEmbed(interaction).setAuthor(punch).setTitle(`${lan.title2}: ${item}`).setThumbnail(getPunchImage(item));
       craftUvs.forEach((uv, ind) => { result.addFields([{ name: `UV #${ind + 1}`, value: uv, inline: true }]) });
       result.addFields([{ name: lan.crafted, value: amount }]);
       result = checkForGm(result, interaction);

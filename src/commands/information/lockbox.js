@@ -37,7 +37,7 @@ module.exports = {
     let box = interaction.options.getString('boxes');
     const slime = interaction.options.getString('slime');
     const item = interaction.options.getString('item');
-    const reply = buildEmbed().setTitle(lan.title);
+    const reply = buildEmbed(interaction).setTitle(lan.title);
 
     if (box) {
       const match = findBox(box);

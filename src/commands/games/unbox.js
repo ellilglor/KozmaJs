@@ -48,7 +48,7 @@ module.exports = {
       money = true;
     }
 
-    const result = buildEmbed()
+    const result = buildEmbed(interaction)
       .setAuthor(author)
       .addFields([
         { name: lan.opened, value: amount.toString(), inline: true },
@@ -98,7 +98,7 @@ module.exports = {
     }
 
     if (!showStats) {
-      const reply = buildEmbed().setTitle(lan.opening).setDescription('3...').setAuthor(author);
+      const reply = buildEmbed(interaction).setTitle(lan.opening).setDescription('3...').setAuthor(author);
       const message = { embeds: [reply], components: [], ephemeral: true };
       
       choice ? await interaction.update(message) : await interaction.reply(message);

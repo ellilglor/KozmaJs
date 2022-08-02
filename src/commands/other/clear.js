@@ -8,7 +8,7 @@ module.exports = {
 		.setDescription('Removes all bot messages in your dms.'),
 	async execute(interaction) {
     const lan = getLanguage('temp').clear;
-    const reply = buildEmbed().setTitle(lan.title);
+    const reply = buildEmbed(interaction).setTitle(lan.title);
     
 		await interaction.reply({ embeds: [reply], ephemeral: true });
     await logCommand(interaction);

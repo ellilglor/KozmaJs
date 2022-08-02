@@ -4,12 +4,14 @@ const { saveUser } = require('@functions/database/user');
 const { globals } = require('@data/variables');
 const fs = require('fs');
 
-const buildEmbed = () => {
+const buildEmbed = ({ client, locale }) => {
+  const lan = getLanguage('temp').general;
+  
   return new EmbedBuilder()
     .setColor('#29D0FF')
     .setFooter({ 
-      text: `Thank you for using Kozma's Backpack bot!`, 
-      iconURL: 'https://cdn.discordapp.com/attachments/713080672893534281/884813303132606474/logo.png'
+      text: `${lan.thanks} ${client.user.username} bot!`, 
+      iconURL: client.user.displayAvatarURL()
     });
 };
 

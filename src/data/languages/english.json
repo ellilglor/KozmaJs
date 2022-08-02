@@ -95,5 +95,9 @@
     "missing": "It looks like this command is missing!",
     "error": "There was an error while executing this command!",
     "notified": "has been notified."
+  },
+  "general": {
+    "thanks": "Thank you for using",
+    "translator": "translator: *insert your tag here*"
   }
 }

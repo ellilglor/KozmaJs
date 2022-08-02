@@ -13,7 +13,7 @@ module.exports = {
 	async execute(interaction) {
     const lan = getLanguage('temp').rate;
     const newValue = interaction.options.getInteger('value');
-    const reply = buildEmbed().setDescription(lan.rate);
+    const reply = buildEmbed(interaction).setDescription(lan.rate);
 
     if (newValue) {
       if (interaction.member?.roles.cache.some(r => r.id === globals.adminId || r.id === globals.modId)) {

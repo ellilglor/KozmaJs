@@ -8,7 +8,7 @@ module.exports = {
 		.setName('update')
 		.setDescription(`Kozma's Backpack staff only.`),
 	async execute(interaction) {
-    const reply = buildEmbed().setTitle('Executing /update');
+    const reply = buildEmbed(interaction).setTitle('Executing /update');
     const stats = [], collectAll = true;
     
     await interaction.reply({ embeds: [reply], ephemeral: true });

@@ -28,7 +28,7 @@ module.exports = {
     const amount = interaction.options.getInteger('amount');
     const currency = interaction.options.getString('currency');
     const rate = interaction.options.getInteger('rate') || await getRate();
-    const reply = buildEmbed().setDescription(`${lan.desc1} **${rate}** ${lan.desc2}`);
+    const reply = buildEmbed(interaction).setDescription(`${lan.desc1} **${rate}** ${lan.desc2}`);
 
     if (currency === 'crowns') {
       const converted = Math.round(amount/rate).toLocaleString('en');

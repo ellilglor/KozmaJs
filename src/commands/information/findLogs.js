@@ -30,7 +30,7 @@ module.exports = {
     const months = interaction.options.getInteger('months') || 6;
     const variants = interaction.options.getString('variants');
     const checkVariants = !variants || variants.includes('variant') ? true : false;
-    const reply = buildEmbed()
+    const reply = buildEmbed(interaction)
       .setTitle(`${lan.title} __${items[0]}__.`)
       .setDescription(
         `${lan.desc1}\n\n${lan.desc2}\n${lan.desc3}\n\n${lan.desc4}\n${lan.desc5}\n` +

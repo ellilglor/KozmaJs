@@ -5,9 +5,12 @@ const { version } = require('@root/package.json');
 const { globals } = require('@data/variables');
 const fs = require('fs');
 
-const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
+const buildStats = async (interaction, embeds, defer) => {
+  const client = interaction.client;
+  const createdTimestamp = interaction.createdTimestamp
+  
   //bot usage
-  const userStats = buildEmbed().setTitle('Top 20 bot users:');
+  const userStats = buildEmbed(interaction).setTitle('Top 20 bot users:');
   const users = await getUsers();
   let tags = '', used = '', gambled = '';
 
@@ -27,7 +30,7 @@ const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
   embeds.push(userStats);
   
   //Servers the bot is in
-  const serverStats = buildEmbed().setTitle('I am in these servers:');
+  const serverStats = buildEmbed(interaction).setTitle('I am in these servers:');
   const servers = client.guilds.cache.map(g => { return { name: g.name, members: g.memberCount } });
   servers.sort((a, b) => { return b.members - a.members });
   let serverField1 = '', serverField2 = '', totalMembers = 0;
@@ -52,7 +55,7 @@ const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
   embeds.push(serverStats);
 
   //Command usage
-  const commandStats = buildEmbed().setTitle('How much each command has been used:');
+  const commandStats = buildEmbed(interaction).setTitle('How much each command has been used:');
   const commands = await getCommands();
   const commandSum = commands.reduce((total, cmd) => cmd.amount + total, 0);
   const commandDesc = commands.reduce((desc, c) => desc.concat('', `**${c.command}** - ${c.amount}\n`), '');
@@ -62,7 +65,7 @@ const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
   embeds.push(commandStats);
 
   //unbox command stats
-  const unboxStats = buildEmbed().setTitle('How much each box has been opened:');
+  const unboxStats = buildEmbed(interaction).setTitle('How much each box has been opened:');
   const boxes = await getBoxes();
   const unboxSum = boxes.reduce((total, box) => box.amount + total, 0);
   const unboxDesc = boxes.reduce((desc, box) => desc.concat('', `**${box.box}** - ${box.amount}\n`), '');
@@ -72,7 +75,7 @@ const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
   embeds.push(unboxStats);
 
   //Amount of tradelogs
-  const logStats = buildEmbed().setTitle('These are the amount of tradelogs:');
+  const logStats = buildEmbed(interaction).setTitle('These are the amount of tradelogs:');
   const channels = JSON.parse(fs.readFileSync(`src/data/tradelogs/tradelogs.json`));
   const logSum = channels.reduce((total, chnl) => chnl.amount + total, 0);
   const logsDesc = channels.reduce((desc, c) => desc.concat('', `**${c.name}** - ${c.amount}\n`), '');
@@ -82,7 +85,7 @@ const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
   embeds.push(logStats);
 
   //findlogs command stats
-  const searchStats = buildEmbed().setTitle('Top 20 searched items:');
+  const searchStats = buildEmbed(interaction).setTitle('Top 20 searched items:');
   const items = await getSearched();
   let searchDesc = '';
 
@@ -95,7 +98,7 @@ const buildStats = async ({ client, createdTimestamp }, embeds, defer) => {
   embeds.push(searchStats);
 
   //general info
-  const info = buildEmbed().setTitle(`General info about ${client.user.username}:`);
+  const info = buildEmbed(interaction).setTitle(`General info about ${client.user.username}:`);
   const guild = await client.guilds.fetch(globals.serverId);
   const latency = defer.createdTimestamp - createdTimestamp;
   const timestamp = Math.round(client.readyTimestamp/1000);

@@ -68,7 +68,7 @@ const searchLogs = async (interaction, items, months, checkVariants, lan) => {
 };
 
 const searchFinished = async (interaction, logsFound, item, unedited, months, checkVar, lan) => {
-  const embed = buildEmbed()
+  const embed = buildEmbed(interaction)
     .setTitle(`${lan.everything} __${unedited}__, ${lan.helped}`)
     .setColor('#f9d49c')
     .setDescription(
@@ -97,7 +97,7 @@ const searchFinished = async (interaction, logsFound, item, unedited, months, ch
     const message = months < 24 ? { embeds: [embed], components: [button] } : { embeds: [embed] };
     await interaction.user.send(message);
   } catch (error) {
-    const errorEmbed = buildEmbed()
+    const errorEmbed = buildEmbed(interaction)
       .setTitle(lan.errorTitle)
       .setColor('#e74c3c')
       .setDescription(`${lan.errorDesc1}\n${lan.errorDesc2}\n\n${lan.errorDesc3}`);
