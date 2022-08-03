@@ -31,7 +31,7 @@
     "desc": "*Disclaimer: The chance to get a book stays the same for each kat, so killing 250 kats does not guarantee a drop.*",
     "spawn": "Black Kat spawn:",
     "drop": "Book drop:",
-    "chance": "Overal chance per Kat:",
+    "chance": "Overall chance per Kat:",
     "or": "or"
   },
   "convert": {
