@@ -19,7 +19,7 @@ const tradelogEmbed = () => {
   return new EmbedBuilder().setColor('#29D0FF');
 };
 
-const logCommand = async ({ client, options, member, user, commandName, message: msg }, extra, item) => {
+const logCommand = async ({ client, options, member, user, commandName, message: msg, locale }, extra, item) => {
   if (user.tag === globals.ownerTag) return;
   const logChannel = client.channels.cache.get(globals.botLogsChannelId);
   const location = member?.guild.name || 'DM';
@@ -32,7 +32,7 @@ const logCommand = async ({ client, options, member, user, commandName, message:
   
   if (item) option += ` ${item}`;
 
-  const message = `${user.tag} used /${command}${option} in ${location}`;
+  const message = `${user.tag} used /${command}${option} in ${location} - ${locale}`;
   console.log(message);
   await logChannel.send(message.slice(0,2000));
 };

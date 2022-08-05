@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, PermissionFlagsBits: perms } = require('discord.js');
 const { buildStats } = require('@functions/commands/stats');
 
 const embeds = [], pages = {};
@@ -6,7 +6,8 @@ const embeds = [], pages = {};
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('stats')
-		.setDescription(`Kozma's Backpack staff only.`),
+		.setDescription(`Kozma's Backpack staff only.`)
+    .setDefaultMemberPermissions(perms.KickMembers | perms.BanMembers),
 	async execute(interaction, button) {
     const id = interaction.user.id;
     pages[id] = pages[id] || 0;

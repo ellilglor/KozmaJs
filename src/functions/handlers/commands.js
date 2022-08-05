@@ -4,7 +4,7 @@ const { Routes } = require('discord.js');
 const fs = require('fs');
 
 const deployCommands = async (globalCommands, kozmaCommands) => {
-  const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+  const rest = new REST({ version: '10' }).setToken(process.env.botToken);
 
   try {
     console.log('Started refreshing application (/) commands.');

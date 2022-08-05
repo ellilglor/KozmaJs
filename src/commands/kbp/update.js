@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits: perms } = require('discord.js');
 const { buildEmbed, logCommand } = require('@functions/general');
 const { convertLogs, saveStats } = require('@functions/commands/update');
 const { channels } = require('@structures/findlogs');
@@ -6,7 +6,8 @@ const { channels } = require('@structures/findlogs');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('update')
-		.setDescription(`Kozma's Backpack staff only.`),
+		.setDescription(`Kozma's Backpack staff only.`)
+    .setDefaultMemberPermissions(perms.KickMembers | perms.BanMembers),
 	async execute(interaction) {
     const reply = buildEmbed(interaction).setTitle('Executing /update');
     const stats = [], collectAll = true;
