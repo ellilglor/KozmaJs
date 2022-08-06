@@ -48,7 +48,7 @@ module.exports = (client) => {
     for (const folder of commandFolders) {
       const commandFiles = fs.readdirSync(`./src/commands/${folder}`).filter(f => f.endsWith('.js'));
       for (const file of commandFiles) {
-	      const command = require(`../../commands/${folder}/${file}`);
+	      const command = require(`@commands/${folder}/${file}`);
 	      client.commands.set(command.data.name, command);
 
         switch (folder) {
