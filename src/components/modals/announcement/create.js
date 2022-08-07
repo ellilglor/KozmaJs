@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 
 module.exports = {
   data: {
@@ -27,7 +27,7 @@ module.exports = {
 	    .addFields(
 		    { name: 'End date:', value: `<t:${timestamp}:F>`, inline: true },
 		    { name: 'Finished:', value: `<t:${timestamp}:R>`, inline: true },
-		    { name: 'More information can be found here:', value: `[**Link**](${info})` },
+		    { name: 'More information can be found here:', value: `[**Link**](${info})` }
 	    )
 	    .setImage(image)
 	    .setTimestamp()
@@ -36,6 +36,14 @@ module.exports = {
         iconURL: interaction.client.user.displayAvatarURL()
       });
 
-    await interaction.reply({ embeds: [embed], ephemeral: true })
+    const buttons = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+				.setCustomId('announce-post').setEmoji('✔️').setStyle('Success'),
+      new ButtonBuilder()
+        .setCustomId('announce-remake').setEmoji('✖️').setStyle('Danger')
+		);
+
+    const msg = { embeds: [embed], components: [buttons], ephemeral: true };
+    interaction.message ? await interaction.update(msg) : await interaction.reply(msg);
   }
 };
