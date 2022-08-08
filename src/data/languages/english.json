@@ -91,7 +91,9 @@
   "clear": {
     "title": "Clearing messages."
   },
-  "error": {
+  "interaction": {
+    "construction": "The bot is currently being worked on.\nPlease try again later.",
+    "banned": "You are banned from the Kozma's Backpack Discord server and are therefore prohibited from using this bot.",
     "missing": "It looks like this command is missing!",
     "error": "There was an error while executing this command!",
     "notified": "has been notified."

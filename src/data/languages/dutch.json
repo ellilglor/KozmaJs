@@ -39,7 +39,10 @@
   "clear": {
     
   },
-  "error": {
+  "interaction": {
+    
+  },
+  "general":{
     
   }
 }

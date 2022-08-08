@@ -6,14 +6,14 @@
     "recraftBtn": "Ricrafta",
     "startBtn": "Inizia a rollare UVs",
     "spent": "Crowns spesi",
-    "lockDesc": "*Questi pulsanti ti consentono di bloccare/sbloccare gli UVs ottenuti.*",
-    "gambleDesc": "*Questi pulsanti ti consentono di ottenere UVs aggiuntivi.*",
+    "lockDesc": "*Questi pulsanti ti consentono di bloccare/sbloccare gli UVs ottenuti*",
+    "gambleDesc": "*Questi pulsanti ti consentono di ottenere UVs aggiuntivi*",
     "single": "Roll Singoli",
     "double": "Roll Doppi",
     "triple": "Roll Tripli",
-    "reward1": "Congratulazioni! Hai creato un item GM.",
-    "reward2": "Come ricompensa riceverai un meme di Spiral Knights a caso.",
-    "author": "Author"
+    "reward1": "Congratulazioni! Hai creato un item GM",
+    "reward2": "Come ricompensa riceverai un meme di Spiral Knights a caso",
+    "author": "author"
   },
   "unbox": {
     "statDesc": "**In questa sessione hai aperto:**",
@@ -89,9 +89,11 @@
     "rate": "Il tasso attuale di crowns per energy è:"
   },
   "clear": {
-    "title": "Cancellazione dei messaggi."
+    "title": "Cancellamento dei messaggi."
   },
-  "error": {
+  "interaction": {
+    "construction": "Lavori in corso! Il bot è attualmente non disponibile.\nPer favore riprova più tardi.",
+    "banned": "Sei stato bannato dal server Discord di Kozma's Backpack e ti è vietato usare questo bot.",
     "missing": "Sembra che questo comando non esista!",
     "error": "Si è verificato un errore durante l'esecuzione di questo comando!",
     "notified": "è stato notificato."

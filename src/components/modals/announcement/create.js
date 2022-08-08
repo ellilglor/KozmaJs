@@ -15,7 +15,7 @@ module.exports = {
     const timestamp = Math.round(date.getTime()/1000);
     
     try {
-      image = new URL(image);
+      new URL(image);
     } catch (_) {
       image = null;  
     }
