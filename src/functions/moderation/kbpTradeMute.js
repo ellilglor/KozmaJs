@@ -58,7 +58,7 @@ const checkTradeMessages = async (channel, role, logChannel) => {
     if (msg.author.bot) remind = false;
 
     const member = msg.member;
-    if (!member) return true;
+    if (!member || msg.author.bot) return true;
     if (member.roles.cache.some(r => r.id === role.id)) return true;
     if (member.roles.cache.some(r => r.id === globals.adminId || r.id === globals.modId)) return true;
 

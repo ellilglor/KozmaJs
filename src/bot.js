@@ -17,9 +17,6 @@ const commandFolders = fs.readdirSync('./src/commands');
 (async () => {
   handlerFiles.forEach(file => require(`./functions/handlers/${file}`)(client));
 
-  //testing to auto restart on ratelimit - remains to be broken
-  //client.rest.on('ratelimited', data => { if (data.timeout > 1000) process.kill(1) });
-
   await client.dbLogin(dbEventFiles);
   client.handleEvents(botEventFiles);
   client.handleCommands(commandFolders);
