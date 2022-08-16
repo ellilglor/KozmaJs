@@ -1,10 +1,12 @@
 const { 
-  SlashCommandBuilder, 
-  ActionRowBuilder, 
-  ModalBuilder, 
-  TextInputBuilder, 
-  TextInputStyle, 
-  PermissionFlagsBits: perms 
+  SlashCommandBuilder,
+  EmbedBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ModalBuilder,
+  TextInputBuilder,
+  TextInputStyle,
+  PermissionFlagsBits: perms
 } = require('discord.js');
 
 module.exports = {
@@ -12,35 +14,47 @@ module.exports = {
 		.setName('game-announcement')
 		.setDescription(`Kozma's Backpack staff only.`)
     .setDefaultMemberPermissions(perms.KickMembers | perms.BanMembers)
-    .addSubcommand(subcommand =>
-		  subcommand.setName('post')
-			.setDescription('Create a game announcement.'))
-	  .addSubcommand(subcommand =>
-		  subcommand.setName('edit')
-			.setDescription('Edit the last posted game announcement.')
-      .addStringOption(option =>
-		    option.setName('title')
-			    .setDescription('Change the embed title.')
-          .addChoices({ name: 'yes', value: 'yes' }))
-      .addStringOption(option =>
-		    option.setName('description')
-			  .setDescription('Change the embed description.')
-        .addChoices({ name: 'yes', value: 'yes' }))
-      .addStringOption(option =>
-		    option.setName('date')
-			  .setDescription('Change the date the event ends.')
-        .addChoices({ name: 'yes', value: 'yes' }))
-      .addStringOption(option =>
-		    option.setName('url')
-			  .setDescription('Change the embed info url.')
-        .addChoices({ name: 'yes', value: 'yes' }))
-      .addStringOption(option =>
-		    option.setName('image')
-			  .setDescription('Change the embed image.')
-        .addChoices({ name: 'yes', value: 'yes' }))),
+    .addStringOption(option =>
+		  option.setName('id')
+			.setDescription('The message id')),
 	async execute(interaction) {
-      const modal = new ModalBuilder();
-    
+    const id = interaction.options.getString('id');
+
+    if (id) {
+      //const channel = interaction.client.channels.cache.get('879297439054581770');
+      await interaction.user.createDM();
+      const channel = interaction.user.dmChannel;
+
+      try {
+        const message = await channel.messages.fetch(id);
+        const embed = EmbedBuilder.from(message.embeds[0]);
+
+        const content = 
+          `id: ${id}\nSelect which parts of the message you would like to edit:\n` +
+          '🇦 - title ❌\n🇧 - description ❌\n🇨 - date ❌\n🇩 - link ❌\n🇪 - image ❌';
+
+        const buttons = new ActionRowBuilder().addComponents(
+          new ButtonBuilder()
+				    .setCustomId('announce-title').setEmoji('🇦').setStyle('Secondary'),
+          new ButtonBuilder()
+				    .setCustomId('announce-desc').setEmoji('🇧').setStyle('Secondary'),
+          new ButtonBuilder()
+				    .setCustomId('announce-date').setEmoji('🇨').setStyle('Secondary'),
+          new ButtonBuilder()
+            .setCustomId('announce-link').setEmoji('🇩').setStyle('Secondary'),
+          new ButtonBuilder()
+            .setCustomId('announce-image').setEmoji('🇪').setStyle('Secondary')
+		    );
+
+        const edit = new ActionRowBuilder().addComponents(
+          new ButtonBuilder().setCustomId('announce-edit').setLabel('edit').setStyle('Success')
+        );
+        
+        await interaction.reply({ content: content, embeds: [embed], components: [buttons, edit], ephemeral: true });
+      } catch (_) {
+        await interaction.reply({ content: 'No message matches that id.', ephemeral: true });
+      }
+    } else {
       const titleInput = new TextInputBuilder()
 			  .setCustomId('titleInput').setLabel('What should I put as the title?')
 			  .setStyle(TextInputStyle.Short);
@@ -66,25 +80,12 @@ module.exports = {
       const date = new ActionRowBuilder().addComponents(dateInput);
 		  const info = new ActionRowBuilder().addComponents(infoInput);
       const image = new ActionRowBuilder().addComponents(imageInput);
-    
-    if (interaction.options?.getSubcommand() === 'edit') {
-      modal.setCustomId('edit-announcement').setTitle('fixing the last announcement');
 
-      if (interaction.options.getString('title')) modal.addComponents(title);
-      if (interaction.options.getString('description')) modal.addComponents(description);
-      if (interaction.options.getString('date')) modal.addComponents(date);
-      if (interaction.options.getString('url')) modal.addComponents(info);
-      if (interaction.options.getString('image')) modal.addComponents(image);
-    } else {
-      modal
+      const modal = new ModalBuilder()
         .setCustomId('create-announcement')
         .setTitle('Creating an announcement')
         .addComponents(title, description, date, info, image);
-    }
 
-    if (modal.components.length === 0) {
-      await interaction.reply({ content: 'You need to select at least 1 option!', ephemeral: true });
-    } else {
       await interaction.showModal(modal);
     }
   }  
