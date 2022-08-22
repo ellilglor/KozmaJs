@@ -26,7 +26,7 @@ const convertLogs = async (channel, channelName, collectAll) => {
 
   const final = temp.concat(filtered);
 
-  fs.writeFileSync(location, JSON.stringify(final));
+  fs.writeFileSync(location, JSON.stringify(final, null, 2));
   return { name: channelName, amount: final.length };
 };
 
@@ -80,7 +80,7 @@ const messageSnipper = (msg) => {
 };
 
 const saveStats = (stats) => {
-  fs.writeFileSync(`src/data/tradelogs/tradelogs.json`, JSON.stringify(stats));
+  fs.writeFileSync(`src/data/tradelogs/tradelogs.json`, JSON.stringify(stats, null, 2));
 }
 
 module.exports = {

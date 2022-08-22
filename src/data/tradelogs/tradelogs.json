@@ -1,1 +1,66 @@
-[{"name":"special-listings","amount":247},{"name":"mixed-trades","amount":541},{"name":"equipment","amount":2762},{"name":"costumes","amount":4554},{"name":"helm-back","amount":943},{"name":"helm-front","amount":2122},{"name":"helm-side","amount":1466},{"name":"helm-top","amount":2478},{"name":"armor-aura","amount":724},{"name":"armor-ankle","amount":129},{"name":"armor-back","amount":1672},{"name":"armor-front","amount":1968},{"name":"armor-rear","amount":553},{"name":"miscellaneous","amount":1827},{"name":"Sprite Food","amount":168},{"name":"Materials","amount":252}]
+[
+  {
+    "name": "special-listings",
+    "amount": 249
+  },
+  {
+    "name": "mixed-trades",
+    "amount": 541
+  },
+  {
+    "name": "equipment",
+    "amount": 2784
+  },
+  {
+    "name": "costumes",
+    "amount": 4570
+  },
+  {
+    "name": "helm-back",
+    "amount": 945
+  },
+  {
+    "name": "helm-front",
+    "amount": 2129
+  },
+  {
+    "name": "helm-side",
+    "amount": 1474
+  },
+  {
+    "name": "helm-top",
+    "amount": 2483
+  },
+  {
+    "name": "armor-aura",
+    "amount": 733
+  },
+  {
+    "name": "armor-ankle",
+    "amount": 129
+  },
+  {
+    "name": "armor-back",
+    "amount": 1677
+  },
+  {
+    "name": "armor-front",
+    "amount": 1978
+  },
+  {
+    "name": "armor-rear",
+    "amount": 555
+  },
+  {
+    "name": "miscellaneous",
+    "amount": 1839
+  },
+  {
+    "name": "Sprite Food",
+    "amount": 168
+  },
+  {
+    "name": "Materials",
+    "amount": 253
+  }
+]

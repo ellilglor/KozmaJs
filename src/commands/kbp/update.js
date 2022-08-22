@@ -22,7 +22,7 @@ module.exports = {
     
     saveStats(stats);
 
+    console.table(stats);
     await interaction.editReply({ embeds: [reply.setTitle('Update completed!')] });
-    console.log('Update Completed!');
 	}
 };
