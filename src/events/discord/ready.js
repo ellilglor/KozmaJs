@@ -9,6 +9,8 @@ module.exports = {
 	async execute(client) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
     client.user.setPresence({ activities: [{ name: '/help', type: ActivityType.Listening }], status: 'online' });
+    client.keepAlive();
+    
     await checkOldMessages(client);
     
     const check = async () => {
@@ -16,6 +18,6 @@ module.exports = {
       await checkForNewLogs(client);
       setTimeout(check, 1000 * 60 * 30);
     }
-    check();
+    await check();
 	},
 };

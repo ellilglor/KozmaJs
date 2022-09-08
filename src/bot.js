@@ -22,5 +22,5 @@ const commandFolders = fs.readdirSync('./src/commands');
   client.handleCommands(commandFolders);
   client.handleComponents(componentFolders);
   client.login(process.env.botToken);
-  client.keepAlive();
+  //client.keepAlive();
 })();
