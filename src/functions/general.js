@@ -4,13 +4,11 @@ const { saveUser } = require('@functions/database/user');
 const { globals } = require('@data/variables');
 const fs = require('fs');
 
-const buildEmbed = ({ client, locale }) => {
-  const lan = getLanguage('temp').general;
-  
+const buildEmbed = ({ client }) => {
   return new EmbedBuilder()
     .setColor('#29D0FF')
     .setFooter({ 
-      text: `${lan.thanks} ${client.user.username} bot!`, 
+      text: `Thank you for using ${client.user.username} bot!`, 
       iconURL: client.user.displayAvatarURL()
     });
 };
@@ -53,9 +51,9 @@ const saveData = async (user, command, option) => {
 
 const getLanguage = (locale) => {
   switch (locale) {
-    case 'it': return JSON.parse(fs.readFileSync(`src/data/languages/italian.json`));
-    case 'nl': return JSON.parse(fs.readFileSync(`src/data/languages/dutch.json`));
-    default: return JSON.parse(fs.readFileSync(`src/data/languages/english.json`));
+    case 'it': return JSON.parse(fs.readFileSync('src/data/languages/italian.json'));
+    case 'nl': return JSON.parse(fs.readFileSync('src/data/languages/dutch.json'));
+    default: return JSON.parse(fs.readFileSync('src/data/languages/english.json'));
   }
 }
 

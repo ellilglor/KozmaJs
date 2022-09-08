@@ -1,71 +1,4 @@
 {
-"punch": {
-    "title1": "Craftando",
-    "title2": "Hai craftato",
-    "crafted": "Quantità craftate",
-    "recraftBtn": "Ricrafta",
-    "startBtn": "Inizia a rollare UVs",
-    "spent": "Crowns spesi",
-    "lockDesc": "*Questi pulsanti ti consentono di bloccare/sbloccare gli UVs ottenuti.*",
-    "gambleDesc": "*Questi pulsanti ti consentono di ottenere UVs aggiuntivi.*",
-    "single": "Roll Singoli",
-    "double": "Roll Doppi",
-    "triple": "Roll Tripli",
-    "reward1": "Congratulazioni! Hai creato un item GM.",
-    "reward2": "Come ricompensa riceverai un meme di Spiral Knights a caso.",
-    "author": "Author"
-  },
-  "unbox": {
-    "statDesc": "**In questa sessione hai aperto:**",
-    "opened": "Aperto:",
-    "spent": "Spesa totale:",
-    "lost": "Il bot si è riavviato e questi dati sono andati persi!",
-    "limit": "**Ho raggiunto il limite di caratteri!**",
-    "title": "Hai trovato:",
-    "opening": "Aprendo la tua lockbox"
-  },
-  "bookChance": {
-    "title1": "Dopo aver ucciso",
-    "title2": "Black Kats, hai una probabilità del",
-    "title3": "di ottenere almeno 1 Book of Dark Rituals.",
-    "desc": "*Disclaimer: La probabilità di ottenere un Book of Dark Rituals rimane la stessa per ogni Black Kat, quindi uccidere 250 Black Kats non ne garantisce un drop.*",
-    "spawn": "Black Kat spawn:",
-    "drop": "Book drop:",
-    "chance": "Probabilità complessiva per Black Kat:",
-    "or": "o"
-  },
-  "convert": {
-    "desc1": "Tasso di conversione utilizzato:",
-    "desc2": "Crowns per Energy.",
-    "equal": "è uguale a circa"
-  },
-  "findLogs": {
-    "title": "Alla ricerca di",
-    "desc1": "**Ti mando in DM quello che riesco a trovare.**",
-    "desc2": "Di default guardo solo i tradelog degli ultimi 6 mesi!",
-    "desc3": "Se vuoi che guardi oltre, usa l'opzione *months*.",
-    "desc4": "__**Informazioni durante la ricerca:**__",
-    "desc5": "~ Slime lockboxes: usa prima la combinazione, poi *slime lockbox*\nEsempio: QQQ Slime Lockbox",
-    "desc6": "~ Equipaggiamenti con UVs: usa asi / ctr + med / high / very high / max",
-    "desc7": "Il bot scambia automaticamente asi e ctr in modo da non dover cercare due volte.",
-    "desc8": "~ Equipaggiamento: il bot cerca l'intero albero genealogico del tuo item!",
-    "desc9": "Quindi quando cerchi *brandish*, cercherà anche *combuster* per esempio",
-    "desc10": "~ Sprite pods: scrivilo come è scritto nel gioco\nExample: Drakon Pod (Divine)",
-    "channel": "Ho trovato questi posts in",
-    "everything": "Questo è tutto ciò che ho trovato per",
-    "helped": "Spero che questi siano stati d'aiuto!",
-    "finDesc1": "Di default guardo solo i tradelog degli ultimi 6 mesi!",
-    "finDesc2": "Se vuoi che guardi oltre, usa l'opzione *months*.",
-    "finDesc3": "Se noti un problema, contatta",
-    "finDesc4": "Sapevi che abbiamo il nostro [**Discord server**]",
-    "noLogs": "Non sono riuscito a trovare nessuna inserzione per",
-    "sheet": "può essere trovato sul [**merchant sheet**]",
-    "button": "Cerca in tutti i tradelog",
-    "errorTitle": "Non riesco a inviarti messaggi!",
-    "errorDesc1": "Assicurati di avere abilitato questa impostazione:",
-    "errorDesc2": "*Permetti ai membri del server di inviarti messaggi diretti* in Impostazioni utente > Privacy e sicurezza",
-    "errorDesc3": "e assicurati di non avermi bloccato!"
-  },
   "help": {
     "title": "Ecco qua tutti i miei comandi:",
     "desc": "Se noti un problema, contatta",
@@ -76,30 +9,5 @@
     "lockbox": "Fornisce informazioni su una lockbox o ti dice quale lockbox droppa un item da te specificato",
     "rate": "Ti dice il tasso di crowns per energy attualmente in uso.",
     "unbox": "Simula l'apertura di una lockbox e rimani deluso gratuitamente."
-  },
-  "lockbox": {
-    "title": "Si prega di selezionare 1 delle opzioni seguenti.",
-    "noMatch": "Non ho trovato una corrispondenza per",
-    "item": "Queste lockboxes contengono",
-    "noItem": "Non ho trovato una lockbox che contenesse"
-  },
-  "rate": {
-    "desc": "Uso questo tasso per calcolare **/convert**.",
-    "noPerm": "Non hai l'autorizzazione per impostare un nuovo tasso!",
-    "rate": "Il tasso attuale di crowns per energy è:"
-  },
-  "clear": {
-    "title": "Cancellamento dei messaggi."
-  },
-  "interaction": {
-    "construction": "Lavori in corso! Il bot è attualmente non disponibile.\nPer favore riprova più tardi.",
-    "banned": "Sei stato bannato dal server Discord di Kozma's Backpack e ti è vietato usare questo bot.",
-    "missing": "Sembra che questo comando non esista!",
-    "error": "Si è verificato un errore durante l'esecuzione di questo comando!",
-    "notified": "è stato notificato."
-  },
-  "general": {
-    "thanks": "Grazie per averlo usato",
-    "translator": "translator: *Top-Platinum#6560*"
   }
 }

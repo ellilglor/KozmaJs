@@ -1,48 +1,13 @@
 {
-  "punch": {
-    "title1": "aan het maken",
-    "title2": "Je hebt gemaakt",
-    "crafted": "Aantal gemaakt",
-    "recraftBtn": "Hermaken",
-    "startBtn": "Start Rollen van Uvs",
-    "spent": "Crowns Gespendeerd",
-    "lockDesc": "*Deze knoppen staan je toe UVs te blokkeren/vrij te maken.*",
-    "gambleDesc": "*Deze knoppen staan je toe additionele UVs toe te voegen.*",
-    "single": "Enkele Rollen",
-    "double": "Dubbel Rollen",
-    "triple": "Tripel Rollen",
-    "reward1": "Proficiat! Je hebt een GM item gemaakt.",
-    "reward2": "Als een beloning krijg je een willekeurige Spiral Knights meme.",
-    "author": "Auteur"
-  },
-  "unbox": {
-    
-  },
-  "bookChance": {
-    
-  },
-  "convert": {
-    
-  },
-  "findLogs": {
-    
-  },
   "help": {
-    
-  },
-  "lockbox": {
-    
-  },
-  "rate": {
-    
-  },
-  "clear": {
-    
-  },
-  "interaction": {
-    
-  },
-  "general":{
-    
+    "title": "Hier zijn al mijn commando's:",
+    "desc": "Als je een probleem opmerkt contacteer dan",
+    "bookChance": "Krijg de kans (in %) om minstens 1 Book of Dark Rituals te krijgen.",
+    "clear": "Verwijder alle berichten dat de bot je heeft gestuurd.",
+    "convert": "Converteer je crowns/energy.",
+    "findLogs": "Laat de bot de database doorzoeken naar een item",
+    "lockbox": "Geeft informatie over een lockbox of zegt welke box jouw item dropt.",
+    "rate": "Vertelt de huidige crowns per energy verhouding",
+    "unbox": "Simuleer het openen van een box en wees gratis teleurgesteld."
   }
 }

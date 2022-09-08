@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { craftItem, getPunchImage, checkForGm } = require('@functions/commands/punch');
-const { buildEmbed, logCommand, getLanguage } = require('@functions/general');
+const { buildEmbed, logCommand } = require('@functions/general');
 const wait = require('util').promisify(setTimeout);
 
 const punch = {
@@ -23,9 +23,8 @@ module.exports = {
       { name: 'Black Kat Cowl', value: 'Black Kat Cowl' }
     )),
 	async execute(interaction, option, crafted) {
-    const lan = getLanguage(interaction.locale).punch;
     const item = option || interaction.options.getString('item');
-    const reply = buildEmbed(interaction).setAuthor(punch).setTitle(`${lan.title1} ${item}`).setDescription('3...');
+    const reply = buildEmbed(interaction).setAuthor(punch).setTitle('Crafting').setDescription('3...');
     const amount = crafted || '1';
     //await logCommand(interaction, option);
 
@@ -33,14 +32,14 @@ module.exports = {
       const craftUvs = craftItem(item);
       const buttons = new ActionRowBuilder().addComponents(
 			  new ButtonBuilder()
-				  .setCustomId('recraft').setLabel(lan.recraftBtn).setStyle('Primary'),
+				  .setCustomId('recraft').setLabel('Recraft').setStyle('Primary'),
         new ButtonBuilder()
-				  .setCustomId('start-punching').setLabel(lan.startBtn).setStyle('Primary')
+				  .setCustomId('start-punching').setLabel('Start Rolling Uvs').setStyle('Primary')
 		  );
 
-      let result = buildEmbed(interaction).setAuthor(punch).setTitle(`${lan.title2}: ${item}`).setThumbnail(getPunchImage(item));
+      let result = buildEmbed(interaction).setAuthor(punch).setTitle(`You crafted: ${item}`).setThumbnail(getPunchImage(item));
       craftUvs.forEach((uv, ind) => { result.addFields([{ name: `UV #${ind + 1}`, value: uv, inline: true }]) });
-      result.addFields([{ name: lan.crafted, value: amount }]);
+      result.addFields([{ name: 'Amount crafted', value: amount }]);
       result = checkForGm(result, interaction);
 
       const message = { embeds: [reply], components: [], ephemeral: true };

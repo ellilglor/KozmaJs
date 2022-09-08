@@ -1,5 +1,4 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { getLanguage } = require('@functions/general');
 
 module.exports = {
   data: {
@@ -8,13 +7,12 @@ module.exports = {
   async execute (interaction) {
     if (!interaction) return;
 
-    const lan = getLanguage(interaction.locale).punch;
     const embed = EmbedBuilder.from(interaction.message.embeds[0]);
     const unlockEmoji = '🔓';
     let uvCount = 0;
 
-    embed.setTitle(embed.data.title.replace(`${lan.title2}: `, ''));
-    embed.data.fields[embed.data.fields.length - 1] = { name: lan.spent, value: '0' };
+    embed.setTitle(embed.data.title.replace('You crafted: ', ''));
+    embed.data.fields[embed.data.fields.length - 1] = { name: 'Crowns Spent', value: '0' };
 
     embed.data.fields.forEach(f => {
       if (f.name.includes('UV #')) {

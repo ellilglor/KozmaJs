@@ -1,5 +1,4 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
-const { getLanguage } = require('@functions/general');
 const fs = require('fs');
 
 const craftItem = (item) => {
@@ -139,7 +138,7 @@ const lockUv = async (interaction, uv) => {
   await interaction.update({ embeds: [embed], components: [lockButtons, gambleButtons] });
 }
 
-const checkForGm = (embed, { locale }) => {
+const checkForGm = (embed) => {
   const weapons = ['Brandish', 'Overcharged Mixmaster'];
   let count = 0, won = false;
 
@@ -157,15 +156,17 @@ const checkForGm = (embed, { locale }) => {
     });
   }
   
-  return won && !embed.data.image ? setImage(embed, locale) : won ? embed : embed.setImage(null);
+  return won && !embed.data.image ? setImage(embed) : won ? embed : embed.setImage(null);
 }
 
-const setImage = (embed, locale) => {
+const setImage = (embed) => {
   const images = JSON.parse(fs.readFileSync(`src/data/punch/memes.json`));
   const pos = Math.floor(Math.random() * images.length);
-  const lan = getLanguage(locale).punch;
 
-  embed.setDescription(`${lan.reward1}\n${lan.reward2}\n${lan.author}: ${images[pos].author}`);
+  embed.setDescription(
+    'Congratulations! You created a GM item.\n' +
+    'As a reward you get a random Spiral Knights meme.\n' +
+    `Author: ${images[pos].author}`);
   embed.setImage(images[pos].url);
   
   return embed;

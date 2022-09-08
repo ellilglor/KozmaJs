@@ -1,15 +1,14 @@
 const { InteractionType: type } = require('discord.js');
-const { buildEmbed, getLanguage } = require('@functions/general');
+const { buildEmbed } = require('@functions/general');
 const { globals } = require('@data/variables');
 
 module.exports = {
 	name: 'interactionCreate',
 	async execute(interaction, client) {
-    const lan = getLanguage('temp').interaction;
-    const noCode = buildEmbed(interaction).setTitle(lan.missing);
+    const noCode = buildEmbed(interaction).setTitle('It looks like this command is missing!');
     
     // if (interaction.user.tag !== globals.ownerTag) {
-    //   const maintenance = buildEmbed(interaction).setTitle(lan.construction);
+    //   const maintenance = buildEmbed(interaction).setTitle('The bot is currently being worked on.\nPlease try again later.');
     //   interaction.reply({ embeds: [maintenance], ephemeral: true });
     //   return console.log(interaction.user.tag);
     // }
@@ -18,7 +17,7 @@ module.exports = {
       try {
         const guild = await interaction.client.guilds.fetch(globals.serverId);
         await guild.bans.fetch(interaction.user.id);
-        const banned = buildEmbed(interaction).setTitle(lan.banned);
+        const banned = buildEmbed(interaction).setTitle(`You are banned from the Kozma's Backpack Discord server and are therefore prohibited from using this bot.`);
         return await interaction.reply({ embeds: [banned], ephemeral: true });
       } catch (_) {
         // catches when user is not banned -> command can run
@@ -38,7 +37,9 @@ module.exports = {
     } catch (error) {
       const logChannel = client.channels.cache.get(globals.botLogsChannelId);
       const name = interaction.commandName || interaction.customId;
-      const crashed = buildEmbed(interaction).setTitle(lan.error).setDescription(`@${globals.ownerTag} ${lan.notified}`);
+      const crashed = buildEmbed(interaction)
+        .setTitle('There was an error while executing this command!')
+        .setDescription(`@${globals.ownerTag} has been notified.`);
       
       console.log(`\u001b[31mError while executing ${name}!\n\u001b[0m`, { error });
 

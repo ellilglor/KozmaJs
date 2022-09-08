@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { buildEmbed, logCommand, getLanguage } = require('@functions/general');
+const { buildEmbed, logCommand } = require('@functions/general');
 const { getRate } = require('@functions/database/rate');
 
 module.exports = {
@@ -24,18 +24,17 @@ module.exports = {
 			.setDescription('Optional custom conversion rate.')
       .setMinValue(1)),
   async execute(interaction) {
-    const lan = getLanguage('temp').convert;
     const amount = interaction.options.getInteger('amount');
     const currency = interaction.options.getString('currency');
     const rate = interaction.options.getInteger('rate') || await getRate();
-    const reply = buildEmbed(interaction).setDescription(`${lan.desc1} **${rate}** ${lan.desc2}`);
+    const reply = buildEmbed(interaction).setDescription(`Used conversion rate: **${rate}** Crowns per Energy.`);
 
     if (currency === 'crowns') {
       const converted = Math.round(amount/rate).toLocaleString('en');
-      reply.setTitle(`${amount.toLocaleString('en')} Crowns ${lan.equal} ${converted} Energy.`).setColor('#f9d49c');
+      reply.setTitle(`${amount.toLocaleString('en')} Crowns is equal to roughly ${converted} Energy.`).setColor('#f9d49c');
     } else {
       const converted = Math.round(amount*rate).toLocaleString('en');
-      reply.setTitle(`${amount.toLocaleString('en')} Energy ${lan.equal} ${converted} Crowns.`);
+      reply.setTitle(`${amount.toLocaleString('en')} Energy is equal to roughly ${converted} Crowns.`);
     }
     
     await interaction.reply({ embeds: [reply], ephemeral: true });

@@ -1,6 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const { rollUv, checkForGm } = require('@functions/commands/punch');
-const { getLanguage } = require('@functions/general');
 
 module.exports = {
   data: {
@@ -9,7 +8,6 @@ module.exports = {
   async execute (interaction) {
     if (!interaction) return;
 
-    const lan = getLanguage(interaction.locale).punch;
     let embed = EmbedBuilder.from(interaction.message.embeds[0]).setDescription(null);
     const lockButtons = ActionRowBuilder.from(interaction.message.components[0]);
     const gambleButtons = ActionRowBuilder.from(interaction.message.components[1]);
@@ -51,12 +49,12 @@ module.exports = {
     embed.data.fields[3].value = (parseInt(embed.data.fields[3].value.replace(/,/g, '')) + 225000).toLocaleString('en');
     embed.data.fields.forEach(f => {
       switch (f.name) {
-        case lan.single: index += 1; break;
-        case lan.double: index += 1; break;
-        case lan.triple: f.value = (parseInt(f.value.replace(/,/g, '')) + 1).toLocaleString('en'); tripleRolls = true;
+        case 'Single Rolls': index += 1; break;
+        case 'Double Rolls': index += 1; break;
+        case 'Triple Rolls': f.value = (parseInt(f.value.replace(/,/g, '')) + 1).toLocaleString('en'); tripleRolls = true;
       } 
     });
-    if (!tripleRolls) embed.data.fields.splice(index, 0, { name: lan.triple, value: '1', inline: true });
+    if (!tripleRolls) embed.data.fields.splice(index, 0, { name: 'Triple Rolls', value: '1', inline: true });
 
     embed = checkForGm(embed, interaction);
 

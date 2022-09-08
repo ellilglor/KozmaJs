@@ -4,7 +4,7 @@ const structures = require('@structures/findlogs');
 const { globals } = require('@data/variables');
 const fs = require('fs');
 
-const searchLogs = async (interaction, items, months, checkVariants, lan) => {
+const searchLogs = async (interaction, items, months, checkVariants) => {
   const unedited = items[0];
   const stopHere = new Date();
   let reverse = ['ultron stinks'], logsFound = false;
@@ -39,7 +39,7 @@ const searchLogs = async (interaction, items, months, checkVariants, lan) => {
       if (!firstMatch) {
         firstMatch = true;
         logsFound = true;
-        const foundIn = tradelogEmbed().setTitle(`${lan.channel} ${channel}:`).setColor('#f9d49c');
+        const foundIn = tradelogEmbed().setTitle(`I found these posts in ${channel}:`).setColor('#f9d49c');
         matches.push(foundIn);
       }
 
@@ -64,24 +64,26 @@ const searchLogs = async (interaction, items, months, checkVariants, lan) => {
     if (matches.length !== 0) await interaction.user.send({ embeds: matches }).catch(error => error);
   }
 
-  await searchFinished(interaction, logsFound, items[0], unedited, months, checkVariants, lan);
+  await searchFinished(interaction, logsFound, items[0], unedited, months, checkVariants);
 };
 
-const searchFinished = async (interaction, logsFound, item, unedited, months, checkVar, lan) => {
+const searchFinished = async (interaction, logsFound, item, unedited, months, checkVar) => {
   const embed = buildEmbed(interaction)
-    .setTitle(`${lan.everything} __${unedited}__, ${lan.helped}`)
+    .setTitle(`This is everything I found for __${unedited}__, I hope these helped!`)
     .setColor('#f9d49c')
     .setDescription(
-      `${lan.finDesc1}\n${lan.finDesc2}\n\n${lan.finDesc3} @${globals.ownerTag}!\n` +
-      `${lan.finDesc4}(${globals.serverInvite} 'Kozma's Backpack Discord server')?`);
+      'By default I only look at tradelogs from the past 6 months!\n' +
+      'If you want me to look past that use the *months* option.\n\n' +
+      'If you notice a problem please contact @${globals.ownerTag}!\n' +
+      `Did you know we have our own [**Discord server**](${globals.serverInvite} 'Kozma's Backpack Discord server')?`);
 
-  if (!logsFound) embed.setTitle(`${lan.noLogs} __${unedited}__.`); 
+  if (!logsFound) embed.setTitle(`I couldn't find any listings for __${unedited}__.`); 
 
   structures.spreadsheet.every(equipment => {
     if (item.includes(equipment)) {
       embed.addFields([{ 
         name: '** **', 
-        value: `__${unedited}__ ${lan.sheet}` +
+        value: `__${unedited}__ can be found on the [**merchant sheet**]` +
           `(https://docs.google.com/spreadsheets/d/1h-SoyMn3kVla27PRW_kQQO6WefXPmLZYy7lPGNUNW7M/htmlview#).` 
       }]);
     }
@@ -90,7 +92,7 @@ const searchFinished = async (interaction, logsFound, item, unedited, months, ch
 
   const button = new ActionRowBuilder().addComponents(
 		new ButtonBuilder()
-      .setCustomId(`research${checkVar ? '-var' : ''}`).setLabel(lan.button).setStyle('Primary')
+      .setCustomId(`research${checkVar ? '-var' : ''}`).setLabel('Search all tradelogs').setStyle('Primary')
   );
 
   try {
@@ -98,9 +100,12 @@ const searchFinished = async (interaction, logsFound, item, unedited, months, ch
     await interaction.user.send(message);
   } catch (error) {
     const errorEmbed = buildEmbed(interaction)
-      .setTitle(lan.errorTitle)
+      .setTitle(`I can't send you any messages!`)
       .setColor('#e74c3c')
-      .setDescription(`${lan.errorDesc1}\n${lan.errorDesc2}\n\n${lan.errorDesc3}`);
+      .setDescription(
+        'Make sure you have the following enabled:\n' +
+        '*Allow direct messages from server members* in User Settings > Privacy & Safety\n\n' +
+        `And Don't block me!`);
     await interaction.editReply({ embeds: [errorEmbed] });
   }
 };
