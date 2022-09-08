@@ -74,7 +74,7 @@ const searchFinished = async (interaction, logsFound, item, unedited, months, ch
     .setDescription(
       'By default I only look at tradelogs from the past 6 months!\n' +
       'If you want me to look past that use the *months* option.\n\n' +
-      'If you notice a problem please contact @${globals.ownerTag}!\n' +
+      `If you notice a problem please contact @${globals.ownerTag}!\n` +
       `Did you know we have our own [**Discord server**](${globals.serverInvite} 'Kozma's Backpack Discord server')?`);
 
   if (!logsFound) embed.setTitle(`I couldn't find any listings for __${unedited}__.`); 
@@ -90,14 +90,20 @@ const searchFinished = async (interaction, logsFound, item, unedited, months, ch
     return embed.data.fields ? false : true;
   });
 
-  const button = new ActionRowBuilder().addComponents(
-		new ButtonBuilder()
-      .setCustomId(`research${checkVar ? '-var' : ''}`).setLabel('Search all tradelogs').setStyle('Primary')
+  const buttons = new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setCustomId('clear-messages').setLabel('Delete messages').setStyle('Primary')
   );
 
+  if (months < 24) {
+    buttons.addComponents(
+      new ButtonBuilder()
+        .setCustomId(`research${checkVar ? '-var' : ''}`).setLabel('Search all tradelogs').setStyle('Primary')
+    );
+  }
+
   try {
-    const message = months < 24 ? { embeds: [embed], components: [button] } : { embeds: [embed] };
-    await interaction.user.send(message);
+    await interaction.user.send({ embeds: [embed], components: [buttons] });
   } catch (error) {
     const errorEmbed = buildEmbed(interaction)
       .setTitle(`I can't send you any messages!`)
