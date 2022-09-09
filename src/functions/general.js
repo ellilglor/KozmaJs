@@ -74,10 +74,19 @@ const contentFilter = (content) => {
 	return result;
 };
 
+const stillAlive = async (client) => {
+  const logChannel = client.channels.cache.get(globals.botLogsChannelId);
+  const message = await logChannel.messages.fetch({ limit: 1 });
+  const [test] = message.values();
+
+  console.log(test.createdAt)
+}
+
 module.exports = {
   buildEmbed,
   tradelogEmbed,
   logCommand,
   getLanguage,
-  contentFilter
+  contentFilter,
+  stillAlive
 };

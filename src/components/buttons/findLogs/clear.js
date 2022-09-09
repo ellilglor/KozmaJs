@@ -6,7 +6,7 @@ module.exports = {
   },
   async execute (interaction) {
     if (!interaction) return;
-    
+
     await command.execute(interaction);
   }
 };

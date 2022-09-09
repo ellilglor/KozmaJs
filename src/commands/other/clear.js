@@ -8,6 +8,7 @@ module.exports = {
 		.setDescription('Removes all bot messages in your dms.'),
 	async execute(interaction) {
     const reply = buildEmbed(interaction).setTitle('Clearing messages.');
+    interaction.commandName = 'clear'; //needed for proper logging when command is ran through the button
     
 		await interaction.reply({ embeds: [reply], ephemeral: true });
     await logCommand(interaction);

@@ -2,6 +2,7 @@ const { ActivityType } = require('discord.js');
 const { checkOldMessages } = require('@functions/moderation/kbpTradeMute');
 const { dbCheckExpiredMutes } = require('@functions/database/tradeMute');
 const { checkForNewLogs } = require('@functions/commands/update');
+const { stillAlive } = require('@functions/general');
 
 module.exports = {
 	name: 'ready',
@@ -16,6 +17,7 @@ module.exports = {
     const check = async () => {
       await dbCheckExpiredMutes(client);
       await checkForNewLogs(client);
+      await stillAlive(client);
       setTimeout(check, 1000 * 60 * 30);
     }
     await check();

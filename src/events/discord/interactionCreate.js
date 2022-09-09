@@ -7,22 +7,22 @@ module.exports = {
 	async execute(interaction, client) {
     const noCode = buildEmbed(interaction).setTitle('It looks like this command is missing!');
     
-    // if (interaction.user.tag !== globals.ownerTag) {
-    //   const maintenance = buildEmbed(interaction).setTitle('The bot is currently being worked on.\nPlease try again later.');
-    //   interaction.reply({ embeds: [maintenance], ephemeral: true });
-    //   return console.log(interaction.user.tag);
-    // }
-
-    if (interaction.type === type.ApplicationCommand && interaction.user.tag !== globals.ownerTag) {
-      try {
-        const guild = await interaction.client.guilds.fetch(globals.serverId);
-        await guild.bans.fetch(interaction.user.id);
-        const banned = buildEmbed(interaction).setTitle(`You are banned from the Kozma's Backpack Discord server and are therefore prohibited from using this bot.`);
-        return await interaction.reply({ embeds: [banned], ephemeral: true });
-      } catch (_) {
-        // catches when user is not banned -> command can run
-      }
+    if (interaction.user.tag !== globals.ownerTag) {
+      const maintenance = buildEmbed(interaction).setTitle('The bot is currently being worked on.\nPlease try again later.');
+      interaction.reply({ embeds: [maintenance], ephemeral: true });
+      return console.log(interaction.user.tag);
     }
+
+    // if (interaction.type === type.ApplicationCommand && interaction.user.tag !== globals.ownerTag) {
+    //   try {
+    //     const guild = await interaction.client.guilds.fetch(globals.serverId);
+    //     await guild.bans.fetch(interaction.user.id);
+    //     const banned = buildEmbed(interaction).setTitle(`You are banned from the Kozma's Backpack Discord server and are therefore prohibited from using this bot.`);
+    //     return await interaction.reply({ embeds: [banned], ephemeral: true });
+    //   } catch (_) {
+    //     // catches when user is not banned -> command can run
+    //   }
+    // }
     
     try {
       switch (interaction.type) {
