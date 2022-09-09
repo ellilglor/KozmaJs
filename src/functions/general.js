@@ -77,9 +77,14 @@ const contentFilter = (content) => {
 const stillAlive = async (client) => {
   const logChannel = client.channels.cache.get(globals.botLogsChannelId);
   const message = await logChannel.messages.fetch({ limit: 1 });
-  const [test] = message.values();
+  const timestamp = Math.round(client.readyTimestamp/1000);
+  const [msg] = message.values();
+  const time = msg.createdAt;
+  const date = new Date();
+  
+  time.setMinutes(time.getMinutes() + 29);
 
-  console.log(test.createdAt)
+  if (date > time) logChannel.send(`**Connected since <t:${timestamp}:f> with ${client.ws.ping}ms ping.**`);
 }
 
 module.exports = {
