@@ -1,7 +1,12 @@
+const { saveRate } = require('@functions/database/rate');
 const { contentFilter } = require('@functions/general');
 const { channels } = require('@structures/findlogs');
+const wait = require('util').promisify(setTimeout);
 const { globals } = require('@data/variables');
 const fetchAll = require('discord-fetch-all');
+const tesseract = require('tesseract.js');
+const sharp = require('sharp');
+const https = require('https');
 const fs = require('fs');
 
 const convertLogs = async (channel, channelName, collectAll) => {
@@ -83,8 +88,45 @@ const saveStats = (stats) => {
   fs.writeFileSync(`src/data/tradelogs/tradelogs.json`, JSON.stringify(stats, null, 2));
 }
 
+const updateRate = async ({ attachments }, logChannel) => {
+  if (!attachments.first()) return console.log('This message has no image!');
+
+  console.log('Extracting data from market image');
+  
+  const url = attachments.first().url;
+  const path = './src/data/market.png';
+
+  https.get(url, res => {
+    const file = fs.createWriteStream(path); // Open file in local filesystem
+    res.pipe(file); // Write data into local file
+    file.on('finish', () => { file.close() }); // Close the file
+  }).on('error', err => { console.log('Error: ', err.message) });
+
+  await wait(500);
+
+  const buyOrder = await sharp(path)
+    .extract({ left: 100, top: 120, width: 60, height: 23 }).png().toBuffer();
+  const sellOrder = await sharp(path)
+    .extract({ left: 455, top: 120, width: 60, height: 23 }).png().toBuffer();
+
+  const { data: { text: left } } = await tesseract.recognize(buyOrder);
+  const { data: { text: right } } = await tesseract.recognize(sellOrder);
+
+  const buy = parseInt(left.replace(/[^0-9]/g, '').trim().slice(0, 2));
+  const sell = parseInt(right.replace(/[^0-9]/g, '').trim().slice(0, 2));
+
+  if ((sell > buy) != true) return console.log('Failed to properly read values of the image');
+
+  const newRate = Math.floor(buy + (sell - buy) / 2);
+  console.log(`calculated rate: ${newRate}`);
+  
+  await saveRate(newRate);
+  await logChannel.send(`The conversion rate has been updated to ${newRate}`);
+}
+
 module.exports = {
   convertLogs,
   checkForNewLogs,
-  saveStats
+  saveStats,
+  updateRate
 };

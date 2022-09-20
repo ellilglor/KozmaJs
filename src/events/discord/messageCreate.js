@@ -1,4 +1,5 @@
 const { giveMute } = require('@functions/moderation/kbpTradeMute');
+const { updateRate } = require('@functions/commands/update');
 const { globals } = require('@data/variables');
 
 module.exports = {
@@ -14,11 +15,10 @@ module.exports = {
         return;
       }
 
-      if (message.member.roles.cache.some(r => r.id === globals.adminId || r.id === globals.modId)) return;
-
       switch (message.channelId) {
         case globals.wtbChannelId: await giveMute(message, logChannel); break;
         case globals.wtsChannelId: await giveMute(message, logChannel); break;
+        case globals.marketChannelId: await updateRate(message, logChannel); break;
       }
       
     } catch (error) {

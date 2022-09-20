@@ -3,6 +3,8 @@ const { tradelogEmbed } = require('@functions/general');
 const { globals } = require('@data/variables');
 
 const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => {
+  if (member.roles.cache.some(r => r.id === globals.adminId || r.id === globals.modId)) return;
+  
   const name = channelId === globals.wtbChannelId ? globals.wtbRole : globals.wtsRole;
   const role = guild.roles.cache.find(r => r.name === name);
 

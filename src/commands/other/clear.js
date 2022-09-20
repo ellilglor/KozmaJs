@@ -16,7 +16,8 @@ module.exports = {
     await interaction.user.createDM();
     const channel = interaction.user.dmChannel;
     await fetchAll.messages(channel).then(messages => {
-      messages.forEach(msg => { if (msg.author.bot) msg.delete() });
+      messages.forEach(msg => { if (msg.author.bot) msg.delete().catch(err => 
+        { console.log('An error occurred but the bot is still running') })});
     });
 	}
 };

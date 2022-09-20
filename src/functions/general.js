@@ -78,7 +78,7 @@ const stillAlive = async (client) => {
   const logChannel = client.channels.cache.get(globals.botLogsChannelId);
   const message = await logChannel.messages.fetch({ limit: 1 });
   const timestamp = Math.round(client.readyTimestamp/1000);
-  const [msg] = message.values();
+  const msg = message.first();
   const time = msg.createdAt;
   const date = new Date();
   
