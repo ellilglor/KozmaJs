@@ -74,7 +74,7 @@ const checkTradeMessages = async (channel, role, logChannel) => {
     return true;
   });
 
-  if ((globals.date.getDate() % 3) === 0 && remind) await sendReminder(channel);
+  if ((globals.date.getDate() % 2) === 0 && remind) await sendReminder(channel);
 }
 
 const sendReminder = async (channel) => {

@@ -1,6 +1,41 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const fs = require('fs');
 
+const players = {};
+
+const setPlayer = ({ user: { id } }, item) => {
+  if (!players[id]) players[id] = {};
+  players[id][item] = {};
+}
+
+const updatePlayer = ({ user: { id } }, item, uv) => {
+  if (!players[id]) players[id] = {}; 
+  if (!players[id][item]) players[id][item] = {};
+  if (!players[id][item]['types']) players[id][item]['types'] = {};
+  if (!players[id][item]['grades']) players[id][item]['grades'] = {};
+
+  const [type, grade] = uv.replace(':', '').split('\n');
+
+  players[id][item]['types'][type] = players[id][item]['types'][type] + 1 || 1;
+  players[id][item]['grades'][grade] = players[id][item]['grades'][grade] + 1 || 1;
+}
+
+const getPlayer = ({ user: { id } }, embed) => {
+  if (!players[id]) return embed.setDescription('The bot has restarted and this data is lost!');
+  if (!players[id][embed.data.title]['types']) return embed.setDescription('You have not rolled anything this session.');
+  
+  let typeDesc = '**In this session you rolled:**', gradeDesc = '\n\n**And got these grades:**\n';
+  let uvTypes = players[id][embed.data.title]['types'], uvGrades = players[id][embed.data.title]['grades'];
+  // sort uvs from most to least rolled
+  uvTypes = Object.fromEntries(Object.entries(uvTypes).sort(([,a],[,b]) => b-a));
+  uvGrades = Object.fromEntries(Object.entries(uvGrades).sort(([,a],[,b]) => b-a));
+
+  Object.entries(uvTypes).forEach(([type, amount]) => typeDesc = typeDesc.concat('\n', `${type} : ${amount}`));
+  Object.entries(uvGrades).forEach(([grade, amount]) => gradeDesc = gradeDesc.concat(' - ', `${grade} : ${amount}`));
+
+  return embed.setDescription(typeDesc.concat(gradeDesc.replace('-', '')));
+}
+
 const craftItem = (item) => {
   const craftRoll = roll();
   const uvs = [], crafting = true;
@@ -173,6 +208,9 @@ const setImage = (embed) => {
 }
 
 module.exports = {
+  setPlayer,
+  updatePlayer,
+  getPlayer,
   craftItem,
   rollUv,
   getPunchImage,

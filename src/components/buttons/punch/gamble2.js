@@ -1,5 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
-const { rollUv, checkForGm } = require('@functions/commands/punch');
+const { updatePlayer, rollUv, checkForGm } = require('@functions/commands/punch');
 
 module.exports = {
   data: {
@@ -33,6 +33,8 @@ module.exports = {
 
     embed.data.fields[2].value = (parseInt(embed.data.fields[2].value.replace(/,/g, '')) + 75000).toLocaleString('en');
     embed.data.fields.forEach(f => {
+      if (f.name.includes('🔓')) updatePlayer(interaction, embed.data.title, f.value);
+      
       switch (f.name) {
         case 'Single Rolls': index += 1; break;
         case 'Double Rolls': f.value = (parseInt(f.value.replace(/,/g, '')) + 1).toLocaleString('en'); doubleRolls = true;

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { craftItem, getPunchImage, checkForGm } = require('@functions/commands/punch');
+const { setPlayer, updatePlayer, craftItem, getPunchImage, checkForGm } = require('@functions/commands/punch');
 const { buildEmbed, logCommand } = require('@functions/general');
 const wait = require('util').promisify(setTimeout);
 
@@ -37,8 +37,13 @@ module.exports = {
 				  .setCustomId('start-punching').setLabel('Start Rolling Uvs').setStyle('Primary')
 		  );
 
+      if (!option) setPlayer(interaction, item);
+
       let result = buildEmbed(interaction).setAuthor(punch).setTitle(`You crafted: ${item}`).setThumbnail(getPunchImage(item));
-      craftUvs.forEach((uv, ind) => { result.addFields([{ name: `UV #${ind + 1}`, value: uv, inline: true }]) });
+      craftUvs.forEach((uv, ind) => {
+        updatePlayer(interaction, item, uv);
+        result.addFields([{ name: `UV #${ind + 1}`, value: uv, inline: true }]);
+      });
       result.addFields([{ name: 'Amount crafted', value: amount }]);
       result = checkForGm(result, interaction);
 

@@ -32,7 +32,9 @@ module.exports = {
         .setDisabled(uvCount < 2),
       new ButtonBuilder()
         .setCustomId('punch-lock3').setEmoji('3️⃣').setStyle('Secondary')
-        .setDisabled(uvCount < 3)
+        .setDisabled(uvCount < 3),
+      new ButtonBuilder()
+        .setCustomId('punch-stats').setEmoji('📘').setStyle('Primary')
 		);
 
     const gambleButtons = new ActionRowBuilder().addComponents(
@@ -43,7 +45,9 @@ module.exports = {
       new ButtonBuilder()
 				.setCustomId('punch-gamble2').setEmoji('2️⃣').setStyle('Secondary'),
       new ButtonBuilder()
-        .setCustomId('punch-gamble3').setEmoji('3️⃣').setStyle('Secondary')
+        .setCustomId('punch-gamble3').setEmoji('3️⃣').setStyle('Secondary'),
+      new ButtonBuilder()
+				.setCustomId('punch-info').setEmoji('❔').setStyle('Primary')
 		);
     
     await interaction.update({ embeds: [embed], components: [lockButtons, gambleButtons] });

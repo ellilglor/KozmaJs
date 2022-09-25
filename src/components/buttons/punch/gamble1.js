@@ -1,5 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
-const { rollUv } = require('@functions/commands/punch');
+const { updatePlayer, rollUv } = require('@functions/commands/punch');
 
 module.exports = {
   data: {
@@ -23,6 +23,8 @@ module.exports = {
     } else {
       embed.data.fields.splice(2, 0, { name: 'Single Rolls', value: '1', inline: true });
     }
+
+    updatePlayer(interaction, embed.data.title, embed.data.fields[0].value);
 
     lockButtons.components[1].setDisabled(false);
     lockButtons.components[2].setDisabled(true);
