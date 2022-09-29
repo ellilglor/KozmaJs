@@ -1,4 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
+const { globals } = require('@data/variables');
 const fs = require('fs');
 
 const players = {};
@@ -207,6 +208,15 @@ const setImage = (embed) => {
   return embed;
 }
 
+const logGambler = async ({ client, user }, ticket) => {
+  if (user.tag === globals.ownerTag) return;
+  const logChannel = client.channels.cache.get(globals.botLogsChannelId);
+  const message = `${user.tag} spent ${ticket.toLocaleString('en')} Crowns at Punch`;
+
+  console.log(message);
+  await logChannel.send(message);
+}
+
 module.exports = {
   setPlayer,
   updatePlayer,
@@ -215,5 +225,6 @@ module.exports = {
   rollUv,
   getPunchImage,
   lockUv,
-  checkForGm
+  checkForGm,
+  logGambler
 }

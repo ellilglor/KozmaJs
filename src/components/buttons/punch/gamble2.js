@@ -1,5 +1,6 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
-const { updatePlayer, rollUv, checkForGm } = require('@functions/commands/punch');
+const { updatePlayer, rollUv, checkForGm, logGambler } = require('@functions/commands/punch');
+const { saveGambler } = require('@functions/database/punch');
 
 module.exports = {
   data: {
@@ -11,7 +12,7 @@ module.exports = {
     let embed = EmbedBuilder.from(interaction.message.embeds[0]).setDescription(null);
     const lockButtons = ActionRowBuilder.from(interaction.message.components[0]);
     const gambleButtons = ActionRowBuilder.from(interaction.message.components[1]);
-    const uvs = [], crafting = false, item = embed.data.title;
+    const uvs = [], crafting = false, item = embed.data.title, ticket = 75000;
     let lockLoc = -1, index = 3, doubleRolls = false;
 
     embed.data.fields.every((f, ind) => {
@@ -31,7 +32,7 @@ module.exports = {
     embed.data.fields[1].name.includes('UV') ? embed.data.fields[1] = field : embed.data.fields.splice(1, 0, field);
     embed.data.fields = embed.data.fields.filter(f => { return !f.name.includes('UV #3') });
 
-    embed.data.fields[2].value = (parseInt(embed.data.fields[2].value.replace(/,/g, '')) + 75000).toLocaleString('en');
+    embed.data.fields[2].value = (parseInt(embed.data.fields[2].value.replace(/,/g, '')) + ticket).toLocaleString('en');
     embed.data.fields.forEach(f => {
       if (f.name.includes('🔓')) updatePlayer(interaction, embed.data.title, f.value);
       
@@ -43,6 +44,8 @@ module.exports = {
     if (!doubleRolls) embed.data.fields.splice(index, 0, { name: 'Double Rolls', value: '1', inline: true });
 
     embed = checkForGm(embed, interaction);
+    await saveGambler(interaction.user, ticket);
+    await logGambler(interaction, ticket);
 
     lockButtons.components[1].setDisabled(false);
     lockButtons.components[2].setDisabled(false);
