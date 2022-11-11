@@ -7,6 +7,15 @@ module.exports = {
 	async execute(message, client) {
     if (message.guildId !== globals.serverId || message.author.bot) return;
 
+    // if (message.author.tag == 'Watergoose#3657') {
+    //   await message.react('🤓');
+    //   await message.react('🦢');
+    //   await message.react('<:check:858090390254780447>');
+    //   await message.react('☑️');
+    //   await message.react('✔️');
+    //   await message.react('✅');
+    // }
+
     const logChannel = client.channels.cache.get(globals.botLogsChannelId);
 
     try {

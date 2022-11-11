@@ -1,66 +1,66 @@
 [
   {
     "name": "special-listings",
-    "amount": 268
+    "amount": 290
   },
   {
     "name": "mixed-trades",
-    "amount": 553
+    "amount": 578
   },
   {
     "name": "equipment",
-    "amount": 2911
+    "amount": 3059
   },
   {
     "name": "costumes",
-    "amount": 4684
+    "amount": 4956
   },
   {
     "name": "helm-back",
-    "amount": 970
+    "amount": 1012
   },
   {
     "name": "helm-front",
-    "amount": 2184
+    "amount": 2272
   },
   {
     "name": "helm-side",
-    "amount": 1503
+    "amount": 1578
   },
   {
     "name": "helm-top",
-    "amount": 2545
+    "amount": 2648
   },
   {
     "name": "armor-aura",
-    "amount": 755
+    "amount": 806
   },
   {
     "name": "armor-ankle",
-    "amount": 132
+    "amount": 149
   },
   {
     "name": "armor-back",
-    "amount": 1721
+    "amount": 1808
   },
   {
     "name": "armor-front",
-    "amount": 2018
+    "amount": 2107
   },
   {
     "name": "armor-rear",
-    "amount": 574
+    "amount": 609
   },
   {
     "name": "miscellaneous",
-    "amount": 1886
+    "amount": 2022
   },
   {
     "name": "Sprite Food",
-    "amount": 169
+    "amount": 171
   },
   {
     "name": "Materials",
-    "amount": 264
+    "amount": 286
   }
 ]

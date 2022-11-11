@@ -1,4 +1,5 @@
 const { dbBuyMute, dbSellMute } = require('@functions/database/tradeMute');
+const { scamPrevention } = require('@structures/reminders');
 const { tradelogEmbed } = require('@functions/general');
 const { globals } = require('@data/variables');
 
@@ -32,7 +33,7 @@ const checkOldMessages = async (client) => {
     if (msg.content === string && globals.date < time) stop = true;
     return !stop;
   });
-
+  
   if (stop) return;
   
   const guild = await client.guilds.fetch(globals.serverId);
@@ -46,10 +47,12 @@ const checkOldMessages = async (client) => {
   await guild.members.fetch();
   await checkTradeMessages(WTBchannel, WTBrole, logChannel);
   await checkTradeMessages(WTSchannel, WTSrole, logChannel);
+  await sendScamPrevention(WTSchannel, client);
 }
 
 const checkTradeMessages = async (channel, role, logChannel) => {
   const messages = await channel.messages.fetch({ limit: 25 });
+  const title = 'This message is a reminder of the __22 hour slowmode__ in this channel!';
   let remind = true;
   
   messages.every(async (msg) => {
@@ -57,8 +60,8 @@ const checkTradeMessages = async (channel, role, logChannel) => {
     expires.setHours(expires.getHours() + 22);
     if (globals.date > expires) return false;
 
-    if (msg.author.bot) remind = false;
-
+    if (msg.author.bot && msg.embeds[0]?.data.title === title) remind = false;
+    
     const member = msg.member;
     if (!member || msg.author.bot) return true;
     if (member.roles.cache.some(r => r.id === role.id)) return true;
@@ -74,16 +77,46 @@ const checkTradeMessages = async (channel, role, logChannel) => {
     return true;
   });
 
-  if ((globals.date.getDate() % 2) === 0 && remind) await sendReminder(channel);
+  if ((globals.date.getDate() % 2) === 0 && remind) await sendSlowmodeReminder(channel, title);
 }
 
-const sendReminder = async (channel) => {
+const sendSlowmodeReminder = async (channel, title) => {
   const reminder = tradelogEmbed()
-    .setTitle('This message is a reminder of the __22 hour slowmode__ in this channel!')
+    .setTitle(title)
     .setDescription('Editing your message is not possible due to how we handle this slowmode.\n' +
                     'We apologise for any inconvenience this may cause.');
   
   await channel.send({ embeds: [reminder] });
+}
+
+const sendScamPrevention = async (WTSchannel, client) => {
+  if ((globals.date.getDate() % 3) !== 0) return;
+  
+  const messages = await WTSchannel.messages.fetch({ limit: 25 });
+  const arcadeTrade = client.channels.cache.get('189463596726616064'); 
+  const title = 'Trading Guidelines';
+  let sendEmbed = true;
+
+  messages.every(msg => {
+    if (!msg.author.bot) return true;
+    if (msg.embeds[0]?.data.title === title) sendEmbed = false;
+    return sendEmbed;
+  });
+
+  if (!sendEmbed) return;
+
+  const num = Math.floor(Math.random() * scamPrevention.length);
+  const [fieldName, fieldValue] = scamPrevention[num];
+  
+  const embed = tradelogEmbed()
+    .setTitle(title)
+    .addFields([{ name: fieldName, value: fieldValue }])
+    .setFooter({ 
+      text: `Information and communication is essential to negotiations. Please be careful!`, 
+      iconURL: client.user.displayAvatarURL()
+    });
+
+  await WTSchannel.send({ embeds: [embed] });
 }
 
 module.exports = {
