@@ -42,6 +42,7 @@ const saveData = async (user, command, option) => {
   switch (command) {
     case 'findlogs':
       option = option.replace(/[0-9]/g, '').replace(' variant-search', '').replace(' single-search', '');
+      option = option.replace(' mixed-search', '').replace(' mixed-ignore', '');
       option = contentFilter(option);
       await saveSearched(option); break;
     case 'unbox':

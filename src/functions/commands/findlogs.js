@@ -4,7 +4,7 @@ const structures = require('@structures/findlogs');
 const { globals } = require('@data/variables');
 const fs = require('fs');
 
-const searchLogs = async (interaction, items, months, checkVariants) => {
+const searchLogs = async (interaction, items, months, checkVariants, checkMixed) => {
   const unedited = items[0];
   const stopHere = new Date();
   let reverse = ['ultron stinks'], logsFound = false;
@@ -19,6 +19,7 @@ const searchLogs = async (interaction, items, months, checkVariants) => {
   }
   
   for (const [channel] of structures.channels) {
+    if (channel === 'mixed-trades' && !checkMixed) continue;
     const messages = JSON.parse(fs.readFileSync(`src/data/tradelogs/${channel}.json`));
     const matches = [];
     let charCount = 0, firstMatch = false;

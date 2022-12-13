@@ -22,13 +22,21 @@ module.exports = {
 			.setDescription('Check for color variants / item family tree. Default: yes.')
       .addChoices(
       { name: 'Yes', value: 'variant-search' },
-      { name: 'No', value: 'single-search' }
-    )),
+      { name: 'No', value: 'single-search' }))
+    .addStringOption(option =>
+		  option.setName('mixed')
+			.setDescription('Check the mixed-trades. Default: yes.')
+      .addChoices(
+      { name: 'Yes', value: 'mixed-search' },
+      { name: 'No', value: 'mixed-ignore' })),
 	async execute(interaction) {
     const items = [interaction.options.getString('item')];
     const months = interaction.options.getInteger('months') || 6;
     const variants = interaction.options.getString('variants');
     const checkVariants = !variants || variants.includes('variant') ? true : false;
+    const mixed = interaction.options.getString('mixed');
+    const checkMixed = !mixed || mixed.includes('search') ? true : false;
+
     const reply = buildEmbed(interaction)
       .setTitle(`Searching for __${items[0]}__.`)
        .setDescription(
@@ -45,6 +53,6 @@ module.exports = {
     
     await interaction.reply({ embeds: [reply], ephemeral: true });
     await logCommand(interaction);
-    await searchLogs(interaction, items, months, checkVariants);
+    await searchLogs(interaction, items, months, checkVariants, checkMixed);
 	}
 };
