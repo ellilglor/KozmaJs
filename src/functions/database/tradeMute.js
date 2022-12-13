@@ -66,12 +66,11 @@ const dbCheckExpiredMutes = async (client) => {
 }
 
 const removeRole = async (members, results, role, logChannel) => {
-  for (const result of results) {
+  results.forEach(async (result) => {
     const member = members.cache.get(result._id);
     
     if (!member) {
-      await logChannel.send(`<@${globals.ownerId}> Failed to find <@${result._id}>`);
-      continue;
+      return await logChannel.send(`<@${globals.ownerId}> Failed to find <@${result._id}>`);
     }
     
     await member.roles.remove(role);
@@ -80,7 +79,7 @@ const removeRole = async (members, results, role, logChannel) => {
     if (member.roles.cache.has(role.id)) {
       await logChannel.send(`<@${globals.ownerId}> Failed to remove ${role.name} from <@${result._id}>`);
     }
-  }
+  });
 }
 
 const getMentions = (results, mentions) => {

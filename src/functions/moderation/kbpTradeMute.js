@@ -2,9 +2,10 @@ const { dbBuyMute, dbSellMute } = require('@functions/database/tradeMute');
 const { scamPrevention } = require('@structures/reminders');
 const { tradelogEmbed } = require('@functions/general');
 const { globals } = require('@data/variables');
+const fs = require('fs');
 
 const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => {
-  if (member.roles.cache.some(r => r.id === globals.adminId || r.id === globals.modId)) return;
+  if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) return;
   
   const name = channelId === globals.wtbChannelId ? globals.wtbRole : globals.wtsRole;
   const role = guild.roles.cache.find(r => r.name === name);
@@ -54,18 +55,21 @@ const checkTradeMessages = async (channel, role, logChannel) => {
   const messages = await channel.messages.fetch({ limit: 25 });
   const title = 'This message is a reminder of the __22 hour slowmode__ in this channel!';
   let remind = true;
-  
-  messages.every(async (msg) => {
+
+  for (const [id, msg] of messages) {
     const expires = msg.createdAt;
     expires.setHours(expires.getHours() + 22);
-    if (globals.date > expires) return false;
+    if (globals.date > expires) break;
 
     if (msg.author.bot && msg.embeds[0]?.data.title === title) remind = false;
     
     const member = msg.member;
-    if (!member || msg.author.bot) return true;
-    if (member.roles.cache.some(r => r.id === role.id)) return true;
-    if (member.roles.cache.some(r => r.id === globals.adminId || r.id === globals.modId)) return true;
+    if (!member || msg.author.bot) continue;
+    if (member.roles.cache.has(role.id)) continue;
+    if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) continue;
+
+    const object = { m : member, roles : member.roles.cache };
+    fs.writeFileSync(`src/${role.name}.json`, JSON.stringify(object, null, 2));
 
     await member.roles.add(role);
 
@@ -73,9 +77,32 @@ const checkTradeMessages = async (channel, role, logChannel) => {
       case globals.wtbRole: await dbBuyMute(member.user, logChannel, msg.createdAt); break;
       case globals.wtsRole: await dbSellMute(member.user, logChannel, msg.createdAt); break;
     }
+  }
+  
+  // messages.every(async (msg) => {
+  //   const expires = msg.createdAt;
+  //   expires.setHours(expires.getHours() + 22);
+  //   if (globals.date > expires) return false;
+
+  //   if (msg.author.bot && msg.embeds[0]?.data.title === title) remind = false;
     
-    return true;
-  });
+  //   const member = msg.member;
+  //   if (!member || msg.author.bot) return true;
+
+  //   let skip = false;
+  //   if (member.roles.cache.has(role.id)) skip = true;
+  //   if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) skip = true;
+  //   if (skip) return true;
+
+  //   await member.roles.add(role);
+
+  //   switch (role.name) {
+  //     case globals.wtbRole: await dbBuyMute(member.user, logChannel, msg.createdAt); break;
+  //     case globals.wtsRole: await dbSellMute(member.user, logChannel, msg.createdAt); break;
+  //   }
+    
+  //   return true;
+  // });
 
   if ((globals.date.getDate() % 2) === 0 && remind) await sendSlowmodeReminder(channel, title);
 }
@@ -99,7 +126,13 @@ const sendScamPrevention = async (WTSchannel, client) => {
 
   messages.every(msg => {
     if (!msg.author.bot) return true;
-    if (msg.embeds[0]?.data.title === title) sendEmbed = false;
+
+    const msgTitle = msg.embeds[0]?.data.title;
+    const timer = msg.createdAt;
+    timer.setHours(timer.getHours() + 5);
+
+    if ((msgTitle !== title && timer > globals.date) || msgTitle === title) sendEmbed = false;
+    
     return sendEmbed;
   });
 

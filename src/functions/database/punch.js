@@ -2,7 +2,8 @@ const gambler = require('@schemas/stats/punch');
 const { globals } = require('@data/variables');
 
 const saveGambler = async (u, ticket) => {
-  if (u.tag === globals.ownerTag) return;
+  //if (u.tag === globals.ownerTag) return;
+  return;
   let gProfile = await gambler.findOne({ _id: u.id });
 
   if (!gProfile) {
