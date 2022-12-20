@@ -36,8 +36,13 @@ const checkOldMessages = async (client) => {
   });
   
   if (stop) return;
-  
+
   const guild = await client.guilds.fetch(globals.serverId);
+  const editRole = guild.roles.cache.get(globals.editRoleId);
+  
+  await guild.members.fetch();
+  await guild.roles.cache.get(globals.editRoleId).members.forEach(m => m.roles.remove(editRole));
+  
   const WTBchannel = client.channels.cache.get(globals.wtbChannelId);
   const WTSchannel = client.channels.cache.get(globals.wtsChannelId);
   const WTBrole = guild.roles.cache.find(r => r.name === globals.wtbRole);
@@ -45,7 +50,6 @@ const checkOldMessages = async (client) => {
 
   console.log(string);
   await logChannel.send(string);
-  await guild.members.fetch();
   await checkTradeMessages(WTBchannel, WTBrole, logChannel);
   await checkTradeMessages(WTSchannel, WTSrole, logChannel);
   await sendScamPrevention(WTSchannel, client);
@@ -78,31 +82,6 @@ const checkTradeMessages = async (channel, role, logChannel) => {
       case globals.wtsRole: await dbSellMute(member.user, logChannel, msg.createdAt); break;
     }
   }
-  
-  // messages.every(async (msg) => {
-  //   const expires = msg.createdAt;
-  //   expires.setHours(expires.getHours() + 22);
-  //   if (globals.date > expires) return false;
-
-  //   if (msg.author.bot && msg.embeds[0]?.data.title === title) remind = false;
-    
-  //   const member = msg.member;
-  //   if (!member || msg.author.bot) return true;
-
-  //   let skip = false;
-  //   if (member.roles.cache.has(role.id)) skip = true;
-  //   if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) skip = true;
-  //   if (skip) return true;
-
-  //   await member.roles.add(role);
-
-  //   switch (role.name) {
-  //     case globals.wtbRole: await dbBuyMute(member.user, logChannel, msg.createdAt); break;
-  //     case globals.wtsRole: await dbSellMute(member.user, logChannel, msg.createdAt); break;
-  //   }
-    
-  //   return true;
-  // });
 
   if ((globals.date.getDate() % 2) === 0 && remind) await sendSlowmodeReminder(channel, title);
 }
@@ -110,7 +89,7 @@ const checkTradeMessages = async (channel, role, logChannel) => {
 const sendSlowmodeReminder = async (channel, title) => {
   const reminder = tradelogEmbed()
     .setTitle(title)
-    .setDescription('Editing your message is not possible due to how we handle this slowmode.\n' +
+    .setDescription('You can edit your posts through the **/tradepostedit** command.\n' +
                     'We apologise for any inconvenience this may cause.');
   
   await channel.send({ embeds: [reminder] });

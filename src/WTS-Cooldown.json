@@ -1,0 +1,35 @@
+{
+  "m": {
+    "guildId": "760222722919497820",
+    "joinedTimestamp": 1643382262110,
+    "premiumSinceTimestamp": null,
+    "nickname": null,
+    "pending": false,
+    "communicationDisabledUntilTimestamp": null,
+    "userId": "525725328711221248",
+    "avatar": null,
+    "displayName": "Swordart",
+    "roles": [
+      "760222722919497820"
+    ],
+    "avatarURL": null,
+    "displayAvatarURL": "https://cdn.discordapp.com/avatars/525725328711221248/c2098e374aeb575290355795dc11be47.webp"
+  },
+  "roles": [
+    {
+      "guild": "760222722919497820",
+      "icon": null,
+      "unicodeEmoji": null,
+      "id": "760222722919497820",
+      "name": "@everyone",
+      "color": 0,
+      "hoist": false,
+      "rawPosition": 0,
+      "permissions": "1071698529856",
+      "managed": false,
+      "mentionable": false,
+      "tags": {},
+      "createdTimestamp": 1601321621399
+    }
+  ]
+}

@@ -9,6 +9,7 @@ const globals = {
   marketChannelId: '866981820846047232',
   wtbChannelId: '872172994158538812',
   wtsChannelId: '872173055386980373',
+  editRoleId: '1054703725396099145',
   wtbRole: 'WTB-Cooldown',
   wtsRole: 'WTS-Cooldown',
   serverInvite: 'https://discord.gg/7tX9hxezvZ',

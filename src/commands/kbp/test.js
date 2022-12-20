@@ -7,8 +7,7 @@ module.exports = {
 		.setDescription(`Kozma's Backpack staff only.`)
     .setDefaultMemberPermissions(perms.KickMembers | perms.BanMembers),
 	async execute(interaction) {
-	  //if (interaction.channel.id === '879297439054581770') return;
-    const reply = buildEmbed(interaction).setTitle('Currently not in use.');
+    const reply = buildEmbed(interaction).setTitle('Command used for testing.');
     await interaction.deferReply({ ephemeral: true });
     
 	  await interaction.editReply({ embeds: [reply] });
