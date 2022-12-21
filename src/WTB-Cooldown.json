@@ -1,21 +1,69 @@
 {
   "m": {
     "guildId": "760222722919497820",
-    "joinedTimestamp": 1618937965716,
+    "joinedTimestamp": 1661144268895,
     "premiumSinceTimestamp": null,
-    "nickname": null,
+    "nickname": "<:check:858090390254780447>",
     "pending": false,
-    "communicationDisabledUntilTimestamp": null,
-    "userId": "284593418301210625",
+    "communicationDisabledUntilTimestamp": 1668882559344,
+    "userId": "312298090747133952",
     "avatar": null,
-    "displayName": "PigeonGod",
+    "displayName": "<:check:858090390254780447>",
     "roles": [
+      "859503341011861554",
+      "868920058284474398",
+      "875755403093344287",
       "760222722919497820"
     ],
     "avatarURL": null,
-    "displayAvatarURL": "https://cdn.discordapp.com/avatars/284593418301210625/3615a744900c97b4116dac36552f9582.webp"
+    "displayAvatarURL": "https://cdn.discordapp.com/avatars/312298090747133952/7d0f97f97f82cac7dad0aeedbca913d1.webp"
   },
   "roles": [
+    {
+      "guild": "760222722919497820",
+      "icon": null,
+      "unicodeEmoji": null,
+      "id": "859503341011861554",
+      "name": "Server Update",
+      "color": 0,
+      "hoist": false,
+      "rawPosition": 9,
+      "permissions": "0",
+      "managed": false,
+      "mentionable": false,
+      "tags": {},
+      "createdTimestamp": 1624991965297
+    },
+    {
+      "guild": "760222722919497820",
+      "icon": null,
+      "unicodeEmoji": null,
+      "id": "868920058284474398",
+      "name": "Predictions",
+      "color": 0,
+      "hoist": false,
+      "rawPosition": 7,
+      "permissions": "0",
+      "managed": false,
+      "mentionable": false,
+      "tags": {},
+      "createdTimestamp": 1627237085649
+    },
+    {
+      "guild": "760222722919497820",
+      "icon": null,
+      "unicodeEmoji": null,
+      "id": "875755403093344287",
+      "name": "Game Update",
+      "color": 0,
+      "hoist": false,
+      "rawPosition": 8,
+      "permissions": "0",
+      "managed": false,
+      "mentionable": false,
+      "tags": {},
+      "createdTimestamp": 1628866758846
+    },
     {
       "guild": "760222722919497820",
       "icon": null,
