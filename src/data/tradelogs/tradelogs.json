@@ -9,7 +9,7 @@
   },
   {
     "name": "equipment",
-    "amount": 3267
+    "amount": 3269
   },
   {
     "name": "costumes",
@@ -37,7 +37,7 @@
   },
   {
     "name": "armor-ankle",
-    "amount": 160
+    "amount": 161
   },
   {
     "name": "armor-back",
@@ -45,7 +45,7 @@
   },
   {
     "name": "armor-front",
-    "amount": 2223
+    "amount": 2224
   },
   {
     "name": "armor-rear",
@@ -53,7 +53,7 @@
   },
   {
     "name": "miscellaneous",
-    "amount": 2202
+    "amount": 2203
   },
   {
     "name": "Sprite Food",

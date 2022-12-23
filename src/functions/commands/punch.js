@@ -217,6 +217,15 @@ const logGambler = async ({ client, user }, ticket) => {
   await logChannel.send(message);
 }
 
+const logCrafter = async ({ client, user }, item) => {
+  if (user.tag === globals.ownerTag) return;
+  const logChannel = client.channels.cache.get(globals.botLogsChannelId);
+  const message = `${user.tag} recrafted: ${item}`;
+
+  console.log(message);
+  await logChannel.send(message);
+}
+
 module.exports = {
   setPlayer,
   updatePlayer,
@@ -226,5 +235,6 @@ module.exports = {
   getPunchImage,
   lockUv,
   checkForGm,
-  logGambler
+  logGambler,
+  logCrafter
 }
