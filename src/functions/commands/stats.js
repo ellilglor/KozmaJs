@@ -1,6 +1,7 @@
 const { buildEmbed } = require('@functions/general');
 const { getCommands, getSearched, getBoxes } = require('@functions/database/stats');
 const { getUsers } = require('@functions/database/user');
+const { getGamblers } = require('@functions/database/punch');
 const { version } = require('@root/package.json');
 const { globals } = require('@data/variables');
 const fs = require('fs');
@@ -12,19 +13,19 @@ const buildStats = async (interaction, embeds, defer) => {
   //bot usage
   const userStats = buildEmbed(interaction).setTitle('Top 20 bot users:');
   const users = await getUsers();
-  let tags = '', used = '', gambled = '';
+  let utags = '', used = '', opened = '';
 
   users.every((u, index) => {
-    tags = tags.concat('', `**${index + 1}. ${u.tag}**\n`);
+    utags = utags.concat('', `**${index + 1}. ${u.tag}**\n`);
     used = used.concat('', `${u.amount}\n`);
-    gambled = gambled.concat('', `${u.unboxed}\n`);
+    opened = opened.concat('', `${u.unboxed}\n`);
     return index > 18 ? false : true;
   });
   
   userStats.addFields([
-    { name: 'Discord tag:', value: tags, inline: true },
+    { name: 'Discord tag:', value: utags, inline: true },
     { name: 'Commands used:', value: used, inline: true },
-    { name: 'Boxes opened:', value: gambled, inline: true },
+    { name: 'Boxes opened:', value: opened, inline: true },
     { name: 'Total amount of users:', value: users.length.toString() }
   ]);
   embeds.push(userStats);
@@ -73,6 +74,25 @@ const buildStats = async (interaction, embeds, defer) => {
   unboxStats.addFields([{ name: 'Total opened:', value: unboxSum.toString() }]);
   unboxStats.setDescription(unboxDesc);
   embeds.push(unboxStats);
+
+  //punch command stats
+  const punchStats = buildEmbed(interaction).setTitle('Top 20 highest spenders at Punch:');
+  const gamblers = await getGamblers();
+  const gamblerSum = gamblers.reduce((total, g) => g.total + total, 0).toLocaleString('en');
+  let gtags = '', punched = '';
+
+  gamblers.every((g, index) => {
+    gtags = gtags.concat('', `**${index + 1}. ${g.tag}**\n`);
+    punched = punched.concat('', `${g.total.toLocaleString('en')}\n`);
+    return index > 18 ? false : true;
+  });
+
+  punchStats.addFields([
+    { name: 'Discord tag:', value: gtags, inline: true },
+    { name: 'Crowns spent:', value: punched, inline: true },
+    { name: 'Total amount spent:', value: gamblerSum }
+  ]);
+  embeds.push(punchStats);
 
   //Amount of tradelogs
   const logStats = buildEmbed(interaction).setTitle('These are the amount of tradelogs:');
