@@ -1,7 +1,8 @@
 const { buildEmbed } = require('@functions/general');
 const { getCommands, getSearched, getBoxes } = require('@functions/database/stats');
-const { getUsers } = require('@functions/database/user');
 const { getGamblers } = require('@functions/database/punch');
+const { getUsers } = require('@functions/database/user');
+const { channels } = require('@structures/findlogs');
 const { version } = require('@root/package.json');
 const { globals } = require('@data/variables');
 const fs = require('fs');
@@ -96,14 +97,47 @@ const buildStats = async (interaction, embeds, defer) => {
 
   //Amount of tradelogs
   const logStats = buildEmbed(interaction).setTitle('These are the amount of tradelogs:');
-  const channels = JSON.parse(fs.readFileSync(`src/data/tradelogs/tradelogs.json`));
-  const logSum = channels.reduce((total, chnl) => chnl.amount + total, 0);
-  const logsDesc = channels.reduce((desc, c) => desc.concat('', `**${c.name}** - ${c.amount}\n`), '');
+  const tradelogChannels = JSON.parse(fs.readFileSync(`src/data/tradelogs/tradelogs.json`));
+  const logSum = tradelogChannels.reduce((total, chnl) => chnl.amount + total, 0);
+  const logsDesc = tradelogChannels.reduce((desc, c) => desc.concat('', `**${c.name}** - ${c.amount}\n`), '');
 
   logStats.addFields([{ name: 'Total amount:', value: logSum.toString() }]);
   logStats.setDescription(logsDesc);
   embeds.push(logStats);
 
+  //tradelog authors
+  const authorStats = buildEmbed(interaction).setTitle('These are all loggers:');
+  const authors = {};
+  let authorNames = '', authorPosted = '', authorPerc = '', index = 1;
+
+  for (const [name, id] of channels) {
+    const logs = JSON.parse(fs.readFileSync(`src/data/tradelogs/${name}.json`));
+
+    for (const message of logs) {
+      authors[message.author] = authors[message.author] + 1 || 1;
+    }
+  }
+  
+  const authorsSortable = Object.entries(authors);
+  authorsSortable.sort((a, b) => { return b[1] - a[1] });
+
+  for (const [author, amount] of authorsSortable) {
+    const perc = ((amount / logSum) * 100).toFixed(2);
+    
+    authorNames = authorNames.concat('', `**${index}. ${author}**\n`);
+    authorPosted = authorPosted.concat('', `${amount.toLocaleString('en')}\n`);
+    authorPerc = authorPerc.concat('', `${perc}%\n`);
+    index++;
+  }
+
+  authorStats.addFields([
+    { name: 'Discord tag:', value: authorNames, inline: true },
+    { name: 'Messages:', value: authorPosted, inline: true },
+    { name: 'Percentage:', value: authorPerc, inline: true },
+    { name: 'Total amount:', value: logSum.toString() }
+  ]);
+  embeds.push(authorStats);
+  
   //findlogs command stats
   const searchStats = buildEmbed(interaction).setTitle('Top 20 searched items:');
   const items = await getSearched();

@@ -77,6 +77,7 @@ const messageSnipper = (msg) => {
 
   return {
     discordId: msg.id,
+    author: msg.author.tag,
     date: d,
     messageUrl: msg.url,
     content: msgContent,
