@@ -7,6 +7,7 @@
     "convert": "Convert your currency. (glorified calculator)",
     "findLogs": "Makes the bot search the database for your item.",
     "lockbox": "Gives information about a lockbox or tells you what box drops your item.",
+    "punch": "Craft items and roll for Unique Variants without draining your wallet.",
     "rate": "Tells you the crowns per energy rate currently in use.",
     "unbox": "Simulate opening a box and be disappointed for free."
   }

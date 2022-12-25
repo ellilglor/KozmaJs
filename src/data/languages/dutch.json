@@ -7,6 +7,7 @@
     "convert": "Converteer je crowns/energy.",
     "findLogs": "Laat de bot de database doorzoeken naar een item",
     "lockbox": "Geeft informatie over een lockbox of zegt welke box jouw item dropt.",
+    "punch": "creëer voorwerpen en rol voor Unique Variants zonder je portefeuille leeg te maken.",
     "rate": "Vertelt de huidige crowns per energy verhouding",
     "unbox": "Simuleer het openen van een box en wees gratis teleurgesteld."
   }

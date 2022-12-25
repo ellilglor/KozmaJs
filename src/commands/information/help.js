@@ -17,6 +17,7 @@ module.exports = {
         { name: '/convert', value: lan.convert },
         { name: '/findlogs', value: lan.findLogs },
         { name: '/lockbox', value: lan.lockbox },
+        { name: '/punch', value: lan.punch },
         { name: '/rate', value: lan.rate },
         { name: '/unbox', value: lan.unbox },
     ]);

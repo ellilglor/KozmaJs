@@ -7,6 +7,7 @@
     "convert": "Converti una valuta. (glorified calculator)",
     "findLogs": "Il bot cercherà un item da te specificato nel database.",
     "lockbox": "Fornisce informazioni su una lockbox o ti dice quale lockbox droppa un item da te specificato",
+    "punch": "Crafta items e rolla Unique Variants senza prosciugarti il portafoglio",
     "rate": "Ti dice il tasso di crowns per energy attualmente in uso.",
     "unbox": "Simula l'apertura di una lockbox e rimani deluso gratuitamente."
   }
