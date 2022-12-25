@@ -42,6 +42,7 @@ Want to invite the bot to your server? use this [link](https://discord.com/api/o
 Extra options:<br>
 - *months* ~ By default the bot only looks in the past 6 months but you can extend this period through the *months* option.<br>
 - *variants* ~ When looking for equipment and certain color themes the bot automatically looks for items of that equipment's family tree or color themes of similar value. You can disable this through the *variants* option.<br>
+- *mixed* ~ By default the bot always look in all channels. The mixed-trades channel doesn't always provide useful info. This option lets you skip that channel.<br>
 
 Qol implementations:<br>
 - The bot automatically swaps ctr & asi uvs to return both options when searching.<br>
@@ -66,6 +67,13 @@ This command has 3 options:
 - *boxes* ~ This option lets you select a lockbox so you can see the possible rewards.<br>
 - *slime* ~ Enter a slime box code (QQQ for example) to discover if that box can drop a special color themed box.<br>
 - *item* ~ Curious what lockbox drops your item? With this option you can find out which box drops your item and the chance the dropchance.
+</details>
+
+<br>
+<details>
+<summary>/punch</summary>
+  
+<br>Craft items and roll for Unique Variants without draining your wallet.
 </details>
 
 <br>
