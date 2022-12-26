@@ -19,6 +19,7 @@ module.exports = {
       .addChoices(
       { name: 'Brandish', value: 'Brandish' },
       { name: 'Overcharged Mixmaster', value: 'Overcharged Mixmaster' },
+      { name: 'Blast Bomb', value: 'Blast Bomb'},
       { name: 'Swiftstrike Buckler', value: 'Swiftstrike Buckler' },
       { name: 'Black Kat Cowl', value: 'Black Kat Cowl' }
     )),

@@ -90,18 +90,19 @@ const getUvGrade = (type) => {
 }
 
 const getUvType = (type, crafting) => {
-  if (type === 'weapon') {
-    const weaponRoll = Math.floor(Math.random() * 8);
+  if (type === 'weapon' || type === 'bomb') {
+    const num = type === 'weapon' ? 8 : 7;
+    const weaponRoll = Math.floor(Math.random() * num);
     
     switch (weaponRoll) {
-      case 0: result = 'Attack Speed Increase:'; break;
-      case 1: result = 'Charge Time Reduction:'; break;
+      case 0: result = 'Damage Bonus vs Undead:'; break;
+      case 1: result = 'Damage Bonus vs Slime:'; break;
       case 2: result = 'Damage Bonus vs Construct:'; break;
       case 3: result = 'Damage Bonus vs Gremlin:'; break;
       case 4: result = 'Damage Bonus vs Fiend:'; break;
       case 5: result = 'Damage Bonus vs Beast:'; break;
-      case 6: result = 'Damage Bonus vs Undead:'; break;
-      case 7: result = 'Damage Bonus vs Slime:';
+      case 6: result = 'Charge Time Reduction:'; break;
+      case 7: result = 'Attack Speed Increase:';
     }
   } else {
     const num = type === 'armor' || (type === 'shield' && crafting) ? 11 : 4;
@@ -127,9 +128,10 @@ const getUvType = (type, crafting) => {
 
 const getItemType = (item) => {
   const weapons = ['Brandish', 'Overcharged Mixmaster'];
+  const bomb = 'Blast Bomb';
   const shield = 'Swiftstrike Buckler';
   
-  return weapons.includes(item) ? 'weapon' : shield === item ? 'shield' : 'armor';
+  return weapons.includes(item) ? 'weapon' : bomb === item ? 'bomb' : shield === item ? 'shield' : 'armor';
 }
 
 const roll = () => {
