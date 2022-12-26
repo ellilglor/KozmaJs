@@ -81,7 +81,7 @@ const getUvGrade = (type) => {
   let result = '\n';
 
   if (gradeRoll <= 245) {
-    result += type === 'weapon' ? 'Very High' : 'Maximum';
+    result += type === 'weapon' || type === 'bomb' ? 'Very High' : 'Maximum';
   } else {
     result += gradeRoll <= 732 ? 'High' : gradeRoll <= 2683 ? 'Medium' : 'Low';
   } 
