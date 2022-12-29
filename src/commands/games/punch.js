@@ -40,7 +40,7 @@ module.exports = {
       await logCommand(interaction, option);
       setPlayer(interaction, item);
     } else {
-      await logCrafter(interaction, item);
+      logCrafter(interaction, item);
     }
     
     let result = buildEmbed(interaction)

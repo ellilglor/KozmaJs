@@ -27,7 +27,7 @@ module.exports = {
 
     updatePlayer(interaction, embed.data.title, embed.data.fields[0].value);
     await saveGambler(interaction.user, ticket);
-    await logGambler(interaction, ticket);
+    logGambler(interaction, ticket);
 
     lockButtons.components[1].setDisabled(false);
     lockButtons.components[2].setDisabled(true);

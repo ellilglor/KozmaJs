@@ -61,7 +61,7 @@ module.exports = {
 
     embed = checkForGm(embed, interaction);
     await saveGambler(interaction.user, ticket);
-    await logGambler(interaction, ticket);
+    logGambler(interaction, ticket);
 
     lockButtons.components[1].setDisabled(false);
     lockButtons.components[2].setDisabled(false);

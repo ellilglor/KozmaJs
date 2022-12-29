@@ -210,22 +210,16 @@ const setImage = (embed) => {
   return embed;
 }
 
-const logGambler = async ({ client, user }, ticket) => {
+const logGambler = ({ user }, ticket) => {
   if (user.tag === globals.ownerTag) return;
-  const logChannel = client.channels.cache.get(globals.botLogsChannelId);
-  const message = `${user.tag} spent ${ticket.toLocaleString('en')} Crowns at Punch`;
 
-  console.log(message);
-  await logChannel.send(message);
+  console.log(`${user.tag} spent ${ticket.toLocaleString('en')} Crowns at Punch`);
 }
 
-const logCrafter = async ({ client, user }, item) => {
+const logCrafter = ({ user }, item) => {
   if (user.tag === globals.ownerTag) return;
-  const logChannel = client.channels.cache.get(globals.botLogsChannelId);
-  const message = `${user.tag} recrafted: ${item}`;
 
-  console.log(message);
-  await logChannel.send(message);
+  console.log(`${user.tag} recrafted: ${item}`);
 }
 
 module.exports = {
