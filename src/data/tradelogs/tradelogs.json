@@ -5,7 +5,7 @@
   },
   {
     "name": "mixed-trades",
-    "amount": 653
+    "amount": 654
   },
   {
     "name": "equipment",
@@ -13,7 +13,7 @@
   },
   {
     "name": "costumes",
-    "amount": 5244
+    "amount": 5247
   },
   {
     "name": "helm-back",
@@ -21,15 +21,15 @@
   },
   {
     "name": "helm-front",
-    "amount": 2353
+    "amount": 2354
   },
   {
     "name": "helm-side",
-    "amount": 1649
+    "amount": 1650
   },
   {
     "name": "helm-top",
-    "amount": 2760
+    "amount": 2761
   },
   {
     "name": "armor-aura",

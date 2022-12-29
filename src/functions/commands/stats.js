@@ -222,7 +222,7 @@ const buildPunchStats = async (interaction) => {
 }
 
 const buildLogStats = (interaction) => {
-  const embed = buildEmbed(interaction).setTitle('These are the amount of tradelogs:');
+  const embed = buildEmbed(interaction).setTitle('Amount of tradelogs:');
   const channels = JSON.parse(fs.readFileSync('src/data/tradelogs/tradelogs.json'));
   channels.sort((a, b) => { return b.amount - a.amount });
   const sum = channels.reduce((total, chnl) => chnl.amount + total, 0);
@@ -265,7 +265,7 @@ const buildAuthorStats = (interaction, totalLogs) => {
   for (const [index, [author, amount]] of sortable.entries()) {
     const perc = ((amount / totalLogs) * 100).toFixed(2);
     
-    tags = tags.concat('', `**${index + 1}. ${author.replace('#supply-depot', '')}**\n`);
+    tags = tags.concat('', `**${index + 1}. ${author.replace(' #supply-depot', '')}**\n`);
     posts = posts.concat('', `${amount.toLocaleString('en')}\n`);
     percentages = percentages.concat('', `${perc}%\n`);
   }
