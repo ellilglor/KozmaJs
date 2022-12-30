@@ -60,7 +60,23 @@ const getImage = (box, item) => {
   return result = content.find(i => item.includes(i.name)).url;
 }
 
+const calculateCost = (amount) => {
+  let cost = 0;
+
+  const amount14Batches = Math.floor(amount / 14);
+  cost += amount14Batches * 49.95;
+
+  const amount5Batches = Math.floor((amount - 14 * amount14Batches) / 5);
+  cost += amount5Batches * 19.95;
+
+  const extra = Math.floor(amount - 14 * amount14Batches - 5 * amount5Batches);
+  cost += extra * 4.95;
+
+  return cost.toFixed(2);
+}
+
 module.exports = {
   unbox,
-  getImage
+  getImage,
+  calculateCost
 }

@@ -9,7 +9,7 @@
   },
   {
     "name": "equipment",
-    "amount": 3305
+    "amount": 3308
   },
   {
     "name": "costumes",
@@ -29,11 +29,11 @@
   },
   {
     "name": "helm-top",
-    "amount": 2761
+    "amount": 2762
   },
   {
     "name": "armor-aura",
-    "amount": 886
+    "amount": 888
   },
   {
     "name": "armor-ankle",
@@ -41,7 +41,7 @@
   },
   {
     "name": "armor-back",
-    "amount": 1936
+    "amount": 1938
   },
   {
     "name": "armor-front",

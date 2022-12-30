@@ -2,6 +2,8 @@ const { buildEmbed } = require('@functions/general');
 const { getCommands, getSearched, getBoxes } = require('@functions/database/stats');
 const { getGamblers } = require('@functions/database/punch');
 const { getUsers } = require('@functions/database/user');
+const { calculateCost } = require('@functions/commands/unbox');
+const { lockboxes, depotBoxes } = require('@structures/unbox');
 const { channels } = require('@structures/findlogs');
 const { version } = require('@root/package.json');
 const { globals } = require('@data/variables');
@@ -14,7 +16,7 @@ const buildStats = async (interaction, embeds, defer) => {
 
   const serverStats = await buildServerStats(interaction, client);
   const commandStats = await buildCommandStats(interaction);
-  const userStats = buildUserStats(interaction, users, commandStats.noGames);
+  const userStats = buildUserStats(interaction, users, commandStats.total);
   const unboxStats = await buildUnboxStats(interaction);
   const unboxerStats = buildUnboxerStats(interaction, users, unboxStats.total);
   const punchStats = await buildPunchStats(interaction);
@@ -121,7 +123,7 @@ const buildCommandStats = async (interaction) => {
     { name: 'Total without games:', value: withoutGames.toLocaleString('en'), inline: true }
   ]);
 
-  return { embed: embed, total: sum, noGames: withoutGames };
+  return { embed: embed, total: withoutGames };
 }
 
 const buildUserStats = (interaction, users, usage) => {
@@ -152,10 +154,18 @@ const buildUnboxStats = async (interaction) => {
   const embed = buildEmbed(interaction).setTitle('How much each box has been opened:');
   const boxes = await getBoxes();
   const sum = boxes.reduce((total, box) => box.amount + total, 0);
-  let names = '', amounts = '', percentages = '';
+  let names = '', amounts = '', percentages = '', energy = 0, dollars = 0;
 
   for (const [index, box] of boxes.entries()) {
     const perc = ((box.amount / sum) * 100).toFixed(2);
+
+    if (lockboxes.includes(box.box)) {
+      energy += box.amount * 750;
+    } else if (depotBoxes.includes(box.box)) {
+      energy += box.amount * 3495;
+    } else {
+      dollars += parseFloat(calculateCost(box.amount));
+    }
 
     names = names.concat('', `**${index + 1}. ${box.box}**\n`);
     amounts = amounts.concat('', `${box.amount.toLocaleString('en')}\n`);
@@ -166,7 +176,9 @@ const buildUnboxStats = async (interaction) => {
     { name: 'Box:', value: names, inline: true },
     { name: 'Opened:', value: amounts, inline: true },
     { name: 'Percentage:', value: percentages, inline: true },
-    { name: 'Total opened:', value: sum.toLocaleString('en') }
+    { name: 'Total opened:', value: sum.toLocaleString('en'), inline: true },
+    { name: 'Energy spent:', value: energy.toLocaleString('en'), inline: true },
+    { name: 'Dollars spent:', value: `$${dollars.toLocaleString('en')}`, inline: true }
   ]);
 
   return { embed: embed, total: sum };
@@ -247,7 +259,7 @@ const buildLogStats = (interaction) => {
 }
 
 const buildAuthorStats = (interaction, totalLogs) => {
-  const embed = buildEmbed(interaction).setTitle('These are all loggers:');
+  const embed = buildEmbed(interaction).setTitle('All loggers:');
   const authors = {};
   let tags = '', posts = '', percentages = '';
 

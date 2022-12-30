@@ -1,4 +1,5 @@
-const { lockboxes, depotBoxes } = require('@structures/unbox')
+const { lockboxes, depotBoxes } = require('@structures/unbox');
+const { calculateCost } = require('@functions/commands/unbox');
 const command = require(`@commands/games/unbox`);
 
 module.exports = {
@@ -18,18 +19,7 @@ module.exports = {
     } else if (depotBoxes.includes(box)){
       spent += 3495;
     } else {
-      let cost = 0;
-
-      const amount14Batches = Math.floor(amount / 14);
-      cost += amount14Batches * 49.95;
-
-      const amount5Batches = Math.floor((amount - 14 * amount14Batches) / 5);
-      cost += amount5Batches * 19.95;
-
-      const extra = Math.floor(amount - 14 * amount14Batches - 5 * amount5Batches);
-      cost += extra * 4.95;
-
-      spent = cost.toFixed(2);
+      spent = calculateCost(amount);
     }
 
     await command.execute(interaction, showStats, box, String(amount), String(spent));
