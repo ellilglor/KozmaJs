@@ -1,37 +1,21 @@
 {
   "m": {
     "guildId": "760222722919497820",
-    "joinedTimestamp": 1655036505082,
+    "joinedTimestamp": 1630767488847,
     "premiumSinceTimestamp": null,
     "nickname": null,
     "pending": false,
     "communicationDisabledUntilTimestamp": null,
-    "userId": "351129866877403145",
+    "userId": "410341946528366602",
     "avatar": null,
-    "displayName": "Dazzu",
+    "displayName": "Zac",
     "roles": [
-      "956172112790433842",
       "760222722919497820"
     ],
     "avatarURL": null,
-    "displayAvatarURL": "https://cdn.discordapp.com/avatars/351129866877403145/4fe316cbc8863679fb8a67bce04fb2a8.webp"
+    "displayAvatarURL": "https://cdn.discordapp.com/avatars/410341946528366602/d097b3d561e11124ea6cff484296d541.webp"
   },
   "roles": [
-    {
-      "guild": "760222722919497820",
-      "icon": null,
-      "unicodeEmoji": null,
-      "id": "956172112790433842",
-      "name": "WTS-Cooldown",
-      "color": 0,
-      "hoist": false,
-      "rawPosition": 5,
-      "permissions": "1071698529856",
-      "managed": false,
-      "mentionable": false,
-      "tags": {},
-      "createdTimestamp": 1648039596508
-    },
     {
       "guild": "760222722919497820",
       "icon": null,

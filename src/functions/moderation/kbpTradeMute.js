@@ -90,7 +90,11 @@ const sendSlowmodeReminder = async (channel, title) => {
   const reminder = tradelogEmbed()
     .setTitle(title)
     .setDescription('You can edit your posts through the **/tradepostedit** command.\n' +
-                    'We apologise for any inconvenience this may cause.');
+                    'We apologise for any inconvenience this may cause.')
+    .addFields([{ 
+      name: '\u200B', 
+      value: 'Interested in what an item has sold for in the past?\nUse the **/findlogs** command.'
+    }]);
   
   await channel.send({ embeds: [reminder] });
 }
