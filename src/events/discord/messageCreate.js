@@ -1,26 +1,17 @@
-const { giveMute } = require('@functions/moderation/kbpTradeMute');
-const { updateRate } = require('@functions/commands/update');
+const { knightlauncher } = require('@functions/messages/knightlauncher');
+const { kbp } = require('@functions/messages/kbp');
 const { globals } = require('@data/variables');
 
 module.exports = {
 	name: 'messageCreate',
 	async execute(message, client) {
-    if (message.guildId !== globals.serverId || message.author.bot) return;
-
-    const logChannel = client.channels.cache.get(globals.botLogsChannelId);
-
     try {
-      if (!message.member) {
-        await logChannel.send(`<@${globals.ownerId}> no member was found for ${message.url}`);
-        return;
-      }
+      const logChannel = client.channels.cache.get(globals.botLogsChannelId);
 
-      switch (message.channelId) {
-        case globals.wtbChannelId: await giveMute(message, logChannel); break;
-        case globals.wtsChannelId: await giveMute(message, logChannel); break;
-        case globals.marketChannelId: await updateRate(message, logChannel); break;
+      switch (message.guildId) {
+        case '653349356459786240': await knightlauncher(message); break;
+        case globals.serverId: await kbp(message, logChannel); break;
       }
-      
     } catch (error) {
       await logChannel.send(`<@${globals.ownerId}> Error on msgCreate!\n${error}`);
       console.log('\u001b[31mError on msgCreate!\n\u001b[0m', { error });
