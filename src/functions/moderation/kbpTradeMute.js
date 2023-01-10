@@ -2,7 +2,6 @@ const { dbBuyMute, dbSellMute } = require('@functions/database/tradeMute');
 const { scamPrevention } = require('@structures/reminders');
 const { tradelogEmbed } = require('@functions/general');
 const { globals } = require('@data/variables');
-const fs = require('fs');
 
 const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => {
   if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) return;
@@ -17,7 +16,7 @@ const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => 
     case globals.wtsRole: await dbSellMute(member.user, logChannel, createdAt); break;
   }
 
-  await guild.members.fetch();
+  //await guild.members.fetch();
   await member.roles.add(role);
 }
 
@@ -71,9 +70,6 @@ const checkTradeMessages = async (channel, role, logChannel) => {
     if (!member || msg.author.bot) continue;
     if (member.roles.cache.has(role.id)) continue;
     if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) continue;
-
-    const object = { m : member, roles : member.roles.cache };
-    fs.writeFileSync(`src/${role.name}.json`, JSON.stringify(object, null, 2));
 
     await member.roles.add(role);
 
