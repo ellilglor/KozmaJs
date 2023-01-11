@@ -59,18 +59,29 @@ const getLanguage = (locale) => {
 }
 
 const contentFilter = (content) => {
-	result = content.replace(/['"\+\[\]()\-{},]/g, "").toLowerCase();
+	result = content.replace(/['"’\+\[\]()\-{},]/g, "").toLowerCase();
 
-	if (result.includes('gm')) result = result.replace('gm', '').concat(' ', 'asi vh ctr vh');
+	if (result.includes('orbitgun') && !result.includes('celestial')) result = result.replace('orbitgun', 'celestial orbitgun');
+  if (result.includes('mixmaster') && !result.includes('overcharged')) result = result.replace('mixmaster', 'overcharged mixmaster');
+  if (result.includes('totem') && !result.includes('somnambulists')) result = result.replace('totem', 'somnambulists totem');
+  if (result.includes('soaker') && !result.includes('spiral')) result = result.replace('soaker', 'spiral soaker');
+  if (result.includes('blitz') && !result.includes('needle')) result = result.replace('blitz', 'blitz needle');
+  if (result.includes('calad') && !result.includes('caladbolg')) result = result.replace('calad', 'caladbolg');
+  if (result.includes('daybreaker') && !result.includes('band')) result = result.replace('daybreaker', 'daybreaker band');
 
+  if (result.includes('ctr m') && !result.includes('ctr med')) result = result.replace('ctr m', 'ctr med');
+  if (result.includes('ctr h') && !result.includes('ctr high')) result = result.replace('ctr h', 'ctr high');
+  if (result.includes('asi m') && !result.includes('asi med')) result = result.replace('asi m', 'asi med');
+  if (result.includes('asi h') && !result.includes('asi high')) result = result.replace('asi h', 'asi high');
+  
 	result = result
-		.replace("  ", " ")
-		.replace("mixer", "overcharged mixmaster")
-		.replace(/vh/g, "very high")
-		.replace("bkc", "black kat cowl")
-		.replace("bkr", "black kat raiment")
-		.replace("bkm", "black kat mail")
-		.trim();
+    .replace(' gm', ' asi very high ctr very high').replace('gm ', 'asi very high ctr very high ')
+		.replace(/vh/g, "very high").replace('ctr very high asi very high', 'asi very high ctr very high')
+    .replace('medium', 'med').replace('maximum', 'max')
+    .replace("mixer", "overcharged mixmaster")
+		.replace('bkc', 'black kat cowl').replace('bkr', 'black kat raiment').replace('bkm', 'black kat mail')
+    .replace('ssb', 'swiftstrike buckler').replace('btb', 'barbarous thorn blade')
+    .replace(/ {2,}/g, ' ').trim(); // remove whitespace
 
 	return result;
 };

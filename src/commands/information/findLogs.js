@@ -16,7 +16,7 @@ module.exports = {
 		  option.setName('months')
 			.setDescription('How far back the bot should search. Default: 6 months.')
       .setMinValue(1)
-      .setMaxValue(24))
+      .setMaxValue(48))
     .addStringOption(option =>
 		  option.setName('variants')
 			.setDescription('Check for color variants / item family tree. Default: yes.')

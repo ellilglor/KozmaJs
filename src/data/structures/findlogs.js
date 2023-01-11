@@ -39,8 +39,10 @@ const equipmentFamilies = {
 
 "blast bombs": ['blast bomb', 'super blast bomb', 'deconstructor', 'master blast bomb', 'irontech bomb', 'heavy deconstructor', 'nitronome', 'irontech destroyer', 'big angry bomb'],
 
-"vortexes": ['electron charge', 'graviton charge', 'electron bomb', 'graviton bomb', 'obsidian crusher', 'electron vortex', 'graviton vortex'],
-
+"vortexes 1": ['electron charge', 'electron bomb', 'electron vortex'],
+  
+"vortexes 2": ['graviton charge', 'graviton bomb', 'obsidian crusher', 'graviton vortex'],
+  
 "wolver set": ['wolver coat', 'padded hunting coat', 'dusker coat', 'quilted hunting coat', 'ash tail coat', 'vog cub coat', 'starlit hunting coat', 'snarbolax coat', 'skolver coat', 'wolver cap', 'padded hunting cap', 'dusker cap', 'quilted hunting cap', 'ash tail cap', 'vog cub capt', 'starlit hunting cap', 'snarbolax cap', 'skolver cap'],
 
 "cloak sets": ['magic cloak', 'elemental cloak', 'miracle cloak', 'chaos cloak', 'divine mantle', 'grey feather mantle', 'magic hood', 'elemental hood', 'miracle hood', 'chaos cowl', 'divine veil', 'grey feather cowl'],

@@ -44,22 +44,21 @@ const searchLogs = async (interaction, items, months, checkVariants, checkMixed)
         matches.push(foundIn);
       }
 
+      if (charCount + message.content.length > 6000 || matches.length === 10) {
+        await interaction.user.send({ embeds: matches }).catch(error => error);
+        matches.splice(0, matches.length);
+        charCount = 0;
+      }
+
       charCount += message.content.length;
 
       const embed = tradelogEmbed()
         .setTitle(message.date)
         .setURL(message.messageUrl)
-        .setDescription(message.content.slice(0,4096));
+        .setDescription(message.content.slice(0,4096))
+        .setImage(message.image);
 
-      if (message.image) embed.setImage(message.image);
-
-      if (matches.length === 10 || charCount >= 5900) {
-        await interaction.user.send({ embeds: matches }).catch(error => error);
-        matches.splice(0, matches.length);
-        charCount = 0;
-      } else { 
-        matches.push(embed);
-      }
+      matches.push(embed);
     }
 
     if (matches.length !== 0) await interaction.user.send({ embeds: matches }).catch(error => error);
@@ -199,5 +198,4 @@ const uvSwap = (name) => {
 
 module.exports = {
   searchLogs,
-  contentFilter
 };
