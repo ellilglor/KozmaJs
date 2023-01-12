@@ -16,7 +16,6 @@ const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => 
     case globals.wtsRole: await dbSellMute(member.user, logChannel, createdAt); break;
   }
 
-  //await guild.members.fetch();
   await member.roles.add(role);
 }
 

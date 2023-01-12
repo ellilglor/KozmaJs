@@ -16,7 +16,7 @@ const dbBuyMute = async (member, logChannel, expires) => {
     })
     await buyProfile.save().catch(err => console.log(err));
   } else {
-    await logChannel.send(`WTB - <@${globals.ownerId}> <@${member.id}> is already in the database!`);
+    //await logChannel.send(`WTB - <@${globals.ownerId}> <@${member.id}> is already in the database!`);
   }
 }
 
@@ -33,7 +33,7 @@ const dbSellMute = async (member, logChannel, expires) => {
     })
     await sellProfile.save().catch(err => console.log(err));
   } else {
-    await logChannel.send(`WTS - <@${globals.ownerId}> <@${member.id}> is already in the database!`);
+    //await logChannel.send(`WTS - <@${globals.ownerId}> <@${member.id}> is already in the database!`);
   }
 }
 

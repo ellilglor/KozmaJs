@@ -9,15 +9,15 @@
   },
   {
     "name": "equipment",
-    "amount": 3387
+    "amount": 3390
   },
   {
     "name": "costumes",
-    "amount": 5319
+    "amount": 5320
   },
   {
     "name": "helm-back",
-    "amount": 1092
+    "amount": 1094
   },
   {
     "name": "helm-front",
@@ -29,11 +29,11 @@
   },
   {
     "name": "helm-top",
-    "amount": 2802
+    "amount": 2804
   },
   {
     "name": "armor-aura",
-    "amount": 918
+    "amount": 919
   },
   {
     "name": "armor-ankle",
@@ -41,19 +41,19 @@
   },
   {
     "name": "armor-back",
-    "amount": 1974
+    "amount": 1975
   },
   {
     "name": "armor-front",
-    "amount": 2280
+    "amount": 2281
   },
   {
     "name": "armor-rear",
-    "amount": 678
+    "amount": 679
   },
   {
     "name": "miscellaneous",
-    "amount": 2285
+    "amount": 2288
   },
   {
     "name": "Sprite Food",
