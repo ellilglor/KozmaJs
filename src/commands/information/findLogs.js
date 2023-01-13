@@ -24,18 +24,23 @@ module.exports = {
       { name: 'Yes', value: 'variant-search' },
       { name: 'No', value: 'single-search' }))
     .addStringOption(option =>
+		  option.setName('clean')
+			.setDescription('Filter out high value uvs. Default: no.')
+      .addChoices(
+      { name: 'Yes', value: 'clean-search' },
+      { name: 'No', value: 'dirty-search' }))
+    .addStringOption(option =>
 		  option.setName('mixed')
-			.setDescription('Check the mixed-trades. Default: yes.')
+			.setDescription('Check the mixed-trades channel. Default: yes.')
       .addChoices(
       { name: 'Yes', value: 'mixed-search' },
       { name: 'No', value: 'mixed-ignore' })),
 	async execute(interaction) {
     const items = [interaction.options.getString('item')];
     const months = interaction.options.getInteger('months') || 6;
-    const variants = interaction.options.getString('variants');
-    const checkVariants = !variants || variants.includes('variant') ? true : false;
-    const mixed = interaction.options.getString('mixed');
-    const checkMixed = !mixed || mixed.includes('search') ? true : false;
+    const checkVariants = interaction.options.getString('variants')?.includes('single') ? false : true;
+    const checkClean = interaction.options.getString('clean')?.includes('clean') ? true : false;
+    const checkMixed = interaction.options.getString('mixed')?.includes('ignore') ? false : true;
 
     const reply = buildEmbed(interaction)
       .setTitle(`Searching for __${items[0]}__.`)
@@ -53,6 +58,6 @@ module.exports = {
     
     await interaction.reply({ embeds: [reply], ephemeral: true });
     await logCommand(interaction);
-    await searchLogs(interaction, items, months, checkVariants, checkMixed);
+    await searchLogs(interaction, items, months, checkVariants, checkClean, checkMixed);
 	}
 };

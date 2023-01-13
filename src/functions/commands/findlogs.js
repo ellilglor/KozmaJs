@@ -4,7 +4,7 @@ const structures = require('@structures/findlogs');
 const { globals } = require('@data/variables');
 const fs = require('fs');
 
-const searchLogs = async (interaction, items, months, checkVariants, checkMixed) => {
+const searchLogs = async (interaction, items, months, checkVariants, checkClean, checkMixed) => {
   const unedited = items[0];
   const stopHere = new Date();
   let reverse = ['ultron stinks'], logsFound = false;
@@ -32,6 +32,14 @@ const searchLogs = async (interaction, items, months, checkVariants, checkMixed)
 
       items.every((item, ind) => {
         if (message.content.includes(item) || message.content.includes(reverse[ind])) sendMessage = true;
+
+        if (checkClean) {
+          structures.cleanFilter.every(uv => {
+            if (message.content.includes(`${item} ${uv}`)) sendMessage = false;
+            return sendMessage;
+          });
+        }
+        
         return !sendMessage;
       });
 

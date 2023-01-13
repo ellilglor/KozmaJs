@@ -1,27 +1,37 @@
 const filters = [
-  { new: 'celestial orbitgun', old: 'orbitgun', exclude: 'celestial' },
   { new: 'overcharged mixmaster', old: 'mixmaster', exclude: 'overcharged' },
   { new: 'somnambulists totem', old: 'totem', exclude: 'somnambulists' },
+  { new: 'celestial orbitgun', old: 'orbitgun', exclude: 'celestial' },
+  { new: 'daybreaker band', old: 'daybreaker', exclude: 'band' },
+  { new: 'overcharged mixmaster', old: 'mixer', exclude: null },
   { new: 'spiral soaker', old: 'soaker', exclude: 'spiral' },
   { new: 'blitz needle', old: 'blitz', exclude: 'needle' },
   { new: 'caladbolg', old: 'calad', exclude: 'bolg' },
-  { new: 'daybreaker band', old: 'daybreaker', exclude: 'band' },
   { new: 'ctr med', old: 'ctr m', exclude: 'ctr med' },
   { new: 'ctr high', old: 'ctr h', exclude: 'ctr high' },
   { new: 'asi med', old: 'asi m', exclude: 'asi med' },
   { new: 'asi high', old: 'asi h', exclude: 'asi high' },
+  { new: ' asi high ctr very high', old: ' lite gm', exclude: null },
+  { new: 'asi high ctr very high ', old: 'lite gm ', exclude: null },
+  { new: ' asi high ctr very high', old: ' gm lite', exclude: null },
+  { new: 'asi high ctr very high ', old: 'gm lite ', exclude: null },
   { new: ' asi very high ctr very high', old: ' gm', exclude: null },
   { new: 'asi very high ctr very high ', old: 'gm ', exclude: null },
   { new: 'asi very high ctr very high', old: 'ctr very high asi very high', exclude: null },
   { new: 'med', old: 'medium', exclude: null },
   { new: 'max', old: 'maximum', exclude: null },
-  { new: 'overcharged mixmaster', old: 'mixer', exclude: null },
   { new: 'black kat ', old: 'bk ', exclude: null },
   { new: 'black kat cowl', old: 'bkc', exclude: null },
   { new: 'black kat raiment', old: 'bkr', exclude: null },
   { new: 'black kat mail', old: 'bkm', exclude: null },
   { new: 'swiftstrike buckler', old: 'ssb', exclude: null },
   { new: 'barbarous thorn blade', old: 'btb', exclude: null }
+];
+
+const cleanFilter = [
+  'ctr high', 'ctr very high', 'asi high', 'asi very high',
+  'normal high', 'normal max', 'shadow high', 'shadow max',
+  'fire high', 'fire max', 'shock high', 'shock max'
 ];
 
 const spreadsheet = ["brand","glacius","combuster","voltedge","flourish","snarble barb","thorn blade","sealed sword","avenger","faust","autogun","needle","chaingun", "alchemer","driver","magnus","tundrus","winter grave","blaster","antigua","raptor", "silversix","blackhawk","pulsar","wildfire","riftlocker","phantamos","permafroster", "grim reapater","gilded griffin","arcana","obsidian carbine","supernova","polaris", "valiance","sentenza","iron slug","callahan","argent peacemaker","blast bomb", "electron","graviton","spine cone","vaporizer","haze","capacitor","smogger","spike shower","atomizer","slumber squall","stagger storm","voltaic tempest","dark briar barrage","venom veiler","torpor tantrum","shivermist buster","nitronome","ash of agni","black kat"];
@@ -201,6 +211,7 @@ const gemExceptions = ['bout', 'rose', 'tabard', 'chaeau', 'buckled', 'clover', 
 
 module.exports = {
   filters,
+  cleanFilter,
   spreadsheet,
   equipmentFamilies,
   colorSets,
