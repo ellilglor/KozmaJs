@@ -72,8 +72,12 @@ const messageSnipper = (msg) => {
   if (!msg.content) return;
 
   const image = msg.attachments.first() ? msg.attachments.first().url : null;
-  const msgContent = contentFilter(msg.content);
   const d = new Date(msg.createdAt).toUTCString().slice(0,16);
+  let msgContent = contentFilter(msg.content);
+
+  if (msg.attachments.reduce(count => count += 1, 0) > 1) {
+    msgContent = msgContent.concat('\n\n', '*This message had multiple images*\n*Click the date to look at them*');
+  }
 
   return {
     discordId: msg.id,
