@@ -1,75 +1,49 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { tradelogEmbed, buildEmbed, contentFilter } = require('@functions/general');
+const { findLogs } = require('@functions/database/tradelogs');
 const structures = require('@structures/findlogs');
 const { globals } = require('@data/variables');
-const fs = require('fs');
 
 const searchLogs = async (interaction, items, months, checkVariants, checkClean, checkMixed) => {
-  const unedited = items[0];
-  const stopHere = new Date();
-  let reverse = ['ultron stinks'], logsFound = false;
+  const unedited = items[0], reverse = [], dirty = [], stopHere = new Date();
   
   items[0] = contentFilter(items[0]);
   stopHere.setMonth(stopHere.getMonth() - months);
 
   if (checkVariants) items = addVariants(items);
+  if (/(?=.*ctr)(?=.*asi)/.test(items[0])) items.forEach(item => reverse.push(uvSwap(item)));
+  if (checkClean) items.forEach(item => structures.cleanFilter.forEach(uv => dirty.push(`${item} ${uv}`)));
 
-  if (items[0].includes('ctr') && items[0].includes('asi')) {
-    reverse = items.map(item => { return uvSwap(item) });
-  }
-  
-  for (const [channel] of structures.channels) {
-    if (channel === 'mixed-trades' && !checkMixed) continue;
-    const messages = JSON.parse(fs.readFileSync(`src/data/tradelogs/${channel}.json`));
-    const matches = [];
-    let charCount = 0, firstMatch = false;
+  const skipSpecial = structures.commonFeatured.some(item => items[0].includes(item));
+  const checkForMatch = items.concat(reverse).toString().replace(/,/g, '.*|').concat('.*');
+  const dirtyString = dirty.toString().replace(/,/g, '.*|').concat('.*');
 
-    for (const message of messages) {
-      if (Date.parse(message.date) < Date.parse(stopHere)) break; 
-      let sendMessage = false;
-      
-      if (channel.includes('special') && structures.commonFeatured.some(item => items.includes(item))) continue;
+  const matches = await findLogs(checkForMatch, stopHere, checkMixed, skipSpecial, dirtyString);
+  const logsFound = matches.length > 0 ? true : false;
 
-      items.every((item, ind) => {
-        if (message.content.includes(item) || message.content.includes(reverse[ind])) sendMessage = true;
+  for (const channel of matches) {
+    const embeds = [tradelogEmbed().setTitle(`I found these posts in ${channel._id}:`).setColor('#f9d49c')];
+    let charCount = 0;
 
-        if (checkClean) {
-          structures.cleanFilter.every(uv => {
-            if (message.content.includes(`${item} ${uv}`)) sendMessage = false;
-            return sendMessage;
-          });
-        }
-        
-        return !sendMessage;
-      });
-
-      if (!sendMessage) continue;
-
-      if (!firstMatch) {
-        firstMatch = true;
-        logsFound = true;
-        const foundIn = tradelogEmbed().setTitle(`I found these posts in ${channel}:`).setColor('#f9d49c');
-        matches.push(foundIn);
-      }
-
-      if (charCount + message.content.length > 6000 || matches.length === 10) {
-        await interaction.user.send({ embeds: matches }).catch(error => error);
-        matches.splice(0, matches.length);
+    for (const message of channel.messages) {
+      if (charCount + message.content.length > 6000 || embeds.length === 10) {
+        await interaction.user.send({ embeds: embeds }).catch(error => error);
+        embeds.splice(0, embeds.length);
         charCount = 0;
       }
 
       charCount += message.content.length;
 
       const embed = tradelogEmbed()
-        .setTitle(message.date)
+        .setTitle(message.date.toUTCString().slice(0,16))
         .setURL(message.messageUrl)
         .setDescription(message.content.slice(0,4096))
         .setImage(message.image);
 
-      matches.push(embed);
+      embeds.push(embed);
     }
-
-    if (matches.length !== 0) await interaction.user.send({ embeds: matches }).catch(error => error);
+    
+    if (embeds.length !== 0) await interaction.user.send({ embeds: embeds }).catch(error => error);
   }
 
   await searchFinished(interaction, logsFound, items[0], unedited, months, checkVariants);

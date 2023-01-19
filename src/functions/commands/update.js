@@ -1,3 +1,4 @@
+const { createLog, saveLogs, checkLog } = require('@functions/database/tradelogs');
 const { saveRate } = require('@functions/database/rate');
 const { contentFilter } = require('@functions/general');
 const { channels } = require('@structures/findlogs');
@@ -10,29 +11,30 @@ const https = require('https');
 const fs = require('fs');
 
 const convertLogs = async (channel, channelName, collectAll) => {
-  const location = `src/data/tradelogs/${channelName}.json`;
-  const filtered = collectAll ? [] : JSON.parse(fs.readFileSync(location));
-  const messages = collectAll ? await fetchAll.messages(channel) : await channel.messages.fetch({ limit: 20 });
-  const temp = [];
+  const logs = [], clearDB = collectAll;
 
-  messages.every(message => {
-    const msg = messageSnipper(message);
-    if (!msg) return true;
-    
-    if (collectAll) {
-      filtered.push(msg);
-    } else {
-      if (filtered[0].discordId === msg.discordId) return false;
-      temp.push(msg);
+  if (collectAll) {
+    await fetchAll.messages(channel).then(messages => {
+      messages.every( message => {
+        const msg = messageSnipper(message, channelName);
+        if (!msg) return true;
+        logs.push(msg);
+        return true;
+      })
+    })
+  } else {
+    const messages = await channel.messages.fetch({ limit: 20 });
+
+    for (const [id, message] of messages) {
+      const msg = messageSnipper(message, channelName);
+      if (!msg) continue;
+      if (await checkLog(id)) break;
+      logs.push(msg);
     }
+  }
 
-    return true;
-  })
-
-  const final = temp.concat(filtered);
-
-  fs.writeFileSync(location, JSON.stringify(final, null, 2));
-  return { name: channelName, amount: final.length };
+  await saveLogs(logs, channelName, clearDB);
+  return { name: channelName, amount: logs.length };
 };
 
 const checkForNewLogs = async (client) => {
@@ -68,7 +70,7 @@ const checkForNewLogs = async (client) => {
   saveStats(stats);
 }
 
-const messageSnipper = (msg) => {
+const messageSnipper = (msg, channel) => {
   if (!msg.content) return;
 
   const image = msg.attachments.first() ? msg.attachments.first().url : null;
@@ -79,14 +81,17 @@ const messageSnipper = (msg) => {
     msgContent = msgContent.concat('\n\n', '*This message had multiple images*\n*Click the date to look at them*');
   }
 
-  return {
-    discordId: msg.id,
+  const profile = createLog({
+    id: msg.id,
+    channel: channel,
     author: msg.author.tag,
     date: d,
-    messageUrl: msg.url,
+    url: msg.url,
     content: msgContent,
     image: image
-  };
+  });
+
+  return profile;
 };
 
 const saveStats = (stats) => {
