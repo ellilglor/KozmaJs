@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { findBox, findSlimeBox, findItem } = require('@functions/commands/lockbox');
 const { buildEmbed, logCommand } = require('@functions/general');
-const { getImage } = require('@functions/commands/unbox');
+const { boxes } = require('@structures/unbox');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -41,7 +41,7 @@ module.exports = {
     if (box) {
       const match = findBox(box);
       if (box !== 'Colors') { 
-        reply.setThumbnail(getImage('Boxes', box));
+        reply.setThumbnail(boxes.get(box).url);
         box = box.concat(' ', 'Lockbox');
       }
       reply.setTitle(`${box.toUpperCase()}:`).setDescription(match);

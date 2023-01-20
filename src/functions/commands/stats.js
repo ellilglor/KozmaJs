@@ -3,7 +3,7 @@ const { getCommands, getSearched, getBoxes } = require('@functions/database/stat
 const { getGamblers } = require('@functions/database/punch');
 const { getUsers } = require('@functions/database/user');
 const { calculateCost } = require('@functions/commands/unbox');
-const { lockboxes, depotBoxes } = require('@structures/unbox');
+const { boxes } = require('@structures/unbox');
 const { channels } = require('@structures/findlogs');
 const { version } = require('@root/package.json');
 const { globals } = require('@data/variables');
@@ -21,8 +21,8 @@ const buildStats = async (interaction, embeds, defer) => {
   const unboxerStats = buildUnboxerStats(interaction, users, unboxStats.total);
   const punchStats = await buildPunchStats(interaction);
   const logStats = buildLogStats(interaction);
-  const authorStats = buildAuthorStats(interaction, logStats.total);
-  const searchStats = buildSearchStats(interaction, items);
+  //const authorStats = buildAuthorStats(interaction, logStats.total);
+  //const searchStats = buildSearchStats(interaction, items);
 
   const info = buildEmbed(interaction).setTitle(`General info about ${client.user.username}:`);
   const guild = await client.guilds.fetch(globals.serverId);
@@ -54,8 +54,8 @@ const buildStats = async (interaction, embeds, defer) => {
     unboxerStats.embed,
     punchStats.embed,
     logStats.embed,
-    authorStats.embed,
-    searchStats.embed
+    //authorStats.embed,
+    //searchStats.embed
   )
 
   return embeds;
@@ -69,7 +69,7 @@ const buildServerStats = async (interaction, client) => {
   let field1 = '', field2 = '';
 
   for (const [id, guild] of client.guilds.cache) {
-    await guild.members.fetch();
+    //await guild.members.fetch();
 
     for (const [id, member] of guild.members.cache) {
       if (member.user.bot) continue;
@@ -152,19 +152,18 @@ const buildUserStats = (interaction, users, usage) => {
 
 const buildUnboxStats = async (interaction) => {
   const embed = buildEmbed(interaction).setTitle('How much each box has been opened:');
-  const boxes = await getBoxes();
-  const sum = boxes.reduce((total, box) => box.amount + total, 0);
+  const boxData = await getBoxes();
+  const sum = boxData.reduce((total, box) => box.amount + total, 0);
   let names = '', amounts = '', percentages = '', energy = 0, dollars = 0;
 
-  for (const [index, box] of boxes.entries()) {
+  for (const [index, box] of boxData.entries()) {
     const perc = ((box.amount / sum) * 100).toFixed(2);
+    const price = boxes.get(box.box).price;
 
-    if (lockboxes.includes(box.box)) {
-      energy += box.amount * 750;
-    } else if (depotBoxes.includes(box.box)) {
-      energy += box.amount * 3495;
-    } else {
+    if (String(price).includes('.')) {
       dollars += parseFloat(calculateCost(box.amount));
+    } else {
+      energy += box.amount * price;
     }
 
     names = names.concat('', `**${index + 1}. ${box.box}**\n`);

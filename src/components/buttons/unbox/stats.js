@@ -6,14 +6,14 @@ module.exports = {
   },
   async execute (interaction) {
     if (!interaction) return;
-    
+
+    const showStats = true;
     const box = interaction.message.embeds[0].author.name;
     const amount = interaction.message.embeds[0].fields[0].value;
     let spent = interaction.message.embeds[0].fields[1].value;
-    const showStats = true;
 
-    spent = spent.includes('$') ? parseFloat(spent.replace("$", "")).toFixed(2) : parseInt(spent);
+    spent = spent.includes('$') ? parseFloat(spent.replace('$', '')).toFixed(2) : parseInt(spent.replace(/,/g, ''));
     
-    await command.execute(interaction, showStats, box, amount, String(spent));
+    await command.execute(interaction, showStats, box, amount, spent);
   }
 };

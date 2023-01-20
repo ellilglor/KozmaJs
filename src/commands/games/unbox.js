@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('@functions/general');
-const { unbox, getImage } = require('@functions/commands/unbox');
-const { lockboxes, depotBoxes } = require('@structures/unbox');
+const { unbox } = require('@functions/commands/unbox');
+const { boxes } = require('@structures/unbox');
 const wait = require('util').promisify(setTimeout);
 
 const items = {};
@@ -31,27 +31,21 @@ module.exports = {
     )),
   async execute(interaction, showStats, choice, opened, spent) {
     const box = choice || interaction.options.getString('box');
-    const author = { name: box, iconURL: getImage('Boxes', box)};
+    const boxData = boxes.get(box);
+    const author = { name: box, iconURL: boxData.url };
+    const total = spent || boxData.price;
+    const money = String(total).includes('.') ? true : false;
     const id = interaction.user.id;
     const amount = opened || '1';
-    let desc = '**In this session you opened:**', total = 0, money = false;
+    let desc = '**In this session you opened:**';
 
     if (!items[id]) items[id] = {};
-
-    if (lockboxes.includes(box)) {
-      total = spent || '750';
-    } else if (depotBoxes.includes(box)) {
-      total = spent || '3495';
-    } else {
-      total = spent || '4.95';
-      money = true;
-    }
 
     const result = buildEmbed(interaction)
       .setAuthor(author)
       .addFields([
-        { name: 'Opened:', value: amount.toString(), inline: true },
-        { name: 'Total spent:', value: money ? `$${total}` : `${total} Energy`, inline: true }
+        { name: 'Opened:', value: amount.toLocaleString('en'), inline: true },
+        { name: 'Total spent:', value: money ? `$${total}` : `${total.toLocaleString('en')} Energy`, inline: true }
       ]);
     
     if (showStats) {

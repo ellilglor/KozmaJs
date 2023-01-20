@@ -54,12 +54,6 @@ const bonusRoll = (box, content, roll, unboxed) => {
   return result;
 }
 
-const getImage = (box, item) => {
-  const content = JSON.parse(fs.readFileSync(`src/data/boxes/${box}.json`));
-  
-  return result = content.find(i => item.includes(i.name)).url;
-}
-
 const calculateCost = (amount) => {
   let cost = 0;
 
@@ -77,6 +71,5 @@ const calculateCost = (amount) => {
 
 module.exports = {
   unbox,
-  getImage,
   calculateCost
 }
