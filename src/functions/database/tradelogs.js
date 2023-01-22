@@ -32,6 +32,9 @@ const findLogs = async (matches, date, checkMixed, skipSpecial, dirty) => {
       { ...(skipSpecial && { channel: { $ne: 'special-listings' } }) },
       { ...(dirty.length > 2 && { content: { $not: {$regex: dirty } } }) }
     ]}},
+    { $sort: {
+      date: -1
+    }},
     { $group: {
       _id: '$channel',
       messages: { $push: '$$ROOT' }

@@ -5,11 +5,11 @@
   },
   {
     "name": "mixed-trades",
-    "amount": 0
+    "amount": 1
   },
   {
     "name": "equipment",
-    "amount": 0
+    "amount": 3
   },
   {
     "name": "costumes",
@@ -49,11 +49,11 @@
   },
   {
     "name": "armor-rear",
-    "amount": 1
+    "amount": 0
   },
   {
     "name": "miscellaneous",
-    "amount": 0
+    "amount": 1
   },
   {
     "name": "Sprite Food",
