@@ -13,6 +13,7 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
   if (checkVariants) items = addVariants(items);
   if (/(?=.*ctr)(?=.*asi)/.test(items[0])) items.forEach(item => reverse.push(uvSwap(item)));
   if (checkClean) items.forEach(item => structures.cleanFilter.forEach(uv => dirty.push(`${item} ${uv}`)));
+  if (items[0].includes('blaster') && !items[0].includes('nog')) dirty.push('nog blaster');
 
   const skipSpecial = structures.commonFeatured.some(item => items[0].includes(item));
   const checkForMatch = items.concat(reverse).toString().replace(/,/g, '.*|').concat('.*');

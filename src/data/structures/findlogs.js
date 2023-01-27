@@ -12,6 +12,7 @@ const channels = new Map([
 const filters = [
   { new: 'overcharged mixmaster', old: 'mixmaster', exclude: 'overcharged' },
   { new: 'somnambulists totem', old: 'totem', exclude: 'somnambulists' },
+  { new: 'orbitgun', old: 'orbit gun', exclude: null },
   { new: 'celestial orbitgun', old: 'orbitgun', exclude: 'celestial' },
   { new: 'daybreaker band', old: 'daybreaker', exclude: 'band' },
   { new: 'overcharged mixmaster', old: 'mixer', exclude: null },
