@@ -1,6 +1,6 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const { updatePlayer, rollUv, logGambler } = require('@functions/commands/punch');
-const { saveGambler } = require('@functions/database/punch');
+const { saveGambler } = require('@functions/database/saveStats');
 
 module.exports = {
   data: {
