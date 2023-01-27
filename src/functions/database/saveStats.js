@@ -21,14 +21,6 @@ const saveCommand = async (cmd) => {
   }
 }
 
-const getCommands = async () => {
-  const result = await command.find();
-
-  result.sort((a, b) => { return b.amount - a.amount });
-  
-  return result;
-}
-
 const saveSearched = async (searched) => {
   let itemProfile = await item.findOne({ item: searched });
 
@@ -45,14 +37,6 @@ const saveSearched = async (searched) => {
       console.log(error);
     }
   }
-}
-
-const getSearched = async () => {
-  result = await item.find();
-
-  result.sort((a, b) => { return b.amount - a.amount });
-
-  return result;
 }
 
 const saveBox = async (opened) => {
@@ -73,19 +57,8 @@ const saveBox = async (opened) => {
   }
 }
 
-const getBoxes = async () => {
-  result = await box.find();
-
-  result.sort((a, b) => { return b.amount - a.amount });
-
-  return result;
-}
-
 module.exports = {
   saveCommand,
   saveSearched,
-  saveBox,
-  getCommands,
-  getSearched,
-  getBoxes
+  saveBox
 }

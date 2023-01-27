@@ -19,7 +19,7 @@ const saveLogs = async (logs, channel, clear) => {
   await tradelog.insertMany(logs);
 }
 
-const checkLog = async (id) => {
+const checkLog = (id) => {
   return tradelog.exists({ _id: id });
 }
 
@@ -51,5 +51,5 @@ module.exports = {
   createLog,
   saveLogs,
   checkLog,
-  findLogs
+  findLogs,
 }

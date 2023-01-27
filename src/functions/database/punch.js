@@ -33,15 +33,6 @@ const saveGambler = async (u, ticket) => {
   }
 }
 
-const getGamblers = async () => {
-  const result = await gambler.find();
-
-  result.sort((a, b) => { return b.total - a.total });
-
-  return result;
-}
-
 module.exports = {
-  saveGambler,
-  getGamblers
+  saveGambler
 }

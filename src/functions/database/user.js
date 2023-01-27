@@ -28,15 +28,6 @@ const saveUser = async (u, command) => {
   }
 }
 
-const getUsers = async () => {
-  const result = await user.find();
-
-  result.sort((a, b) => { return b.amount - a.amount });
-
-  return result;
-}
-
 module.exports = {
-  saveUser,
-  getUsers
+  saveUser
 }

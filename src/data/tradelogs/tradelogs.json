@@ -5,19 +5,19 @@
   },
   {
     "name": "mixed-trades",
-    "amount": 1
+    "amount": 0
   },
   {
     "name": "equipment",
-    "amount": 3
+    "amount": 0
   },
   {
     "name": "costumes",
-    "amount": 0
+    "amount": 3
   },
   {
     "name": "helm-back",
-    "amount": 0
+    "amount": 1
   },
   {
     "name": "helm-front",
@@ -33,7 +33,7 @@
   },
   {
     "name": "armor-aura",
-    "amount": 0
+    "amount": 1
   },
   {
     "name": "armor-ankle",
@@ -41,7 +41,7 @@
   },
   {
     "name": "armor-back",
-    "amount": 0
+    "amount": 1
   },
   {
     "name": "armor-front",
@@ -53,7 +53,7 @@
   },
   {
     "name": "miscellaneous",
-    "amount": 1
+    "amount": 0
   },
   {
     "name": "Sprite Food",

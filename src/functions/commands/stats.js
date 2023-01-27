@@ -1,28 +1,31 @@
 const { buildEmbed } = require('@functions/general');
-const { getCommands, getSearched, getBoxes } = require('@functions/database/stats');
-const { getGamblers } = require('@functions/database/punch');
-const { getUsers } = require('@functions/database/user');
+const db = require('@functions/database/getStats');
 const { calculateCost } = require('@functions/commands/unbox');
 const { boxes } = require('@structures/unbox');
-const { channels } = require('@structures/findlogs');
 const { version } = require('@root/package.json');
 const { globals } = require('@data/variables');
-const fs = require('fs');
 
 const buildStats = async (interaction, embeds, defer) => {
   const client = interaction.client;
-  const items = await getSearched();
-  const users = await getUsers();
+  const logCount = await db.getTotalLogs();
+  const unboxStats = await db.getUnboxStats();
+  const findlogStats = await db.getFindlogStats();
+  const commandStats = await db.getCommandStats();
+  const punchStats = await db.getPunchStats();
+  const userStats = await db.getUserStats(commandStats[0].total, unboxStats.total);
+
+  const punchSessions = commandStats[1].total - unboxStats.total;
 
   const serverStats = await buildServerStats(interaction, client);
-  const commandStats = await buildCommandStats(interaction);
-  const userStats = buildUserStats(interaction, users, commandStats.total);
-  const unboxStats = await buildUnboxStats(interaction);
-  const unboxerStats = buildUnboxerStats(interaction, users, unboxStats.total);
-  const punchStats = await buildPunchStats(interaction);
-  const logStats = buildLogStats(interaction);
-  //const authorStats = buildAuthorStats(interaction, logStats.total);
-  //const searchStats = buildSearchStats(interaction, items);
+  const commandEmbed = buildCommandEmbed(interaction, commandStats[0]);
+  const gameEmbed = buildCommandEmbed(interaction, commandStats[1]);
+  const userEmbed = buildUserEmbed(interaction, userStats, commandStats[0].total);
+  const unboxEmbed = buildUnboxEmbed(interaction, unboxStats);
+  const unboxerEmbed = buildUnboxerEmbed(interaction, userStats, unboxStats.total);
+  const punchEmbed = buildPunchEmbed(interaction, punchStats, punchSessions);
+  const logChannelEmbed = await buildTradelogEmbed(interaction, '$author', logCount);
+  const logAuthorEmbed = await buildTradelogEmbed(interaction, '$channel', logCount);
+  const findlogEmbed = buildFindlogEmbed(interaction, findlogStats);
 
   const info = buildEmbed(interaction).setTitle(`General info about ${client.user.username}:`);
   const guild = await client.guilds.fetch(globals.serverId);
@@ -36,26 +39,27 @@ const buildStats = async (interaction, embeds, defer) => {
     { name: 'Running since:', value: `<t:${timestamp}:f>`, inline: true },
     { name: 'Websocket heartbeat:', value: `${client.ws.ping}ms`, inline: true },
     { name: 'Roundtrip latency:', value: `${latency}ms`, inline: true },
-    { name: 'Unique bot users:', value: users.length.toLocaleString('en'), inline: true },
+    { name: 'Unique bot users:', value: userStats.total.toLocaleString('en'), inline: true },
     { name: 'Total servers:', value: client.guilds.cache.size.toLocaleString('en'), inline: true },
     { name: 'Available unique users:', value: serverStats.total.toLocaleString('en'), inline: true },
-    { name: 'Commands used:', value: commandStats.total.toLocaleString('en'), inline: true },
-    { name: 'Amount of tradelogs:', value: logStats.total.toLocaleString('en'), inline: true },
-    { name: 'Items searched:', value: items.length.toLocaleString('en'), inline: true },
+    { name: 'Commands used:', value: commandStats[0].total.toLocaleString('en'), inline: true },
+    { name: 'Amount of tradelogs:', value: logCount.toLocaleString('en'), inline: true },
+    { name: 'Items searched:', value: findlogStats.totalSearched.toLocaleString('en'), inline: true },
     { name: 'Server members:', value: guild.memberCount.toLocaleString('en'), inline: true }
   ]);
 
   embeds.push(
     info,
     serverStats.embed,
-    commandStats.embed,
-    userStats.embed,
-    unboxStats.embed,
-    unboxerStats.embed,
-    punchStats.embed,
-    logStats.embed,
-    //authorStats.embed,
-    //searchStats.embed
+    commandEmbed,
+    gameEmbed,
+    userEmbed,
+    unboxEmbed,
+    unboxerEmbed,
+    punchEmbed,
+    logChannelEmbed,
+    logAuthorEmbed,
+    findlogEmbed
   )
 
   return embeds;
@@ -64,12 +68,12 @@ const buildStats = async (interaction, embeds, defer) => {
 const buildServerStats = async (interaction, client) => {
   const embed = buildEmbed(interaction).setTitle('I am in these servers:');
   const servers = client.guilds.cache.map(g => { return { name: g.name, members: g.memberCount } });
-  servers.sort((a, b) => { return b.members - a.members });
+  servers.sort((a, b) => b.members - a.members);
   const members = {};
   let field1 = '', field2 = '';
 
   for (const [id, guild] of client.guilds.cache) {
-    //await guild.members.fetch();
+    await guild.members.fetch();
 
     for (const [id, member] of guild.members.cache) {
       if (member.user.bot) continue;
@@ -99,65 +103,53 @@ const buildServerStats = async (interaction, client) => {
   return { embed: embed, total: uniqueMembers };
 }
 
-const buildCommandStats = async (interaction) => {
-  const embed = buildEmbed(interaction).setTitle('How much each command has been used:');
-  const commands = await getCommands();
-  const sum = commands.reduce((total, cmd) => cmd.amount + total, 0);
-  const unbox = commands.find((c) => c.command == 'unbox'), punch = commands.find((c) => c.command == 'punch');
-  const withoutGames = sum - unbox.amount - punch.amount;
+const buildCommandEmbed = (interaction, stats) => {
+  const title = stats._id === false ? 'Command usage:' : 'Games played:';
+  const embed = buildEmbed(interaction).setTitle(title);
   let names = '', amounts = '', percentages = '';
 
-  for (const [index, cmd] of commands.entries()) {
-    const perc = ((cmd.amount / sum) * 100).toFixed(2);
-
-    names = names.concat('', `**${index + 1}. ${cmd.command}**\n`);
-    amounts = amounts.concat('', `${cmd.amount.toLocaleString('en')}\n`);
-    percentages = percentages.concat('', `${perc}%\n`);
-  }
+  stats.commands.forEach((command, index) => {
+    names = names.concat('', `**${index + 1}. ${command.command}**\n`);
+    amounts = amounts.concat('', `${command.amount.toLocaleString('en')}\n`);
+    percentages = percentages.concat('', `${command.percentage}%\n`);
+  });
 
   embed.addFields([
     { name: 'Command:', value: names, inline: true },
     { name: 'Used:', value: amounts, inline: true },
     { name: 'Percentage:', value: percentages, inline: true },
-    { name: 'Total amount:', value: sum.toLocaleString('en'), inline: true },
-    { name: 'Total without games:', value: withoutGames.toLocaleString('en'), inline: true }
+    { name: 'Total:', value: stats.total.toLocaleString('en'), inline: true },
   ]);
 
-  return { embed: embed, total: withoutGames };
+  return embed;
 }
 
-const buildUserStats = (interaction, users, usage) => {
+const buildUserEmbed = (interaction, stats, total) => {
   const embed = buildEmbed(interaction).setTitle('Top 20 bot users:');
   let tags = '', commands = '', percentages = '';
 
-  users.every((user, index) => {
-    const perc = ((user.amount / usage) * 100).toFixed(2);
-    
+  stats.users.forEach((user, index) => {
     tags = tags.concat('', `**${index + 1}. ${user.tag}**\n`);
     commands = commands.concat('', `${user.amount}\n`);
-    percentages = percentages.concat('', `${perc}%\n`);
-    return index > 18 ? false : true;
-  });
+    percentages = percentages.concat('', `${user.percentage}%\n`);
+  })
   
   embed.addFields([
     { name: 'Discord tag:', value: tags, inline: true },
     { name: 'Commands:', value: commands, inline: true },
     { name: 'Percentage:', value: percentages, inline: true },
-    { name: 'Unique users:', value: users.length.toLocaleString('en'), inline: true },
-    { name: 'Bot usage:', value: usage.toLocaleString('en'), inline: true }
+    { name: 'Unique users:', value: stats.total.toLocaleString('en'), inline: true },
+    { name: 'Bot usage:', value: total.toLocaleString('en'), inline: true }
   ]);
 
-  return { embed: embed };
+  return embed;
 }
 
-const buildUnboxStats = async (interaction) => {
+const buildUnboxEmbed = (interaction, stats) => {
   const embed = buildEmbed(interaction).setTitle('How much each box has been opened:');
-  const boxData = await getBoxes();
-  const sum = boxData.reduce((total, box) => box.amount + total, 0);
   let names = '', amounts = '', percentages = '', energy = 0, dollars = 0;
 
-  for (const [index, box] of boxData.entries()) {
-    const perc = ((box.amount / sum) * 100).toFixed(2);
+  stats.boxes.forEach((box, index) => {
     const price = boxes.get(box.box).price;
 
     if (String(price).includes('.')) {
@@ -168,33 +160,29 @@ const buildUnboxStats = async (interaction) => {
 
     names = names.concat('', `**${index + 1}. ${box.box}**\n`);
     amounts = amounts.concat('', `${box.amount.toLocaleString('en')}\n`);
-    percentages = percentages.concat('', `${perc}%\n`);
-  }
+    percentages = percentages.concat('', `${box.percentage}%\n`);
+  });
 
   embed.addFields([
     { name: 'Box:', value: names, inline: true },
     { name: 'Opened:', value: amounts, inline: true },
     { name: 'Percentage:', value: percentages, inline: true },
-    { name: 'Total opened:', value: sum.toLocaleString('en'), inline: true },
+    { name: 'Total opened:', value: stats.total.toLocaleString('en'), inline: true },
     { name: 'Energy spent:', value: energy.toLocaleString('en'), inline: true },
     { name: 'Dollars spent:', value: `$${dollars.toLocaleString('en')}`, inline: true }
   ]);
 
-  return { embed: embed, total: sum };
+  return embed;
 }
 
-const buildUnboxerStats = (interaction, users, total) => {
+const buildUnboxerEmbed = (interaction, stats, total) => {
   const embed = buildEmbed(interaction).setTitle('Top 20 unboxers:');
   let tags = '', amounts = '', percentages = '';
-  users.sort((a, b) => { return b.unboxed - a.unboxed });
 
-  users.every((user, index) => {
-    const perc = ((user.unboxed / total) * 100).toFixed(2);
-    
+  stats.unboxers.forEach((user, index) => {
     tags = tags.concat('', `**${index + 1}. ${user.tag}**\n`);
     amounts = amounts.concat('', `${user.unboxed}\n`);
-    percentages = percentages.concat('', `${perc}%\n`);
-    return index > 18 ? false : true;
+    percentages = percentages.concat('', `${user.percentage}%\n`);
   });
 
   embed.addFields([
@@ -204,110 +192,69 @@ const buildUnboxerStats = (interaction, users, total) => {
     { name: 'Total opened:', value: total.toLocaleString('en') }
   ]);
 
-  return { embed: embed };
+  return embed;
 }
 
-const buildPunchStats = async (interaction) => {
+const buildPunchEmbed = (interaction, stats, sessions) => {
   const embed = buildEmbed(interaction).setTitle('Top 20 highest spenders at Punch:');
-  const gamblers = await getGamblers();
-  const sum = gamblers.reduce((total, g) => g.total + total, 0);
   let tags = '', spent = '', percentages = '';
 
-  gamblers.every((g, index) => {
-    const perc = ((g.total / sum) * 100).toFixed(2);
-    
-    tags = tags.concat('', `**${index + 1}. ${g.tag}**\n`);
-    spent = spent.concat('', `${g.total.toLocaleString('en')}\n`);
-    percentages = percentages.concat('', `${perc}%\n`);
-    return index > 18 ? false : true;
+  stats.gamblers.forEach((gambler, index) => {
+    tags = tags.concat('', `**${index + 1}. ${gambler.tag}**\n`);
+    spent = spent.concat('', `${gambler.total.toLocaleString('en')}\n`);
+    percentages = percentages.concat('', `${gambler.percentage}%\n`);
   });
 
   embed.addFields([
     { name: 'Discord tag:', value: tags, inline: true },
     { name: 'Crowns spent:', value: spent, inline: true },
     { name: 'Percentage:', value: percentages, inline: true },
-    { name: 'Total amount spent:', value: sum.toLocaleString('en') }
+    { name: 'Total amount spent:', value: stats.total.toLocaleString('en'), inline: true },
+    { name: 'Sessions:', value: sessions.toLocaleString('en'), inline: true }
   ]);
 
-  return { embed: embed };
+  return embed;
 }
 
-const buildLogStats = (interaction) => {
-  const embed = buildEmbed(interaction).setTitle('Amount of tradelogs:');
-  const channels = JSON.parse(fs.readFileSync('src/data/tradelogs/tradelogs.json'));
-  channels.sort((a, b) => { return b.amount - a.amount });
-  const sum = channels.reduce((total, chnl) => chnl.amount + total, 0);
-  let names = '', amounts = '', percentages = '';
+const buildTradelogEmbed = async (interaction, type, total) => {
+  const title = type === '$author' ? 'All loggers:' : 'Amount of tradelogs:';
+  const fieldName = type === '$author' ? 'Discord tag:' : 'Channel:';
+  const embed = buildEmbed(interaction).setTitle(title);
+  const stats = await db.getLogStats(type, total);
+  let field1 = '', posts = '', percentages = '';
 
-  for (const [index, chnl] of channels.entries()) {
-    const perc = ((chnl.amount / sum) * 100).toFixed(2);
-
-    names = names.concat('', `**${index + 1}. ${chnl.name}**\n`);
-    amounts = amounts.concat('', `${chnl.amount.toLocaleString('en')}\n`);
-    percentages = percentages.concat('', `${perc}%\n`);
-  }
+  stats.forEach((stat, index) => {
+    field1 = field1.concat('', `**${index + 1}. ${stat._id.replace(' #supply-depot', '')}**\n`);
+    posts = posts.concat('', `${stat.amount.toLocaleString('en')}\n`);
+    percentages = percentages.concat('', `${stat.percentage}%\n`);
+  });
 
   embed.addFields([
-    { name: 'Channel:', value: names, inline: true },
-    { name: 'Posts:', value: amounts, inline: true },
+    { name: fieldName, value: field1, inline: true },
+    { name: 'posts:', value: posts, inline: true },
     { name: 'Percentage:', value: percentages, inline: true },
-    { name: 'Total amount:', value: sum.toLocaleString('en') }
+    { name: 'Total:', value: total.toLocaleString('en') }
   ]);
 
-  return { embed: embed, total: sum };
+  return embed;
 }
 
-const buildAuthorStats = (interaction, totalLogs) => {
-  const embed = buildEmbed(interaction).setTitle('All loggers:');
-  const authors = {};
-  let tags = '', posts = '', percentages = '';
-
-  for (const [name, id] of channels) {
-    const logs = JSON.parse(fs.readFileSync(`src/data/tradelogs/${name}.json`));
-
-    for (const message of logs) {
-      authors[message.author] = authors[message.author] + 1 || 1;
-    }
-  }
-  
-  const sortable = Object.entries(authors);
-  sortable.sort((a, b) => { return b[1] - a[1] });
-
-  for (const [index, [author, amount]] of sortable.entries()) {
-    const perc = ((amount / totalLogs) * 100).toFixed(2);
-    
-    tags = tags.concat('', `**${index + 1}. ${author.replace(' #supply-depot', '')}**\n`);
-    posts = posts.concat('', `${amount.toLocaleString('en')}\n`);
-    percentages = percentages.concat('', `${perc}%\n`);
-  }
-
-  embed.addFields([
-    { name: 'Discord tag:', value: tags, inline: true },
-    { name: 'Messages:', value: posts, inline: true },
-    { name: 'Percentage:', value: percentages, inline: true },
-    { name: 'Total amount:', value: totalLogs.toLocaleString('en') }
-  ]);
-
-  return { embed: embed };
-}
-
-const buildSearchStats = (interaction, items) => {
+const buildFindlogEmbed = (interaction, stats) => {
   const embed = buildEmbed(interaction).setTitle('Top 20 searched items:');
   let names = '', amounts = '';
 
-  items.every((item, index) => {
+  stats.searches.forEach((item, index) => {
     names = names.concat('', `**${index + 1}. ${item.item}**\n`);
     amounts = amounts.concat('', `${item.amount.toLocaleString('en')}\n`);
-    return index > 18 ? false : true;
   });
   
   embed.addFields([
     { name: 'Item:', value: names, inline: true },
     { name: 'Searches:', value: amounts, inline: true },
-    { name: 'Items searched:', value: items.length.toLocaleString('en') }
+    { name: 'Items searched:', value: stats.totalSearched.toLocaleString('en') }
   ]);
 
-  return { embed: embed };
+  return embed;
 }
 
 module.exports = {
