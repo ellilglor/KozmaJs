@@ -52,7 +52,7 @@ const checkForNewLogs = async (client) => {
 
   console.log(string);
   await logChannel.send(string);
-  const stats = [], collectAll = false;
+  const collectAll = false;
   
   for (const [name, id] of channels) {
     const chnl = client.channels.cache.get(id);
@@ -64,10 +64,8 @@ const checkForNewLogs = async (client) => {
       await chnl.setArchived(false);
     }
     
-    stats.push(await convertLogs(chnl, name, collectAll));
+    await convertLogs(chnl, name, collectAll);
   }
-
-  saveStats(stats);
 }
 
 const messageSnipper = (msg, channel) => {
@@ -93,10 +91,6 @@ const messageSnipper = (msg, channel) => {
 
   return profile;
 };
-
-const saveStats = (stats) => {
-  fs.writeFileSync(`src/data/tradelogs/tradelogs.json`, JSON.stringify(stats, null, 2));
-}
 
 const updateRate = async ({ attachments }, logChannel) => {
   if (!attachments.first()) return console.log('This message has no image!');
@@ -137,6 +131,5 @@ const updateRate = async ({ attachments }, logChannel) => {
 module.exports = {
   convertLogs,
   checkForNewLogs,
-  saveStats,
   updateRate
 };

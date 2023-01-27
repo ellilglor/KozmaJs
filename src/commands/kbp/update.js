@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits: perms } = require('discord.js');
 const { buildEmbed, logCommand } = require('@functions/general');
-const { convertLogs, saveStats, updateRate } = require('@functions/commands/update');
+const { convertLogs, updateRate } = require('@functions/commands/update');
 const { channels } = require('@structures/findlogs');
 const { globals } = require('@data/variables');
 
@@ -39,7 +39,6 @@ module.exports = {
       await interaction.editReply({ embeds: [reply.setTitle(`Finished ${name} in ${time} seconds`)] });
     }
     
-    saveStats(stats);
     console.table(stats);
     await interaction.editReply({ embeds: [reply.setTitle(`Update completed in ${(totalTime/60).toFixed(2)} minutes!`)] });
 	}
