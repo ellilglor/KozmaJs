@@ -12,9 +12,10 @@ module.exports = {
     const showStats = false;
     const box = interaction.message.embeds[0].author.name;
     const amount = parseInt(interaction.message.embeds[0].fields[0].value) + 1;
-    const spent = interaction.message.embeds[0].fields[1].value.replace(/,/g, '');
-    const newSpent = spent.includes('$') ? calculateCost(parseFloat(amount)) : parseInt(spent) + boxes.get(box).price;
+    
+    const boxData = boxes.get(box);
+    const spent = boxData.currency === '$' ? calculateCost(amount) : amount * boxData.price;
 
-    await command.execute(interaction, showStats, box, amount, newSpent);
+    await command.execute(interaction, showStats, box, amount, spent);
   }
 };

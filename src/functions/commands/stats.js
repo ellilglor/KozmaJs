@@ -150,12 +150,12 @@ const buildUnboxEmbed = (interaction, stats) => {
   let names = '', amounts = '', percentages = '', energy = 0, dollars = 0;
 
   stats.boxes.forEach((box, index) => {
-    const price = boxes.get(box.box).price;
+    const boxData = boxes.get(box.box);
 
-    if (String(price).includes('.')) {
+    if (boxData.currency === '$') {
       dollars += parseFloat(calculateCost(box.amount));
     } else {
-      energy += box.amount * price;
+      energy += box.amount * boxData.price;
     }
 
     names = names.concat('', `**${index + 1}. ${box.box}**\n`);

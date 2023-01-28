@@ -34,7 +34,7 @@ module.exports = {
     const boxData = boxes.get(box);
     const author = { name: box, iconURL: boxData.url };
     const total = spent || boxData.price;
-    const money = String(total).includes('.') ? true : false;
+    const money = boxData.currency === '$' ? true : false;
     const id = interaction.user.id;
     const amount = opened || '1';
     let desc = '**In this session you opened:**';
