@@ -84,7 +84,7 @@ module.exports = {
         .setDisabled(showStats)
 		);
 
-    if (amount === '69') {
+    if (amount === 69) {
       buttons.addComponents(
         new ButtonBuilder().setURL('https://www.gamblersanonymous.org/ga/').setEmoji('💰').setStyle('Link')
       );
