@@ -1,6 +1,9 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const { updatePlayer, rollUv, logGambler } = require('@functions/commands/punch');
 const { saveGambler } = require('@functions/database/saveStats');
+const { buildEmbed } = require('@functions/general');
+const { images } = require('@structures/punch');
+const wait = require('util').promisify(setTimeout);
 
 module.exports = {
   data: {
@@ -33,6 +36,9 @@ module.exports = {
     lockButtons.components[2].setDisabled(true);
     lockButtons.components[3].setDisabled(true);
 
-    await interaction.update({ embeds: [embed], components: [lockButtons, gambleButtons] });
+    const waitEmbed = buildEmbed(interaction).setAuthor(images.get('Punch')).setImage(images.get(embed.data.title).gif);
+    await interaction.update({ embeds: [waitEmbed], components: [] });
+    
+    await wait(1500); await interaction.editReply({ embeds: [embed], components: [lockButtons, gambleButtons] });
   }
 };

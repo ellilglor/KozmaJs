@@ -1,6 +1,6 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
+const { memes } = require('@structures/punch');
 const { globals } = require('@data/variables');
-const fs = require('fs');
 
 const players = {};
 
@@ -138,12 +138,6 @@ const roll = () => {
   return Math.floor(Math.random() * 10001);
 }
 
-const getPunchImage = (item) => {
-  const itemList = JSON.parse(fs.readFileSync(`src/data/punch/items.json`));
-
-  return itemList.find(i => item === i.name).url;
-}
-
 const lockUv = async (interaction, uv) => {
   const embed = EmbedBuilder.from(interaction.message.embeds[0]).setDescription(null);
   const lockButtons = ActionRowBuilder.from(interaction.message.components[0]);
@@ -198,14 +192,13 @@ const checkForGm = (embed) => {
 }
 
 const setImage = (embed) => {
-  const images = JSON.parse(fs.readFileSync(`src/data/punch/memes.json`));
-  const pos = Math.floor(Math.random() * images.length);
+  const pos = Math.floor(Math.random() * memes.length);
 
   embed.setDescription(
     'Congratulations! You created a GM item.\n' +
     'As a reward you get a random Spiral Knights meme.\n' +
-    `Author: ${images[pos].author}`);
-  embed.setImage(images[pos].url);
+    `Author: ${memes[pos].author}`);
+  embed.setImage(memes[pos].url);
   
   return embed;
 }
@@ -228,7 +221,6 @@ module.exports = {
   getPlayer,
   craftItem,
   rollUv,
-  getPunchImage,
   lockUv,
   checkForGm,
   logGambler,

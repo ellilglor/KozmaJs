@@ -1,12 +1,8 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { setPlayer, updatePlayer, craftItem, getPunchImage, checkForGm, logCrafter } = require('@functions/commands/punch');
+const { setPlayer, updatePlayer, craftItem, checkForGm, logCrafter } = require('@functions/commands/punch');
 const { buildEmbed, logCommand } = require('@functions/general');
+const { images } = require('@structures/punch');
 const wait = require('util').promisify(setTimeout);
-
-const punch = {
-  name: 'Punch:',
-  iconURL: 'https://media3.spiralknights.com/wiki-images/archive/1/1b/20200502113903!Punch-Mugshot.png'
-};
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -25,8 +21,8 @@ module.exports = {
     )),
 	async execute(interaction, option, crafted) {
     const item = option || interaction.options.getString('item');
-    const reply = buildEmbed(interaction).setAuthor(punch).setTitle('Crafting').setDescription('3...');
-    const amount = crafted || '1';
+    const punch = images.get('Punch');
+    const reply = buildEmbed(interaction).setAuthor(punch).setImage(images.get('Crafting').gif);
     const craftUvs = craftItem(item);
     
     const buttons = new ActionRowBuilder().addComponents(
@@ -46,20 +42,18 @@ module.exports = {
     let result = buildEmbed(interaction)
       .setAuthor(punch)
       .setTitle(`You crafted: ${item}`)
-      .setThumbnail(getPunchImage(item));
+      .setThumbnail(images.get(item).image);
     
     craftUvs.forEach((uv, ind) => {
       updatePlayer(interaction, item, uv);
       result.addFields([{ name: `UV #${ind + 1}`, value: uv, inline: true }]);
     });
-    result.addFields([{ name: 'Amount crafted', value: amount }]);
+    result.addFields([{ name: 'Amount crafted', value: crafted || '1' }]);
     result = checkForGm(result, interaction);
 
     const message = { embeds: [reply], components: [], ephemeral: true };
       
     option ? await interaction.update(message) : await interaction.reply(message);
-    await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('2...')] });;
-    await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('1...')] });
-    await wait(1000); await interaction.editReply({ embeds: [result], components: [buttons] });
+    await wait(2500); await interaction.editReply({ embeds: [result], components: [buttons] });
 	}
 };
