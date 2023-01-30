@@ -91,13 +91,11 @@ module.exports = {
     }
 
     if (!showStats) {
-      const reply = buildEmbed(interaction).setTitle('Opening your box').setDescription('3...').setAuthor(author);
+      const reply = buildEmbed(interaction).setAuthor(author).setImage(boxData.gif);
       const message = { embeds: [reply], components: [], ephemeral: true };
       
       choice ? await interaction.update(message) : await interaction.reply(message);
-      await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('2...')] });
-      await wait(1000); await interaction.editReply({ embeds: [reply.setDescription('1...')] });
-      await wait(1000); await interaction.editReply({ embeds: [result], components: [buttons] });
+      await wait(3000); await interaction.editReply({ embeds: [result], components: [buttons] });
 	  } else {
       await interaction.update({ embeds: [result], components: [buttons] });
     }
