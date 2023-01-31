@@ -15,19 +15,19 @@ module.exports = {
 			.setDescription('Select the box you want to open.')
       .setRequired(true)
       .addChoices(
-      { name: 'Copper', value: 'Copper' },
-      { name: 'Steel', value: 'Steel' },
-      { name: 'Silver', value: 'Silver' },
-      { name: 'Platinum', value: 'Platinum' },
-      { name: 'Gold', value: 'Gold' },
-      { name: 'Titanium', value: 'Titanium' },
-      { name: 'Iron', value: 'Iron' },
-      { name: 'Mirrored', value: 'Mirrored' },
-      { name: 'QQQ', value: 'Slime' },
       { name: 'Equinox', value: 'Equinox' },
       { name: 'Confection', value: 'Confection' },
       { name: 'Spritely', value: 'Spritely' },
-      { name: 'Lucky', value: 'Lucky' }
+      { name: 'Lucky', value: 'Lucky' },
+      { name: 'QQQ', value: 'Slime' },
+      { name: 'Mirrored', value: 'Mirrored' },
+      { name: 'Iron', value: 'Iron' },
+      { name: 'Copper', value: 'Copper' },
+      { name: 'Platinum', value: 'Platinum' },
+      { name: 'Titanium', value: 'Titanium' },
+      { name: 'Silver', value: 'Silver' },
+      { name: 'Steel', value: 'Steel' },
+      { name: 'Gold', value: 'Gold' },
     )),
   async execute(interaction, showStats, choice, opened, spent) {
     const box = choice || interaction.options.getString('box');
@@ -73,7 +73,7 @@ module.exports = {
       if (!items[id][box] || !choice) items[id][box] = {};
       unboxed.forEach(item => { items[id][box][item.name] = items[id][box][item.name] + 1 || 1 });
       
-      result.setTitle('You unboxed:').setDescription(`*${desc}*`).setThumbnail(unboxed[0].url);
+      result.setTitle('You unboxed:').setDescription(`*${desc}*`).setImage(unboxed[0].url);
     }
 
     const buttons = new ActionRowBuilder().addComponents(
