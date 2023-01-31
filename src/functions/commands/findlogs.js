@@ -52,7 +52,7 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
 
 const searchFinished = async (interaction, matchCount, item, unedited, months, checkVar) => {
   const embed = buildEmbed(interaction)
-    .setTitle(`I found ${matchCount} messages containing __${unedited}__`)
+    .setTitle(`I found ${matchCount} message${matchCount != 1 ? 's' : ''} containing __${unedited}__`)
     .setColor('#f9d49c')
     .setDescription(
       'By default I only look at tradelogs from the past **6 months**!\n' +
