@@ -20,7 +20,7 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
   const dirtyString = dirty.toString().replace(/,/g, '.*|').concat('.*');
 
   const matches = await findLogs(checkForMatch, stopHere, checkMixed, skipSpecial, dirtyString);
-  const logsFound = matches.length > 0 ? true : false;
+  const matchCount = matches.reduce((total, channel) => total += channel.messages.length, 0);
 
   for (const channel of matches) {
     const embeds = [tradelogEmbed().setTitle(`I found these posts in ${channel._id}:`).setColor('#f9d49c')];
@@ -47,20 +47,18 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
     if (embeds.length !== 0) await interaction.user.send({ embeds: embeds }).catch(error => error);
   }
 
-  await searchFinished(interaction, logsFound, items[0], unedited, months, checkVariants);
+  await searchFinished(interaction, matchCount, items[0], unedited, months, checkVariants);
 };
 
-const searchFinished = async (interaction, logsFound, item, unedited, months, checkVar) => {
+const searchFinished = async (interaction, matchCount, item, unedited, months, checkVar) => {
   const embed = buildEmbed(interaction)
-    .setTitle(`This is everything I found for __${unedited}__, I hope these helped!`)
+    .setTitle(`I found ${matchCount} messages containing __${unedited}__`)
     .setColor('#f9d49c')
     .setDescription(
-      'By default I only look at tradelogs from the past 6 months!\n' +
+      'By default I only look at tradelogs from the past **6 months**!\n' +
       'If you want me to look past that use the *months* option.\n\n' +
       `If you notice a problem please contact @${globals.ownerTag}!\n` +
       `Did you know we have our own [**Discord server**](${globals.serverInvite} 'Kozma's Backpack Discord server')?`);
-
-  if (!logsFound) embed.setTitle(`I couldn't find any listings for __${unedited}__.`); 
 
   structures.spreadsheet.every(equipment => {
     if (item.includes(equipment)) {
