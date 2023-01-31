@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { setPlayer, updatePlayer, craftItem, checkForGm, logCrafter } = require('@functions/commands/punch');
 const { buildEmbed, logCommand } = require('@functions/general');
-const { images } = require('@structures/punch');
+const { data } = require('@structures/punch');
 const wait = require('util').promisify(setTimeout);
 
 module.exports = {
@@ -20,10 +20,10 @@ module.exports = {
       { name: 'Black Kat Cowl', value: 'Black Kat Cowl' }
     )),
 	async execute(interaction, option, crafted) {
-    const item = option || interaction.options.getString('item');
-    const punch = images.get('Punch');
-    const reply = buildEmbed(interaction).setAuthor(punch).setImage(images.get('Crafting').gif);
-    const craftUvs = craftItem(item);
+    const item = data.get(option || interaction.options.getString('item'));
+    const punch = data.get('Punch');
+    const reply = buildEmbed(interaction).setAuthor(punch).setImage(data.get('Crafting').gif);
+    const craftUvs = craftItem(item.type);
     
     const buttons = new ActionRowBuilder().addComponents(
 			new ButtonBuilder()
@@ -34,18 +34,18 @@ module.exports = {
 
     if (!option) {
       await logCommand(interaction, option);
-      setPlayer(interaction, item);
+      setPlayer(interaction, item.name);
     } else {
-      logCrafter(interaction, item);
+      logCrafter(interaction, item.name);
     }
     
     let result = buildEmbed(interaction)
       .setAuthor(punch)
-      .setTitle(`You crafted: ${item}`)
-      .setThumbnail(images.get(item).image);
+      .setTitle(`You crafted: ${item.name}`)
+      .setThumbnail(item.image);
     
     craftUvs.forEach((uv, ind) => {
-      updatePlayer(interaction, item, uv);
+      updatePlayer(interaction, item.name, uv);
       result.addFields([{ name: `UV #${ind + 1}`, value: uv, inline: true }]);
     });
     result.addFields([{ name: 'Amount crafted', value: crafted || '1' }]);

@@ -2,7 +2,7 @@ const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const { updatePlayer, rollUv, logGambler } = require('@functions/commands/punch');
 const { saveGambler } = require('@functions/database/saveStats');
 const { buildEmbed } = require('@functions/general');
-const { images } = require('@structures/punch');
+const { data } = require('@structures/punch');
 const wait = require('util').promisify(setTimeout);
 
 module.exports = {
@@ -15,10 +15,10 @@ module.exports = {
     const embed = EmbedBuilder.from(interaction.message.embeds[0]).setDescription(null).setImage(null);
     const lockButtons = ActionRowBuilder.from(interaction.message.components[0]);
     const gambleButtons = ActionRowBuilder.from(interaction.message.components[1]);
-    const crafting = false, ticket = 20000;
+    const item = data.get(embed.data.title), crafting = false, ticket = 20000;
 
     if (!embed.data.fields[0].name.includes('UV')) embed.data.fields.unshift({ name: '🔓 UV #1', value: '', inline: true });
-    embed.data.fields[0].value = rollUv(embed.data.title, crafting, []);
+    embed.data.fields[0].value = rollUv(item.type, crafting, []);
     embed.data.fields = embed.data.fields.filter(f => { return (!f.name.includes('UV #2') && !f.name.includes('UV #3')) });
 
     embed.data.fields[1].value = (parseInt(embed.data.fields[1].value.replace(/,/g, '')) + ticket).toLocaleString('en');
@@ -28,7 +28,7 @@ module.exports = {
       embed.data.fields.splice(2, 0, { name: 'Single Rolls', value: '1', inline: true });
     }
 
-    updatePlayer(interaction, embed.data.title, embed.data.fields[0].value);
+    updatePlayer(interaction, item.name, embed.data.fields[0].value);
     await saveGambler(interaction.user, ticket);
     logGambler(interaction, ticket);
 
@@ -36,7 +36,7 @@ module.exports = {
     lockButtons.components[2].setDisabled(true);
     lockButtons.components[3].setDisabled(true);
 
-    const waitEmbed = buildEmbed(interaction).setAuthor(images.get('Punch')).setImage(images.get(embed.data.title).gif);
+    const waitEmbed = buildEmbed(interaction).setAuthor(data.get('Punch')).setImage(item.gif);
     await interaction.update({ embeds: [waitEmbed], components: [] });
     
     await wait(1500); await interaction.editReply({ embeds: [embed], components: [lockButtons, gambleButtons] });

@@ -37,27 +37,26 @@ const getPlayer = ({ user: { id } }, embed) => {
   return embed.setDescription(typeDesc.concat(gradeDesc.replace('-', '')));
 }
 
-const craftItem = (item) => {
+const craftItem = (type) => {
   const craftRoll = roll();
   const uvs = [], crafting = true;
 
   if (craftRoll <= 10) {
     for (let i=1; i <= 3; i++) {
-      uvs.push(rollUv(item, crafting, uvs));
+      uvs.push(rollUv(type, crafting, uvs));
     }
   } else if (craftRoll <= 100) {
     for (let i=1; i <= 2; i++) {
-      uvs.push(rollUv(item, crafting, uvs));
+      uvs.push(rollUv(type, crafting, uvs));
     }
   } else if (craftRoll <= 1000) {
-    uvs.push(rollUv(item, crafting, uvs));
+    uvs.push(rollUv(type, crafting, uvs));
   }
 
   return uvs;
 }
 
-const rollUv = (item, crafting, uvs) => {
-  const itemType = getItemType(item);
+const rollUv = (itemType, crafting, uvs) => {
   const uvGrade = getUvGrade(itemType);
   let uvType = getUvType(itemType, crafting);
 
@@ -81,7 +80,7 @@ const getUvGrade = (type) => {
   let result = '\n';
 
   if (gradeRoll <= 245) {
-    result += type === 'weapon' || type === 'bomb' ? 'Very High' : 'Maximum';
+    result += type === 'Weapon' || type === 'Bomb' ? 'Very High' : 'Maximum';
   } else {
     result += gradeRoll <= 732 ? 'High' : gradeRoll <= 2683 ? 'Medium' : 'Low';
   } 
@@ -90,8 +89,8 @@ const getUvGrade = (type) => {
 }
 
 const getUvType = (type, crafting) => {
-  if (type === 'weapon' || type === 'bomb') {
-    const num = type === 'weapon' ? 8 : 7;
+  if (type === 'Weapon' || type === 'Bomb') {
+    const num = type === 'Weapon' ? 8 : 7;
     const weaponRoll = Math.floor(Math.random() * num);
     
     switch (weaponRoll) {
@@ -105,7 +104,7 @@ const getUvType = (type, crafting) => {
       case 7: result = 'Attack Speed Increase:';
     }
   } else {
-    const num = type === 'armor' || (type === 'shield' && crafting) ? 11 : 4;
+    const num = type === 'Armor' || (type === 'Shield' && crafting) ? 11 : 4;
     const armorRoll = Math.floor(Math.random() * num);
     
     switch (armorRoll) {
@@ -124,14 +123,6 @@ const getUvType = (type, crafting) => {
   }
 
   return result;
-}
-
-const getItemType = (item) => {
-  const weapons = ['Brandish', 'Overcharged Mixmaster'];
-  const bomb = 'Blast Bomb';
-  const shield = 'Swiftstrike Buckler';
-  
-  return weapons.includes(item) ? 'weapon' : bomb === item ? 'bomb' : shield === item ? 'shield' : 'armor';
 }
 
 const roll = () => {

@@ -1,11 +1,21 @@
-const images = new Map([
+const data = new Map([
   ['Punch',{ name: 'Punch:', iconURL: 'https://media3.spiralknights.com/wiki-images/archive/1/1b/20200502113903!Punch-Mugshot.png' }],
   ['Crafting',{ gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069643186978430996/crafting.gif' }],
-  ['Brandish',{ image: 'https://media3.spiralknights.com/wiki-images/2/22/Brandish-Equipped.png', gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069643184252133406/sword.gif' }],
-  ['Overcharged Mixmaster',{ image: 'https://media3.spiralknights.com/wiki-images/f/fd/Overcharged_Mixmaster-Equipped.png', gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069643185170686064/mixmaster.gif' }],
-  ['Swiftstrike Buckler',{ image: 'https://media3.spiralknights.com/wiki-images/5/5b/Swiftstrike_Buckler-Equipped.png', gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069643184688337027/shield.gif' }],
-  ['Black Kat Cowl',{ image: 'https://media3.spiralknights.com/wiki-images/2/20/Black_Kat_Cowl-Equipped.png', gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069643185539776532/helm.gif' }],
-  ['Blast Bomb',{ image: 'https://media3.spiralknights.com/wiki-images/c/c2/Blast_Bomb-Equipped.png', gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069643183866253392/bomb.gif' }],
+  ['Brandish',{ name: 'Brandish', type: 'Weapon',
+    image: 'https://media3.spiralknights.com/wiki-images/2/22/Brandish-Equipped.png',
+    gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069643184252133406/sword.gif' }],
+  ['Overcharged Mixmaster',{ name: 'Overcharged Mixmaster', type: 'Weapon',
+    image: 'https://media3.spiralknights.com/wiki-images/f/fd/Overcharged_Mixmaster-Equipped.png',
+    gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069643185170686064/mixmaster.gif' }],
+  ['Swiftstrike Buckler',{ name: 'Swiftstrike Buckler', type: 'Shield',
+    image: 'https://media3.spiralknights.com/wiki-images/5/5b/Swiftstrike_Buckler-Equipped.png',
+    gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069643184688337027/shield.gif' }],
+  ['Black Kat Cowl',{ name: 'Black Kat Cowl', type: 'Armor',
+    image: 'https://media3.spiralknights.com/wiki-images/2/20/Black_Kat_Cowl-Equipped.png',
+    gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069643185539776532/helm.gif' }],
+  ['Blast Bomb',{ name: 'Blast Bomb', type: 'Bomb',
+    image: 'https://media3.spiralknights.com/wiki-images/c/c2/Blast_Bomb-Equipped.png',
+    gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069643183866253392/bomb.gif' }],
 ]);
 
 const memes = [
@@ -49,6 +59,6 @@ const memes = [
 ];
 
 module.exports = {
-  images,
+  data,
   memes
 }
