@@ -9,7 +9,7 @@ const dbBuyMute = async (member, logChannel, expires) => {
   if (!buyProfile) {
     expires.setHours(expires.getHours() + 22);
     
-    buyProfile = await new buy({
+    buyProfile = new buy({
       _id: member.id,
       tag: member.tag,
       expires: expires,
@@ -26,7 +26,7 @@ const dbSellMute = async (member, logChannel, expires) => {
   if (!sellProfile) {
     expires.setHours(expires.getHours() + 22);
     
-    sellProfile = await new sell({
+    sellProfile = new sell({
       _id: member.id,
       tag: member.tag,
       expires: expires,
