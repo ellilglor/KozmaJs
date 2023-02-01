@@ -24,7 +24,10 @@ module.exports = {
       default: 
         const defer = await interaction.deferReply({ ephemeral: true, fetchReply: true });
         embeds.splice(0, embeds.length);
+        
+        const start = performance.now();
         await buildStats(interaction, embeds, defer);
+        console.log(`Finished building embeds in ${((performance.now() - start)/1000).toFixed(2)} seconds`);
     }
 
     const buttons = new ActionRowBuilder().addComponents(
