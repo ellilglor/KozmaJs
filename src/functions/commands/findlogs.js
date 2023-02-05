@@ -23,7 +23,8 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
   const matchCount = matches.reduce((total, channel) => total += channel.messages.length, 0);
 
   for (const channel of matches) {
-    const embeds = [tradelogEmbed().setTitle(`I found these posts in ${channel._id}:`).setColor('#f9d49c')];
+    const l = channel.messages.length;
+    const embeds = [tradelogEmbed().setTitle(`I found ${l} post${l != 1 ? 's' : ''} in ${channel._id}:`).setColor('#f9d49c')];
     let charCount = 0;
 
     for (const message of channel.messages) {

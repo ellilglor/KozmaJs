@@ -60,9 +60,9 @@ const getLanguage = (locale) => {
 
 const contentFilter = (content) => {
   let result = content
+    .toLowerCase()
     .replace(/vh/g, "very high")
-    .replace(/['"’\+\[\]()\-{},]/g, '').replace(/ {2,}/g, ' ')
-    .trim().toLowerCase();
+    .replace(/['"’\+\[\]()\-{},]/g, ' ').replace(/ {2,}/g, ' ').trim();
 
   for (const check of filters) {
     if (result.includes(check.old) && !result.includes(check.exclude)) result = result.replace(check.old, check.new);
