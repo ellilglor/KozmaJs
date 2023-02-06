@@ -8,7 +8,7 @@ module.exports = {
     if (!interaction) return;
 
     const title = interaction.message.embeds[0].data.title;
-    const item = title.startsWith("I") ? title.slice(35, -3) : title.slice(33, -24);
+    const item = title.split(' ').slice(5).toString().replace(/,/g, ' ').replace(/_/g, '');
     const months = 24, checkVariants = false, checkClean = false, checkMixed = true;
 
     console.log(`${interaction.user.tag} searched for more logs of ${item}`);
