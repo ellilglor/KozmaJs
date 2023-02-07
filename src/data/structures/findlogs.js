@@ -47,6 +47,8 @@ const cleanFilter = [
   'fire high', 'fire max', 'shock high', 'shock max'
 ];
 
+const uvTerms = ['ctr', 'asi', 'normal', 'shadow', 'fire', 'shock', 'poison', 'stun', 'freeze', 'elemental', 'piercing', 'low', 'med', 'high', 'very', 'max'];
+
 const commonFeatured = [
   'gloweyes', 'scissor', 'prime bombhead', 'medieval war', 'mixmaster', 'spiral soaker', 'tricorne', 'shogun',
   'tabard of the coral', 'chapeau of the coral', 'tabard of the violet', 'chapeau of the violet',
@@ -357,6 +359,7 @@ module.exports = {
   channels,
   filters,
   cleanFilter,
+  uvTerms,
   commonFeatured,
   spreadsheet,
   equipmentFamilies,
