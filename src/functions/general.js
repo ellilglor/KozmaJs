@@ -2,7 +2,6 @@ const { EmbedBuilder } = require('discord.js');
 const db = require('@functions/database/saveStats');
 const { filters } = require('@structures/findlogs');
 const { globals } = require('@data/variables');
-const fs = require('fs');
 
 const buildEmbed = ({ client }) => {
   return new EmbedBuilder()
@@ -50,14 +49,6 @@ const saveData = async (user, command, option) => {
   }
 }
 
-const getLanguage = (locale) => {
-  switch (locale) {
-    case 'it': return JSON.parse(fs.readFileSync('src/data/languages/italian.json'));
-    case 'nl': return JSON.parse(fs.readFileSync('src/data/languages/dutch.json'));
-    default: return JSON.parse(fs.readFileSync('src/data/languages/english.json'));
-  }
-}
-
 const contentFilter = (content) => {
   let result = content
     .toLowerCase()
@@ -88,7 +79,6 @@ module.exports = {
   buildEmbed,
   tradelogEmbed,
   logCommand,
-  getLanguage,
   contentFilter,
   stillAlive
 };

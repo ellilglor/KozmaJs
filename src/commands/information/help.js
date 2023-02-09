@@ -1,13 +1,15 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { buildEmbed, logCommand, getLanguage } = require('@functions/general');
+const { buildEmbed, logCommand } = require('@functions/general');
 const { globals } = require('@data/variables');
+const { text } = require('@structures/languages');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
 		.setDescription('Explains all commands.'),
 	async execute(interaction) {
-    const lan = getLanguage('temp').help;
+    const lan = text.get(interaction.locale) || text.get('English');
+    
     const reply = buildEmbed(interaction)
       .setTitle(lan.title)
       .setDescription(`*${lan.desc} @${globals.ownerTag}*`)
