@@ -5,7 +5,7 @@ const { searchLogs } = require('@functions/commands/findlogs');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('findlogs')
-		.setDescription('Search the tradelog database for an item.')
+		.setDescription('Search the tradelog database for any item.')
     .addStringOption(option =>
 		  option.setName('item')
 			.setDescription('Item the bot should look for.')

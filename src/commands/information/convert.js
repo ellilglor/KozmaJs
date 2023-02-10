@@ -5,7 +5,7 @@ const { getRate } = require('@functions/database/rate');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('convert')
-    .setDescription('Convert crowns or energy.')
+    .setDescription('Convert crowns or energy into the other currency.')
     .addStringOption(option =>
 		  option.setName('currency')
 			.setDescription('Currency you want to convert.')

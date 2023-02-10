@@ -4,7 +4,7 @@ const { buildEmbed, logCommand } = require('@functions/general');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('bookchance')
-		.setDescription('Odds of getting at least 1 book in x kills.')
+		.setDescription('Odds of getting at least 1 Book of Dark Rituals in x kills.')
     .addIntegerOption(option =>
 		  option.setName('kats')
 			.setDescription('Amount of Black Kats you encountered')

@@ -9,7 +9,7 @@ const items = {};
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('unbox')
-		.setDescription(`Simulate opening a box.`)
+		.setDescription('Simulate opening a Prize Box or Lockbox.')
     .addStringOption(option =>
 		  option.setName('box')
 			.setDescription('Select the box you want to open.')

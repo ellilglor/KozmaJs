@@ -6,7 +6,7 @@ const { globals } = require('@data/variables');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('rate')
-		.setDescription('View or update the current crowns per energy rate.')
+		.setDescription('View the current crowns per energy rate used for /convert.')
     .addIntegerOption(option =>
 		  option.setName('value')
 			.setDescription('Update the used exchange rate.')),

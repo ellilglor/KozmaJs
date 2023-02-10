@@ -7,7 +7,7 @@ const wait = require('util').promisify(setTimeout);
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('punch')
-		.setDescription(`Create your own GM item!`)
+		.setDescription('Craft and roll on an item for Unique Variants.')
     .addStringOption(option =>
 		  option.setName('item')
 			.setDescription('Select the item you want to craft.')
