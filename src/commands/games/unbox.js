@@ -18,6 +18,7 @@ module.exports = {
       { name: 'Equinox', value: 'Equinox' },
       { name: 'Confection', value: 'Confection' },
       { name: 'Spritely', value: 'Spritely' },
+      { name: 'Polar', value: 'Polar' },
       { name: 'Lucky', value: 'Lucky' },
       { name: 'QQQ', value: 'Slime' },
       { name: 'Mirrored', value: 'Mirrored' },

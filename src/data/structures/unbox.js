@@ -35,6 +35,9 @@ const boxes = new Map([
   ['Spritely',{ price: 4.95, currency: '$',
     url: 'https://media3.spiralknights.com/wiki-images/9/90/Usable-Spritely_Prize_Box_icon.png',
     gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069736604689760276/Spritely.gif' }],
+  ['Polar',{ price: 4.95, currency: '$',
+    url: 'https://media3.spiralknights.com/wiki-images/6/6c/Usable-Polar_Prize_Box_icon.png',
+    gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1074382088016515123/Polar.gif' }],
   ['Lucky',{ price: 3495, currency: 'energy',
     url: 'https://media3.spiralknights.com/wiki-images/e/e7/Usable-Lucky_Prize_Box_icon.png',
     gif: 'https://cdn.discordapp.com/attachments/1069643121622777876/1069736605822238781/Lucky.gif' }]
