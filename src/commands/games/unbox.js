@@ -64,7 +64,12 @@ module.exports = {
         });
 
         result.setDescription(desc)
-          .addFields({ name: 'Unique:', value: Object.keys(items[id][box]).length.toString(), inline: true });
+          .addFields([
+            { name: '\u200b', value: '\u200b', inline: true },
+            { name: 'Unique:', value: Object.keys(items[id][box]).length.toString(), inline: true },
+            { name: 'Info:', value: `[Link](${boxData.page} 'page with distribution of probabilities')`, inline: true },
+            { name: '\u200b', value: '\u200b', inline: true }
+          ]);
       }
     } else {
       const unboxed = unbox(box);
