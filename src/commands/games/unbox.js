@@ -46,7 +46,7 @@ module.exports = {
       .setAuthor(author)
       .addFields([
         { name: 'Opened:', value: amount.toLocaleString('en'), inline: true },
-        { name: 'Total spent:', value: money ? `$${total}` : `${total.toLocaleString('en')} Energy`, inline: true }
+        { name: 'Spent:', value: money ? `$${total}` : `${total.toLocaleString('en')} Energy`, inline: true }
       ]);
     
     if (showStats) {
@@ -63,7 +63,8 @@ module.exports = {
           return desc.length < 4030 ? true : false;
         });
 
-        result.setDescription(desc);
+        result.setDescription(desc)
+          .addFields({ name: 'Unique:', value: Object.keys(items[id][box]).length.toString(), inline: true });
       }
     } else {
       const unboxed = unbox(box);
