@@ -71,7 +71,7 @@ module.exports = {
     lockButtons.components[3].setDisabled(false);
 
     const waitEmbed = buildEmbed(interaction).setAuthor(data.get('Punch')).setImage(item.gif);
-    await interaction.update({ embeds: [waitEmbed], components: [] });
+    await interaction.editReply({ embeds: [waitEmbed], components: [] });
 
     await wait(1500); await interaction.editReply({ embeds: [embed], components: [lockButtons, gambleButtons] });
   }

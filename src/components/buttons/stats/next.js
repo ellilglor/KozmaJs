@@ -7,6 +7,6 @@ module.exports = {
   async execute (interaction) {
     if (!interaction) return;
 
-    await command.execute(interaction, 'next');
+    await command.execute(interaction, 'defer', 'next');
   }
 };

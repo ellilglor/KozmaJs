@@ -13,7 +13,7 @@ module.exports = {
       .setDescription('Using this command to bypass the slowmode will result in a timeout.');
     const role = interaction.guild.roles.cache.get(globals.editRoleId);
 
-    await interaction.reply({ embeds: [reply], ephemeral: true });
+    await interaction.editReply({ embeds: [reply] });
     await interaction.member.roles.add(role);
     await logCommand(interaction);
     await wait(120000);

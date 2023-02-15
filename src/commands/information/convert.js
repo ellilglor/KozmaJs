@@ -37,7 +37,7 @@ module.exports = {
       reply.setTitle(`${amount.toLocaleString('en')} Energy is equal to roughly ${converted} Crowns.`);
     }
     
-    await interaction.reply({ embeds: [reply], ephemeral: true });
+    await interaction.editReply({ embeds: [reply] });
     await logCommand(interaction);
   }
 };

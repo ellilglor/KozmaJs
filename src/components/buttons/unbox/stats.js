@@ -14,6 +14,6 @@ module.exports = {
 
     spent = spent.includes('$') ? parseFloat(spent.replace('$', '')).toFixed(2) : parseInt(spent.replace(/,/g, ''));
     
-    await command.execute(interaction, showStats, box, amount, spent);
+    await command.execute(interaction, 'defer', showStats, box, amount, spent);
   }
 };

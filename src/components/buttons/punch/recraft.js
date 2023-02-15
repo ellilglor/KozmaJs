@@ -11,6 +11,6 @@ module.exports = {
     const field = interaction.message.embeds[0].fields.find(f => f.name === 'Amount crafted');
     const amount = String(parseInt(field.value) + 1);
 
-    await command.execute(interaction, item, amount);
+    await command.execute(interaction, 'defer', item, amount);
   }
 };

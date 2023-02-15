@@ -6,7 +6,6 @@ require('dotenv').config();
 const client = new Client({ intents: [Int.Guilds, Int.GuildMessages, Int.GuildMembers, Int.MessageContent] });
 client.commands = new Collection();
 client.buttons = new Collection();
-client.modals = new Collection();
 
 const handlerFiles = fs.readdirSync('./src/functions/handlers').filter(f => f.endsWith('.js'));
 const botEventFiles = fs.readdirSync('./src/events/discord').filter(f => f.endsWith('.js'));

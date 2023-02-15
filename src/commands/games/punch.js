@@ -19,7 +19,7 @@ module.exports = {
       { name: 'Swiftstrike Buckler', value: 'Swiftstrike Buckler' },
       { name: 'Black Kat Cowl', value: 'Black Kat Cowl' }
     )),
-	async execute(interaction, option, crafted) {
+	async execute(interaction, defer, option, crafted) {
     const item = data.get(option || interaction.options.getString('item'));
     const punch = data.get('Punch');
     const reply = buildEmbed(interaction).setAuthor(punch).setImage(data.get('Crafting').gif);
@@ -50,10 +50,8 @@ module.exports = {
     });
     result.addFields([{ name: 'Amount crafted', value: crafted || '1' }]);
     result = checkForGm(result, interaction);
-
-    const message = { embeds: [reply], components: [], ephemeral: true };
       
-    option ? await interaction.update(message) : await interaction.reply(message);
+    await interaction.editReply({ embeds: [reply], components: [] });
     await wait(2500); await interaction.editReply({ embeds: [result], components: [buttons] });
 	}
 };

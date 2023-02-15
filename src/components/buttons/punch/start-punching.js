@@ -50,6 +50,6 @@ module.exports = {
 				.setCustomId('punch-info').setEmoji('❔').setStyle('Primary')
 		);
     
-    await interaction.update({ embeds: [embed], components: [lockButtons, gambleButtons] });
+    await interaction.editReply({ embeds: [embed], components: [lockButtons, gambleButtons] });
   }
 };

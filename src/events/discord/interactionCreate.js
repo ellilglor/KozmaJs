@@ -5,35 +5,41 @@ const { globals } = require('@data/variables');
 module.exports = {
 	name: 'interactionCreate',
 	async execute(interaction, client) {
-    const noCode = buildEmbed(interaction).setTitle('It looks like this command is missing!');
-    
     // if (interaction.user.tag !== globals.ownerTag) {
     //   const maintenance = buildEmbed(interaction).setTitle('The bot is currently being worked on.\nPlease try again later.');
     //   interaction.reply({ embeds: [maintenance], ephemeral: true });
     //   return console.log(interaction.user.tag);
     // }
-
-    if (interaction.type === type.ApplicationCommand && interaction.user.tag !== globals.ownerTag) {
-      try {
-        const guild = await interaction.client.guilds.fetch(globals.serverId);
-        await guild.bans.fetch(interaction.user.id);
-        const banned = buildEmbed(interaction).setTitle(`You are banned from the Kozma's Backpack Discord server and are therefore prohibited from using this bot.`);
-        return await interaction.reply({ embeds: [banned], ephemeral: true });
-      } catch (_) {
-        // catches when user is not banned -> command can run
-      }
-    }
     
     try {
+      const noCode = buildEmbed(interaction).setTitle('It looks like this command is missing!');
+      
       switch (interaction.type) {
-        case type.ApplicationCommand: code = client.commands.get(interaction.commandName); break;
-        case type.MessageComponent: code = client.buttons.get(interaction.customId); break;
-        case type.ModalSubmit: code = client.modals.get(interaction.customId); break;
+        case type.ApplicationCommand: 
+          const defer = await interaction.deferReply({ ephemeral: true, fetchReply: true });
+          const command = client.commands.get(interaction.commandName);
+          
+          if (!command) return await interaction.editReply({ embeds: [noCode], ephemeral: true });
+
+          if (interaction.guildId !== globals.serverId && interaction.user.tag !== globals.ownerTag) {
+            try {
+              const guild = await interaction.client.guilds.fetch(globals.serverId);
+              await guild.bans.fetch(interaction.user.id);
+              const banned = buildEmbed(interaction).setTitle(`You are banned from the Kozma's Backpack Discord server and are therefore prohibited from using this bot.`);
+              return await interaction.editReply({ embeds: [banned], ephemeral: true });
+            } catch (_) {
+              // catches when user is not banned -> command can run
+            }
+          }
+          
+          await command.execute(interaction, defer); break;
+        case type.MessageComponent: 
+          await interaction.deferUpdate();
+          const button = client.buttons.get(interaction.customId);
+          if (!button) return await interaction.editReply({ embeds: [noCode], ephemeral: true });
+          await button.execute(interaction); break;
         default: return await interaction.reply({ embeds: [noCode], ephemeral: true });
       }
-
-      if (!code) return await interaction.reply({ embeds: [noCode], ephemeral: true });
-      await code.execute(interaction);
     } catch (error) {
       const logChannel = client.channels.cache.get(globals.botLogsChannelId);
       const name = interaction.commandName || interaction.customId;

@@ -30,7 +30,7 @@ module.exports = {
       { name: 'Steel', value: 'Steel' },
       { name: 'Gold', value: 'Gold' },
     )),
-  async execute(interaction, showStats, choice, opened, spent) {
+  async execute(interaction, defer, showStats, choice, opened, spent) {
     const box = choice || interaction.options.getString('box');
     const boxData = boxes.get(box);
     const author = { name: box, iconURL: boxData.url };
@@ -64,7 +64,12 @@ module.exports = {
         });
 
         result.setDescription(desc)
-          .addFields({ name: 'Unique:', value: Object.keys(items[id][box]).length.toString(), inline: true });
+          .addFields([
+            { name: '\u200b', value: '\u200b', inline: true },
+            { name: 'Unique:', value: Object.keys(items[id][box]).length.toString(), inline: true },
+            { name: 'Info:', value: `[Link](${boxData.page} 'page with distribution of probabilities')`, inline: true },
+            { name: '\u200b', value: '\u200b', inline: true }
+          ]);
       }
     } else {
       const unboxed = unbox(box);
@@ -94,12 +99,10 @@ module.exports = {
 
     if (!showStats) {
       const reply = buildEmbed(interaction).setAuthor(author).setImage(boxData.gif);
-      const message = { embeds: [reply], components: [], ephemeral: true };
-      
-      choice ? await interaction.update(message) : await interaction.reply(message);
-      await wait(3000); await interaction.editReply({ embeds: [result], components: [buttons] });
-	  } else {
-      await interaction.update({ embeds: [result], components: [buttons] });
-    }
+      await interaction.editReply({ embeds: [reply], components: [] });
+      await wait(3000);
+	  }
+    
+    await interaction.editReply({ embeds: [result], components: [buttons] });
 	}
 };

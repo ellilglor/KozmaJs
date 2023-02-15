@@ -14,6 +14,6 @@ module.exports = {
         '- Low: ~ 73.17%\n- Medium: ~ 19.51%\n- High: ~ 4.87%\n- Very High/Maximum: ~ 2.45%\n\n' +
         '**When crafting:**\n- 1/10 for 1 UV\n- 1/100 for 2 UVs\n- 1/1000 for 3 UVs');
 
-    await interaction.update({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   }
 };

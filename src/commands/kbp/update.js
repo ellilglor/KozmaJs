@@ -19,7 +19,7 @@ module.exports = {
     const msg = message.first();
     let totalTime = 0;
 
-    await interaction.reply({ embeds: [reply], ephemeral: true });
+    await interaction.editReply({ embeds: [reply] });
 
     await updateRate(msg, logChannel);
     

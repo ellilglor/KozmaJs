@@ -31,7 +31,7 @@ module.exports = {
 				.setURL(globals.serverInvite).setLabel('Discord server').setStyle('Link')
 		);
     
-		await interaction.reply({ embeds: [reply], components: [buttons], ephemeral: true });
+		await interaction.editReply({ embeds: [reply], components: [buttons] });
     await logCommand(interaction);
 	}
 };

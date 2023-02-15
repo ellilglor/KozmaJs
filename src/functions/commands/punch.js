@@ -158,7 +158,7 @@ const lockUv = async (interaction, uv) => {
       gambleButtons.components[3].setDisabled(false);
   } 
 
-  await interaction.update({ embeds: [embed], components: [lockButtons, gambleButtons] });
+  await interaction.editReply({ embeds: [embed], components: [lockButtons, gambleButtons] });
 }
 
 const checkForGm = (embed) => {

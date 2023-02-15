@@ -26,7 +26,7 @@ module.exports = {
       reply.setTitle(`The current crowns per energy rate is: ${rate}.`);
     }
     
-    await interaction.reply({ embeds: [reply], ephemeral: true });
+    await interaction.editReply({ embeds: [reply] });
     await logCommand(interaction);
 	}
 };

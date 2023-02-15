@@ -24,7 +24,7 @@ module.exports = {
         { name: 'Overall chance per Kat:', value: '0.004%', inline: true }
       ]);
     
-    await interaction.reply({ embeds: [reply], ephemeral: true });
+    await interaction.editReply({ embeds: [reply] });
     await logCommand(interaction);
 	}
 };

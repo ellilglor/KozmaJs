@@ -8,12 +8,12 @@ module.exports = {
 		.setName('stats')
 		.setDescription(`Kozma's Backpack staff only.`)
     .setDefaultMemberPermissions(perms.KickMembers | perms.BanMembers),
-	async execute(interaction, button) {
+	async execute(interaction, defer, button) {
     const id = interaction.user.id;
     pages[id] = pages[id] || 0;
 
     if (button && embeds.length === 0) {
-      return await interaction.update({ content: 'The bot has restarted.', embeds: [], components: [], ephemeral: true });
+      return await interaction.editReply({ content: 'The bot has restarted.', embeds: [], components: [], ephemeral: true });
     }
 
     switch (button) {
@@ -22,7 +22,6 @@ module.exports = {
       case 'next': ++pages[id]; break;
       case 'last': pages[id] = embeds.length - 1; break;
       default: 
-        const defer = await interaction.deferReply({ ephemeral: true, fetchReply: true });
         embeds.splice(0, embeds.length);
         
         const start = performance.now();
@@ -45,7 +44,6 @@ module.exports = {
         .setDisabled(pages[id] === embeds.length - 1)
 		);
     
-    const message = { embeds: [embeds[pages[id]]], components: [buttons] };
-    button ? await interaction.update(message) : await interaction.editReply(message);
+    await interaction.editReply({ embeds: [embeds[pages[id]]], components: [buttons] });
   }
 };

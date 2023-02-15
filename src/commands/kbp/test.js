@@ -8,7 +8,6 @@ module.exports = {
     .setDefaultMemberPermissions(perms.KickMembers | perms.BanMembers),
 	async execute(interaction) {
     const reply = buildEmbed(interaction).setTitle('Command used for testing.');
-    await interaction.deferReply({ ephemeral: true });
     
 	  await interaction.editReply({ embeds: [reply] });
   }  

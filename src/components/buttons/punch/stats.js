@@ -10,6 +10,6 @@ module.exports = {
     
     const embed = getPlayer(interaction, EmbedBuilder.from(interaction.message.embeds[0]).setImage(null));
 
-    await interaction.update({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   }
 };

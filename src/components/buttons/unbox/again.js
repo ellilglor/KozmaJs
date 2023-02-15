@@ -16,6 +16,6 @@ module.exports = {
     const boxData = boxes.get(box);
     const spent = boxData.currency === '$' ? calculateCost(amount) : amount * boxData.price;
 
-    await command.execute(interaction, showStats, box, amount, spent);
+    await command.execute(interaction, 'defer', showStats, box, amount, spent);
   }
 };

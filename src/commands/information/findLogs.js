@@ -56,7 +56,7 @@ module.exports = {
         `So when you lookup *brandish* it will also look for *combuster* for example\n` +
         `~ Sprite pods: type out as seen in game\n` + `Example: Drakon Pod (Divine)`);
     
-    await interaction.reply({ embeds: [reply], ephemeral: true });
+    await interaction.editReply({ embeds: [reply] });
     await logCommand(interaction);
     await searchLogs(interaction, items, months, checkVariants, checkClean, checkMixed);
 	}
