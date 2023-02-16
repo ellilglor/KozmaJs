@@ -98,7 +98,7 @@ const updateRate = async ({ attachments }, logChannel) => {
   console.log('Extracting data from market image');
   
   const url = attachments.first().url;
-  const path = './src/data/market.png';
+  const path = './src/data/images/market.png';
 
   https.get(url, res => {
     const file = fs.createWriteStream(path); // Open file in local filesystem
