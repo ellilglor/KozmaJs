@@ -10,10 +10,10 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
   items[0] = contentFilter(items[0]);
   stopHere.setMonth(stopHere.getMonth() - months);
 
-  const inputArray = items[0].split(' ');
-  const first = inputArray.filter(word => !structures.uvTerms.includes(word)).toString().replace(/,/g, ' ');
-  const last = inputArray.filter(word => structures.uvTerms.includes(word)).toString().replace(/,/g, ' ');
-  items[0] = first.concat(' ', last);
+  // const inputArray = items[0].split(' ');
+  // const first = inputArray.filter(word => !structures.uvTerms.includes(word)).toString().replace(/,/g, ' ');
+  // const last = inputArray.filter(word => structures.uvTerms.includes(word)).toString().replace(/,/g, ' ');
+  // items[0] = first.concat(' ', last);
 
   if (checkVariants) items = addVariants(items);
   if (/(?=.*ctr)(?=.*asi)/.test(items[0])) items.forEach(item => reverse.push(uvSwap(item)));
