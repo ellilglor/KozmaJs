@@ -74,8 +74,8 @@
 {"name": "Divine Slimed Aura", "chance": 0.05, "url": "https://cdn.discordapp.com/attachments/1069643121622777876/1073697779760762961/image.png"},
 {"name": "Volcanic Slimed Aura", "chance": 0.05, "url": "https://media3.spiralknights.com/wiki-images/4/47/Volcanic_Slimed_Aura-Equipped.png"},
 {"name": "**Shadow Slimed Aura**", "chance": 0.01, "url": "https://media3.spiralknights.com/wiki-images/d/d1/Shadow_Slimed_Aura-Equipped.png"},
-{"name": "Early Riser Ring", "chance": 1, "url": "https://media3.spiralknights.com/wiki-images/3/35/Equipment-Early_Riser_Ring_icon.png"}, 
-{"name": "Dawn Bracelet", "chance": 0.6, "url": "https://media3.spiralknights.com/wiki-images/7/7e/Equipment-Dawn_Bracelet_icon.png"},
-{"name": "**Daybreaker Band**", "chance": 0.4, "url": "https://media3.spiralknights.com/wiki-images/a/a7/Equipment-Daybreaker_Band_icon.png"},
-{"name": "**Node Field Aura**", "chance": 0.67, "url": "https://media3.spiralknights.com/wiki-images/a/a8/Node_Field_Aura-Equipped.png"},
-{"name": "**Somnambulist's Totem**", "chance": 0.33, "url": "https://media3.spiralknights.com/wiki-images/d/db/Equipment-Somnambulist's_Totem_icon.png"}]
+{"name": "Early Riser Ring", "chance": 1.3, "url": "https://media3.spiralknights.com/wiki-images/3/35/Equipment-Early_Riser_Ring_icon.png"}, 
+{"name": "Dawn Bracelet", "chance": 0.7, "url": "https://media3.spiralknights.com/wiki-images/7/7e/Equipment-Dawn_Bracelet_icon.png"},
+{"name": "**Daybreaker Band**", "chance": 0.3333333333333333, "url": "https://media3.spiralknights.com/wiki-images/a/a7/Equipment-Daybreaker_Band_icon.png"},
+{"name": "**Node Field Aura**", "chance": 0.3333333333333333, "url": "https://media3.spiralknights.com/wiki-images/a/a8/Node_Field_Aura-Equipped.png"},
+{"name": "**Somnambulist's Totem**", "chance": 0.3333333333333333, "url": "https://media3.spiralknights.com/wiki-images/d/db/Equipment-Somnambulist's_Totem_icon.png"}]

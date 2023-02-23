@@ -359,7 +359,7 @@ module.exports = {
   channels,
   filters,
   cleanFilter,
-  uvTerms,
+  //uvTerms,
   commonFeatured,
   spreadsheet,
   equipmentFamilies,
