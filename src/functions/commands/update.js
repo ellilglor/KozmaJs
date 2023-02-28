@@ -71,6 +71,7 @@ const checkForNewLogs = async (client) => {
 const messageSnipper = (msg, channel) => {
   if (!msg.content) return;
 
+  const author = msg.author.tag.includes('Knight Launcher') ? 'Haven Server' : msg.author.tag;
   const image = msg.attachments.first() ? msg.attachments.first().url : null;
   const d = new Date(msg.createdAt).toUTCString().slice(0,16);
   let msgContent = contentFilter(msg.content);
@@ -82,7 +83,7 @@ const messageSnipper = (msg, channel) => {
   const profile = createLog({
     id: msg.id,
     channel: channel,
-    author: msg.author.tag,
+    author: author,
     date: d,
     url: msg.url,
     content: msgContent,

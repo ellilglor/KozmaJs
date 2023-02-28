@@ -221,7 +221,7 @@ const buildTradelogEmbed = async (interaction, type, total) => {
   let field1 = '', posts = '', percentages = '';
 
   stats.forEach((stat, index) => {
-    field1 = field1.concat('', `**${index + 1}. ${stat._id.replace(' #supply-depot', '')}**\n`);
+    field1 = field1.concat('', `**${index + 1}. ${stat._id}**\n`);
     posts = posts.concat('', `${stat.amount.toLocaleString('en')}\n`);
     percentages = percentages.concat('', `${stat.percentage}%\n`);
   });
