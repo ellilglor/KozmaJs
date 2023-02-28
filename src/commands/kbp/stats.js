@@ -29,6 +29,9 @@ module.exports = {
         console.log(`Finished building embeds in ${((performance.now() - start)/1000).toFixed(2)} seconds`);
     }
 
+    const embed = embeds[pages[id]];
+    embed.setTitle(`${embed.data.title} - ${pages[id] + 1}/${embeds.length}`);
+
     const buttons = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
 				.setCustomId('first-stats').setLabel('◀◀').setStyle('Primary')
@@ -44,6 +47,6 @@ module.exports = {
         .setDisabled(pages[id] === embeds.length - 1)
 		);
     
-    await interaction.editReply({ embeds: [embeds[pages[id]]], components: [buttons] });
+    await interaction.editReply({ embeds: [embed], components: [buttons] });
   }
 };
