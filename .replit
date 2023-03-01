@@ -1,1 +1,0 @@
-run="while true;do npm start; sleep 300; kill 1;done"
