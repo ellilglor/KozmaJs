@@ -70,11 +70,18 @@ const checkForNewLogs = async (client) => {
 
 const messageSnipper = (msg, channel) => {
   if (!msg.content) return;
-
+  
+  const regex = /([0-9]{2}\/[0-9]{2}\/[0-9]{4})/;
   const author = msg.author.tag.includes('Knight Launcher') ? 'Haven Server' : msg.author.tag;
   const image = msg.attachments.first() ? msg.attachments.first().url : null;
-  const d = new Date(msg.createdAt).toUTCString().slice(0,16);
-  let msgContent = contentFilter(msg.content);
+  let msgContent = contentFilter(msg.content), d = '2021-04-04';
+
+  if (regex.test(msgContent)) {
+    parts = regex.exec(msgContent)[0].split('/');
+    d = new Date(parts[2], parseInt(parts[1] - 1), parts[0]).toUTCString().slice(0,16);
+  } else {
+    d = new Date(msg.createdAt).toUTCString().slice(0,16);
+  }
 
   if (msg.attachments.reduce(count => count += 1, 0) > 1) {
     msgContent = msgContent.concat('\n\n', '*This message had multiple images*\n*Click the date to look at them*');
