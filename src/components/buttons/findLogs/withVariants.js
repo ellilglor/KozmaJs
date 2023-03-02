@@ -9,7 +9,7 @@ module.exports = {
 
     const title = interaction.message.embeds[0].data.title;
     const item = title.split(' ').slice(5).toString().replace(/,/g, ' ').replace(/_/g, '');
-    const months = 24, checkVariants = true, checkClean = false, checkMixed = true;
+    const months = 120, checkVariants = true, checkClean = false, checkMixed = true;
 
     console.log(`${interaction.user.tag} searched for more logs of ${item}`);
 
