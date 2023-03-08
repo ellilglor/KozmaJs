@@ -49,13 +49,16 @@ const cleanFilter = [
   'fire high', 'fire max', 'shock high', 'shock max'
 ];
 
-// const uvTerms = ['ctr', 'asi', 'normal', 'shadow', 'fire', 'shock', 'poison', 'stun', 'freeze', 'elemental', 'piercing', 'low', 'med', 'high', 'very', 'max'];
+const uvTerms = {
+  types: ['ctr', 'asi', 'normal', 'shadow', 'fire', 'shock', 'poison', 'stun', 'freeze', 'elemental', 'piercing'],
+  grades: ['low', 'med', 'high', 'very', 'max']
+}
 
 const commonFeatured = [
   'gloweyes', 'scissor', 'prime bombhead', 'medieval war', 'mixmaster', 'spiral soaker', 'tricorne', 'shogun',
   'tabard of the coral', 'chapeau of the coral', 'tabard of the violet', 'chapeau of the violet',
   'moonlight leafy', 'dead leafy', 'gatecrasher helm', 'snarblepup', 'gun pup', 'love puppy', 'restored',
-  'sniped stranger', 'iron shackles', 'tails tails', 'metal sonic', ''
+  'sniped stranger', 'iron shackles', 'tails tails', 'metal sonic'
 ];
 
 const spreadsheet = [
@@ -361,7 +364,7 @@ module.exports = {
   channels,
   filters,
   cleanFilter,
-  //uvTerms,
+  uvTerms,
   commonFeatured,
   spreadsheet,
   equipmentFamilies,
