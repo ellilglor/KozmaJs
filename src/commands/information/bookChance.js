@@ -21,7 +21,7 @@ module.exports = {
       .addFields([
         { name: 'Black Kat spawn:', value: '1/90 or 1.11%', inline: true },
         { name: 'Book drop:', value: '1/250 or 0.4%', inline: true },
-        { name: 'Overall chance per Kat:', value: '0.004%', inline: true }
+        { name: 'Overall chance per Kat:', value: '1/25000 or 0.004%', inline: true }
       ]);
     
     await interaction.editReply({ embeds: [reply] });
