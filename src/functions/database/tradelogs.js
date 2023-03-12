@@ -23,14 +23,14 @@ const checkLog = (id) => {
   return tradelog.exists({ _id: id });
 }
 
-const findLogs = async (matches, date, checkMixed, skipSpecial, dirty) => {
+const findLogs = async (matches, date, checkMixed, skipSpecial, ignore) => {
   const result = await tradelog.aggregate([
     { $match: { $and: [
       { content: { $regex: matches, $options: 'i' } },
       { date: { $gt: date } },
       { ...(!checkMixed && { channel: { $ne: 'mixed-trades' } }) },
       { ...(skipSpecial && { channel: { $ne: 'special-listings' } }) },
-      { ...(dirty.length > 2 && { content: { $not: {$regex: dirty } } }) }
+      { ...(ignore.length > 2 && { content: { $not: {$regex: ignore } } }) }
     ]}},
     { $sort: {
       date: -1

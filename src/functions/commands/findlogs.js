@@ -5,7 +5,7 @@ const structures = require('@structures/findlogs');
 const { globals } = require('@data/variables');
 
 const searchLogs = async (interaction, items, months, checkVariants, checkClean, checkMixed) => {
-  const unedited = items[0], reverse = [], dirty = [], stopHere = new Date();
+  const unedited = items[0], reverse = [], ignore = [], stopHere = new Date();
   
   items[0] = contentFilter(items[0]);
   stopHere.setMonth(stopHere.getMonth() - months);
@@ -24,14 +24,15 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
 
   if (checkVariants) items = addVariants(items);
   if (/(?=.*ctr)(?=.*asi)/.test(items[0])) items.forEach(item => reverse.push(uvSwap(item)));
-  if (checkClean) items.forEach(item => structures.cleanFilter.forEach(uv => dirty.push(`${item} ${uv}`)));
-  if (items[0].includes('blaster') && !items[0].includes('nog')) dirty.push('nog blaster');
+  if (checkClean) items.forEach(item => structures.cleanFilter.forEach(uv => ignore.push(`${item} ${uv}`)));
+  if (/(?=.*blaster)(?!.*nog)/.test(items[0])) ignore.push('nog blaster');
+  if (!items[0].includes('recipe')) ignore.push('recipe');
 
   const skipSpecial = structures.commonFeatured.some(item => items[0].includes(item));
   const checkForMatch = items.concat(reverse).toString().replace(/,/g, '.*|').concat('.*');
-  const dirtyString = dirty.toString().replace(/,/g, '.*|').concat('.*');
+  const ignoreString = ignore.toString().replace(/,/g, '.*|').concat('.*');
 
-  const matches = await findLogs(checkForMatch, stopHere, checkMixed, skipSpecial, dirtyString);
+  const matches = await findLogs(checkForMatch, stopHere, checkMixed, skipSpecial, ignoreString);
   const matchCount = matches.reduce((total, channel) => total += channel.messages.length, 0);
 
   for (const channel of matches) {
@@ -41,7 +42,7 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
 
     for (const message of channel.messages) {
       if (charCount + message.content.length > 6000 || embeds.length === 10) {
-        await interaction.user.send({ embeds: embeds }).catch(error => error);
+        //await interaction.user.send({ embeds: embeds }).catch(error => error);
         embeds.splice(0, embeds.length);
         charCount = 0;
       }
