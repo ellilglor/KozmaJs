@@ -42,7 +42,7 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
 
     for (const message of channel.messages) {
       if (charCount + message.content.length > 6000 || embeds.length === 10) {
-        //await interaction.user.send({ embeds: embeds }).catch(error => error);
+        await interaction.user.send({ embeds: embeds }).catch(error => error);
         embeds.splice(0, embeds.length);
         charCount = 0;
       }
@@ -119,7 +119,7 @@ const addVariants = (items) => {
   itemFamilyLoop:
   for (const family in structures.equipmentFamilies) {
     for (const name of structures.equipmentFamilies[family]) {
-      if (!items[0].includes(name)) continue;
+      if (!items[0].includes(name) || items[0].includes('nog')) continue;
       
       const uvs = ' ' + items[0].replace(name, '').trim();
       items.pop();
