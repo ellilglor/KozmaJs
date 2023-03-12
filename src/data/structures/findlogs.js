@@ -40,7 +40,8 @@ const filters = [
   { new: 'black kat raiment', old: 'bkr', exclude: null },
   { new: 'black kat mail', old: 'bkm', exclude: null },
   { new: 'swiftstrike buckler', old: 'ssb', exclude: null },
-  { new: 'barbarous thorn blade', old: 'btb', exclude: null }
+  { new: 'barbarous thorn blade', old: 'btb', exclude: null },
+  { new: 'receiver', old: 'reciever', exclude: null }
 ];
 
 const cleanFilter = [
