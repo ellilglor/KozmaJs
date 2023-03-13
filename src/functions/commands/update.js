@@ -94,6 +94,7 @@ const messageSnipper = (msg, channel) => {
     date: d,
     url: msg.url,
     content: msgContent,
+    original: msg.content,
     image: image
   });
 

@@ -7,6 +7,7 @@ const tradelogSchema = new mongoose.Schema({
   date: Date,
   messageUrl: String,
   content: String,
+  original: String,
   image: String
 });
 

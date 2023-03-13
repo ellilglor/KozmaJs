@@ -8,6 +8,7 @@ const createLog = (msg) => {
     date: msg.date,
     messageUrl: msg.url,
     content: msg.content,
+    original: msg.original,
     image: msg.image
   });
 

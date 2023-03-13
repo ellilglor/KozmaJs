@@ -21,7 +21,7 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
       });
     });
   });
-
+  
   if (checkVariants) items = addVariants(items);
   if (/(?=.*ctr)(?=.*asi)/.test(items[0])) items.forEach(item => reverse.push(uvSwap(item)));
   if (checkClean) items.forEach(item => structures.cleanFilter.forEach(uv => ignore.push(`${item} ${uv}`)));
@@ -41,18 +41,18 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
     let charCount = 0;
 
     for (const message of channel.messages) {
-      if (charCount + message.content.length > 6000 || embeds.length === 10) {
+      if (charCount + message.original.length > 6000 || embeds.length === 10) {
         await interaction.user.send({ embeds: embeds }).catch(error => error);
         embeds.splice(0, embeds.length);
         charCount = 0;
       }
 
-      charCount += message.content.length;
+      charCount += message.original.length;
 
       const embed = tradelogEmbed()
         .setTitle(message.date.toUTCString().slice(0,16))
         .setURL(message.messageUrl)
-        .setDescription(message.content.slice(0,4096))
+        .setDescription(message.original.slice(0,4096))
         .setImage(message.image);
 
       embeds.push(embed);
