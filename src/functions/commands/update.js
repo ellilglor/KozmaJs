@@ -74,17 +74,18 @@ const messageSnipper = (msg, channel) => {
   const regex = /([0-9]{2}\/[0-9]{2}\/[0-9]{4})/;
   const author = msg.author.tag.includes('Knight Launcher') ? 'Haven Server' : msg.author.tag;
   const image = msg.attachments.first() ? msg.attachments.first().url : null;
-  let msgContent = contentFilter(msg.content), d = '2021-04-04';
+  const filtered = contentFilter(msg.content);
+  let d = '2021-04-04', text = msg.content;
 
-  if (regex.test(msgContent)) {
-    parts = regex.exec(msgContent)[0].split('/');
+  if (regex.test(filtered)) {
+    parts = regex.exec(filtered)[0].split('/');
     d = new Date(parts[2], parseInt(parts[1] - 1), parts[0]).toUTCString().slice(0,16);
   } else {
     d = new Date(msg.createdAt).toUTCString().slice(0,16);
   }
 
   if (msg.attachments.reduce(count => count += 1, 0) > 1) {
-    msgContent = msgContent.concat('\n\n', '*This message had multiple images*\n*Click the date to look at them*');
+    text = text.concat('\n\n', '*This message had multiple images*\n*Click the date to look at them*');
   }
 
   const profile = createLog({
@@ -93,8 +94,8 @@ const messageSnipper = (msg, channel) => {
     author: author,
     date: d,
     url: msg.url,
-    content: msgContent,
-    original: msg.content,
+    content: filtered,
+    original: text,
     image: image
   });
 
