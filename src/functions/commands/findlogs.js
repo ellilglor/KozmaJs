@@ -70,7 +70,10 @@ const searchFinished = async (interaction, matchCount, item, unedited, months, c
     .setColor('#f9d49c')
     .setDescription(
       'By default I only look at tradelogs from the past **6 months**!\n' +
-      'If you want me to look past that use the *months* option.\n\n' +
+      'If you want me to look past that use the `months` option.\n\n' +
+      'Only want to see your item and no variants?\nSet `variants` to *NO*.\n\n' +
+      `Wondering what your item without UV's goes for?\nSet \`clean\` to *YES*.\n\n` +
+      'Not interested in item trades?\nSet `mixed` to *NO*.\n\n' +
       `If you notice a problem please contact @${globals.ownerTag}!\n` +
       `Did you know we have our own [**Discord server**](${globals.serverInvite} 'Kozma's Backpack Discord server')?`);
 
