@@ -117,7 +117,7 @@ const searchFinished = async (interaction, matchCount, item, unedited, months, c
 const addVariants = (items) => {
   let check = true;
 
-  if (items[0].includes('drakon') || items[0].includes('maskeraith')) check = false;
+  if (/(?=.*drakon)|(?=.*maskeraith)/.test(items[0])) check = false;
   
   itemFamilyLoop:
   for (const family in structures.equipmentFamilies) {
@@ -149,19 +149,14 @@ const addVariants = (items) => {
           if (stop) continue colorLoop;
         }
 
-        if (set === 'snipes' && (items[0].includes('slime') || items[0].includes('plume'))) continue colorLoop;
+        if (set === 'snipes' && /(?=.*slime)|(?=.*plume)/.test(items[0])) continue colorLoop;
       
         const template = items[0].replace(name, '').trim();
 
-        if (set === 'snipes' && name ==='rose') {
-          if (structures.roses.includes(template) || template.includes('tabard') || template.includes('chapeau')) {
-            continue colorLoop;
-          }
-        }
+        if (name === 'rose' && (structures.roses.includes(template) || /(?=.*tabard)|(?=.*chapeau)/.test(template))) continue colorLoop;
 
         items.pop();
-        
-        if (set === 'obsidian' || set.includes('rose')) {
+        if (/(?=.*obsidian)|(?=.*rose)/.test(set)) {
           structures.colorSets[set].forEach(color => items.push(`${template} ${color}`.trim()));
         } else {
           structures.colorSets[set].forEach(color => items.push(`${color} ${template}`.trim()));
