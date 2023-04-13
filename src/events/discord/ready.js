@@ -3,6 +3,7 @@ const { checkOldMessages } = require('@functions/moderation/kbpTradeMute');
 const { dbCheckExpiredMutes } = require('@functions/database/tradeMute');
 const { checkForNewLogs } = require('@functions/commands/update');
 const { stillAlive } = require('@functions/general');
+const { checkTimedEvents } = require('@functions/other/timedEvents');
 
 module.exports = {
 	name: 'ready',
@@ -15,6 +16,7 @@ module.exports = {
     await checkOldMessages(client);
     
     const check = async () => {
+      await checkTimedEvents(client);
       await dbCheckExpiredMutes(client);
       await checkForNewLogs(client);
       await stillAlive(client);

@@ -21,11 +21,11 @@ module.exports = {
 
     await interaction.editReply({ embeds: [reply] });
 
-    await updateRate(msg, logChannel);
+    //await updateRate(msg, logChannel);
     
-    const marketTime = ((performance.now() - startTime)/1000).toFixed(2);
-    totalTime += parseFloat(marketTime);
-    await interaction.editReply({ embeds: [reply.setTitle(`Finished reading market image in ${marketTime} seconds`)] });
+    // const marketTime = ((performance.now() - startTime)/1000).toFixed(2);
+    // totalTime += parseFloat(marketTime);
+    // await interaction.editReply({ embeds: [reply.setTitle(`Finished reading market image in ${marketTime} seconds`)] });
 
     for (const [name, id] of channels) {
       const start = performance.now();
