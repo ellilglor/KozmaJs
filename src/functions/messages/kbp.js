@@ -5,7 +5,7 @@ const { globals } = require('@data/variables');
 const kbp = async (message, logChannel) => {
   if (message.author.bot) {
     switch (message.channelId) {
-      case '1095265535723327532': message.crosspost(); break;
+      case globals.marketChannelId: message.crosspost(); break;
     }
   } else {
     switch (message.channelId) {
