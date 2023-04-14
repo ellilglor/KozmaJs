@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 const knightlauncher = async (message) => {
   switch (message.channelId) {
     case '1059194248894885968': await sendListings(message); break;
