@@ -89,7 +89,7 @@ const saveUser = async (u, command) => {
 }
 
 const saveGambler = async (u, ticket) => {
-  if (u.tag === globals.ownerTag) return;
+  if (u.id === globals.ownerId) return;
 
   let gProfile = await gambler.findOne({ _id: u.id });
 

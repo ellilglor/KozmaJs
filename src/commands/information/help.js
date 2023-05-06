@@ -12,7 +12,7 @@ module.exports = {
     
     const reply = buildEmbed(interaction)
       .setTitle(lan.title)
-      .setDescription(`*${lan.desc} @${globals.ownerTag}*`)
+      .setDescription(`*${lan.desc} <@${globals.ownerId}>*`)
       .addFields([
         { name: '/bookchance', value: lan.bookChance },
         { name: '/clear', value: lan.clear },

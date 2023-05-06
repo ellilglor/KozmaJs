@@ -74,7 +74,7 @@ const searchFinished = async (interaction, matchCount, item, unedited, months, c
       'Only want to see your item and no variants?\nSet `variants` to *NO*.\n\n' +
       `Want to filter out higher value UV's?\nSet \`clean\` to *YES*.\n\n` +
       'Not interested in item trades?\nSet `mixed` to *NO*.\n\n' +
-      `If you notice a problem please contact @${globals.ownerTag}!\n` +
+      `If you notice a problem please contact <@${globals.ownerId}>!\n` +
       `Did you know we have our own [**Discord server**](${globals.serverInvite} 'Kozma's Backpack Discord server')?`);
 
   structures.spreadsheet.every(equipment => {

@@ -5,7 +5,7 @@ const { globals } = require('@data/variables');
 module.exports = {
 	name: 'interactionCreate',
 	async execute(interaction, client) {
-    // if (interaction.user.tag !== globals.ownerTag) {
+    // if (interaction.user.id !== globals.ownerId) {
     //   const maintenance = buildEmbed(interaction).setTitle('The bot is currently being worked on.\nPlease try again later.');
     //   interaction.reply({ embeds: [maintenance], ephemeral: true });
     //   return console.log(interaction.user.tag);
@@ -21,7 +21,7 @@ module.exports = {
           
           if (!command) return await interaction.editReply({ embeds: [noCode], ephemeral: true });
 
-          if (interaction.guildId !== globals.serverId && interaction.user.tag !== globals.ownerTag) {
+          if (interaction.guildId !== globals.serverId && interaction.user.id !== globals.ownerId) {
             try {
               const guild = await interaction.client.guilds.fetch(globals.serverId);
               await guild.bans.fetch(interaction.user.id);
@@ -45,7 +45,7 @@ module.exports = {
       const name = interaction.commandName || interaction.customId;
       const crashed = buildEmbed(interaction)
         .setTitle('There was an error while executing this command!')
-        .setDescription(`@${globals.ownerTag} has been notified.`);
+        .setDescription(`<@${globals.ownerId}> has been notified.`);
       
       console.log(`\u001b[31mError while executing ${name}!\n\u001b[0m`, { error });
 

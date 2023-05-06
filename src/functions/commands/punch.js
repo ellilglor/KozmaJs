@@ -195,13 +195,13 @@ const setImage = (embed) => {
 }
 
 const logGambler = ({ user }, ticket) => {
-  if (user.tag === globals.ownerTag) return;
+  if (user.id === globals.ownerId) return;
 
   console.log(`${user.tag} spent ${ticket.toLocaleString('en')} Crowns at Punch`);
 }
 
 const logCrafter = ({ user }, item) => {
-  if (user.tag === globals.ownerTag) return;
+  if (user.id === globals.ownerId) return;
 
   console.log(`${user.tag} recrafted: ${item}`);
 }

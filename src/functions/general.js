@@ -17,7 +17,7 @@ const tradelogEmbed = () => {
 };
 
 const logCommand = async ({ client, options, member, user, commandName, message: msg, locale }, extra, item) => {
-  if (user.tag === globals.ownerTag) return;
+  if (user.id === globals.ownerId) return;
   const logChannel = client.channels.cache.get(globals.botLogsChannelId);
   const location = member?.guild.name || 'DM';
   const command = commandName || msg.interaction.commandName || msg.interaction.name;
