@@ -56,7 +56,11 @@ const buildStats = async (interaction, embeds, defer) => {
     logChannelEmbed,
     logAuthorEmbed,
     findlogEmbed
-  )
+  );
+
+  embeds.forEach((embed, id) => {
+    embed.setTitle(`${embed.data.title} - ${id + 1}/${embeds.length}`);
+  })
 
   return embeds;
 }
@@ -74,17 +78,17 @@ const buildServerStats = async (interaction, client) => {
     for (const [id, member] of guild.members.cache) {
       if (member.user.bot) continue;
       if (members[id]) continue;
-      members[id] = null;
+      members[id] = 1;
     }
   }
 
   const uniqueMembers = Object.keys(members).length;
 
   servers.forEach((server, index) => {
-    if (index % 2 === 0) {
-      field1 = field1.concat('', `**${index + 1}. ${server.name}** - ${server.members}\n`);
+    if (index < (servers.length / 2)) {
+      field1 = field1.concat('', `${index + 1}. **${server.name}**: ${server.members}\n`);
     } else {
-      field2 = field2.concat('', `**${index + 1}. ${server.name}** - ${server.members}\n`);
+      field2 = field2.concat('', `${index + 1}. **${server.name}**: ${server.members}\n`);
     }
   });
   
@@ -106,9 +110,9 @@ const buildCommandEmbed = (interaction, stats) => {
   let names = '', amounts = '', percentages = '';
 
   stats.commands.forEach((command, index) => {
-    names = names.concat('', `**${index + 1}. ${command.command}**\n`);
+    names = names.concat('', `${index + 1} **${command.command}**\n`);
     amounts = amounts.concat('', `${command.amount.toLocaleString('en')}\n`);
-    percentages = percentages.concat('', `${command.percentage}%\n`);
+    percentages = percentages.concat('', `${command.percentage.toFixed(2)}%\n`);
   });
 
   embed.addFields([
@@ -126,9 +130,9 @@ const buildUserEmbed = (interaction, stats, total) => {
   let tags = '', commands = '', percentages = '';
 
   stats.users.forEach((user, index) => {
-    tags = tags.concat('', `**${index + 1}. ${user.tag}**\n`);
+    tags = tags.concat('', `${index + 1} **${user.tag}**\n`);
     commands = commands.concat('', `${user.amount}\n`);
-    percentages = percentages.concat('', `${user.percentage}%\n`);
+    percentages = percentages.concat('', `${user.percentage.toFixed(2)}%\n`);
   })
   
   embed.addFields([
@@ -155,9 +159,9 @@ const buildUnboxEmbed = (interaction, stats) => {
       energy += box.amount * boxData.price;
     }
 
-    names = names.concat('', `**${index + 1}. ${box.box}**\n`);
+    names = names.concat('', `${index + 1} **${box.box}**\n`);
     amounts = amounts.concat('', `${box.amount.toLocaleString('en')}\n`);
-    percentages = percentages.concat('', `${box.percentage}%\n`);
+    percentages = percentages.concat('', `${box.percentage.toFixed(2)}%\n`);
   });
 
   embed.addFields([
@@ -177,9 +181,9 @@ const buildUnboxerEmbed = (interaction, stats, total) => {
   let tags = '', amounts = '', percentages = '';
 
   stats.unboxers.forEach((user, index) => {
-    tags = tags.concat('', `**${index + 1}. ${user.tag}**\n`);
+    tags = tags.concat('', `${index + 1} **${user.tag}**\n`);
     amounts = amounts.concat('', `${user.unboxed}\n`);
-    percentages = percentages.concat('', `${user.percentage}%\n`);
+    percentages = percentages.concat('', `${user.percentage.toFixed(2)}%\n`);
   });
 
   embed.addFields([
@@ -197,9 +201,9 @@ const buildPunchEmbed = (interaction, stats, sessions) => {
   let tags = '', spent = '', percentages = '';
 
   stats.gamblers.forEach((gambler, index) => {
-    tags = tags.concat('', `**${index + 1}. ${gambler.tag}**\n`);
+    tags = tags.concat('', `${index + 1} **${gambler.tag}**\n`);
     spent = spent.concat('', `${gambler.total.toLocaleString('en')}\n`);
-    percentages = percentages.concat('', `${gambler.percentage}%\n`);
+    percentages = percentages.concat('', `${gambler.percentage.toFixed(2)}%\n`);
   });
 
   embed.addFields([
@@ -221,9 +225,9 @@ const buildTradelogEmbed = async (interaction, type, total) => {
   let field1 = '', posts = '', percentages = '';
 
   stats.forEach((stat, index) => {
-    field1 = field1.concat('', `**${index + 1}. ${stat._id}**\n`);
+    field1 = field1.concat('', `${index + 1} **${stat._id}**\n`);
     posts = posts.concat('', `${stat.amount.toLocaleString('en')}\n`);
-    percentages = percentages.concat('', `${stat.percentage}%\n`);
+    percentages = percentages.concat('', `${stat.percentage.toFixed(2)}%\n`);
   });
 
   embed.addFields([
@@ -241,7 +245,7 @@ const buildFindlogEmbed = (interaction, stats) => {
   let names = '', amounts = '';
 
   stats.searches.forEach((item, index) => {
-    names = names.concat('', `**${index + 1}. ${item.item}**\n`);
+    names = names.concat('', `${index + 1} **${item.item}**\n`);
     amounts = amounts.concat('', `${item.amount.toLocaleString('en')}\n`);
   });
   
