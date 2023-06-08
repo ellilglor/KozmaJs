@@ -5,15 +5,15 @@ const { globals } = require('@data/variables');
 const players = {};
 
 const setPlayer = ({ user: { id } }, item) => {
-  if (!players[id]) players[id] = {};
+  players[id] ||= {};
   players[id][item] = {};
 }
 
 const updatePlayer = ({ user: { id } }, item, uv) => {
-  if (!players[id]) players[id] = {}; 
-  if (!players[id][item]) players[id][item] = {};
-  if (!players[id][item]['types']) players[id][item]['types'] = {};
-  if (!players[id][item]['grades']) players[id][item]['grades'] = {};
+  players[id] ||= {}; 
+  players[id][item] ||= {};
+  players[id][item]['types'] ||= {};
+  players[id][item]['grades'] ||= {};
 
   const [type, grade] = uv.replace(':', '').split('\n');
 

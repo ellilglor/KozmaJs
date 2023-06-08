@@ -10,7 +10,7 @@ module.exports = {
     .setDefaultMemberPermissions(perms.KickMembers | perms.BanMembers),
 	async execute(interaction, defer, button) {
     const id = interaction.user.id;
-    pages[id] = pages[id] || 0;
+    pages[id] ||= 0;
 
     if (button && embeds.length === 0) {
       return await interaction.editReply({ content: 'The bot has restarted.', embeds: [], components: [], ephemeral: true });

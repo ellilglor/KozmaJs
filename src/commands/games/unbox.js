@@ -39,8 +39,7 @@ module.exports = {
     const id = interaction.user.id;
     const amount = opened || '1';
     let desc = '**In this session you opened:**';
-
-    if (!items[id]) items[id] = {};
+    items[id] ||= {};
 
     const result = buildEmbed(interaction)
       .setAuthor(author)
