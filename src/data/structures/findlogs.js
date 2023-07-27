@@ -75,12 +75,12 @@ const spreadsheet = [
 
 const equipmentFamilies = {
 "brandishes": [
-  'brandish', 'shockburst brandish', 'iceburst brandish', 'fireburst brandish', 'nightblade', 'cautery sword', 'boltbrand', 'silent nightblade',
-  'blizzbrand', 'blazebrand', 'advanced cautery sword', 'obsidian edge', 'voltedge', 'glacius', 'combuster', 'amputator', 'acheron'
+  'shockburst brandish', 'iceburst brandish', 'fireburst brandish', 'boltbrand', 'silent nightblade',
+  'blizzbrand', 'blazebrand', 'advanced cautery sword', 'obsidian edge', 'voltedge', 'glacius', 'combuster', 'amputator', 'acheron', 'brandish', 'nightblade', 'cautery sword'
 ],
 "flourishes": [
-  'flourish', 'snarble barb', 'twisted snarble barb', 'swift flourish', 'rigadoon', 'flamberge', 'dark thorn blade', 'grand flourish', 
-  'fierce flamberge', 'daring rigadoon', 'barbarous thorn blade', 'furious flamberge', 'final flourish', 'fearless rigadoon'
+  'twisted snarble barb', 'swift flourish', 'dark thorn blade', 'grand flourish', 
+  'fierce flamberge', 'daring rigadoon', 'barbarous thorn blade', 'furious flamberge', 'final flourish', 'fearless rigadoon', 'flourish', 'snarble barb', 'rigadoon', 'flamberge'
 ],
 "troikas": [
   'troika', 'grintovec', 'kamarin', 'jalovec', 'khorovod', 'triglav', 'sudaruska'
@@ -89,36 +89,36 @@ const equipmentFamilies = {
   'spur', 'arc razor', 'winmillion', 'turbillion'
 ],
 "cutters": [
-  'cutter', 'striker', 'vile striker', 'hunting blade', 'dread venom striker', 'wild hunting blade'
+  'cutter', 'vile striker', 'dread venom striker', 'wild hunting blade', 'striker', 'hunting blade'
 ],
 "caliburs": [
-  'calibur', 'tempered calibur', 'cold iron carver', 'ascended calibur', 'leviathan blade', 'cold iron vanquisher'
+  'tempered calibur', 'cold iron carver', 'ascended calibur', 'leviathan blade', 'cold iron vanquisher', 'calibur'
 ],
 "sealed swords": [
-  'sealed sword', 'faust', 'avenger', 'gran faust', 'divine avenger'
+  'sealed sword', 'gran faust', 'faust', 'divine avenger', 'avenger'
 ],
 "pulars": [
-  'pulsar', 'freezing pulsar', 'flaming pulsar', 'kilowatt pulsar', 'heavy pulsar', 'frozen pulsar',
-  'blazing pulsar','radiant pulsar', 'gigawatt pulsar', 'wildfire', 'permafroster', 'supernova', 'polaris'
+  'freezing pulsar', 'flaming pulsar', 'kilowatt pulsar', 'heavy pulsar', 'frozen pulsar',
+  'blazing pulsar','radiant pulsar', 'gigawatt pulsar', 'wildfire', 'permafroster', 'supernova', 'polaris', 'pulsar'
 ],
 "catalyzers": [
-  'catalyzer', 'toxic catalyzer', 'industrial catalyzer', 'volatile catalyzer', 'virulent catalyzer', 'neutralizer', 'biohazard'
+  'toxic catalyzer', 'industrial catalyzer', 'volatile catalyzer', 'virulent catalyzer', 'neutralizer', 'biohazard', 'catalyzer'
 ],
 "alchemers": [
-  'voltech alchemer', 'shadowtech alchemer', 'prismatech alchemer', 'firotech alchemer', 'cryotech alchemer', 'shadowtech alchemer mk ii',
-  'prismatech alchemer mk ii', 'firotech alchemer mk ii', 'cryotech alchemer mk ii', 'volt driver', 'shadow driver', 'prisma driver',
-  'firo driver', 'cryo driver', 'umbra driver', 'storm driver', 'nova driver', 'magma driver', 'hail driver'
+   'shadowtech alchemer mk ii', 'prismatech alchemer mk ii', 'firotech alchemer mk ii', 'cryotech alchemer mk ii', 'volt driver',
+  'shadow driver', 'prisma driver', 'firo driver', 'cryo driver', 'umbra driver', 'storm driver', 'nova driver', 'magma driver',
+  'hail driver', 'voltech alchemer', 'shadowtech alchemer', 'prismatech alchemer', 'firotech alchemer', 'cryotech alchemer'
 ],
 "autoguns": [
-  'autogun', 'dark chaingun', 'toxic needle', 'pepperbox', 'needle shot', 'black chaingun','blight needle',
-  'strike needle', 'fiery pepperbox', 'grim repeater', 'plague needle', 'volcanic pepperbox', 'blitz needle'
+  'autogun', 'dark chaingun', 'toxic needle', 'needle shot', 'black chaingun','blight needle',
+  'strike needle', 'fiery pepperbox', 'grim repeater', 'plague needle', 'volcanic pepperbox', 'blitz needle', 'pepperbox'
 ],
 "blasters": [
-  'blaster', 'shadow blaster', 'pierce blaster', 'elemental blaster', 'super blaster', 'umbral blaster', 
-  'fusion blaster', 'breach blaster', 'master blaster', 'riftlocker', 'phantamos', 'arcana', 'valiance'
+  'shadow blaster', 'pierce blaster', 'elemental blaster', 'super blaster', 'umbral blaster', 
+  'fusion blaster', 'breach blaster', 'master blaster', 'riftlocker', 'phantamos', 'arcana', 'valiance', 'blaster'
 ],
 "magnuses": [
-  'tundrus', 'magnus', 'mega tundrus', 'mega magnus', 'iron slug', 'winter grave', 'callahan'
+  'mega tundrus', 'mega magnus', 'iron slug', 'winter grave', 'callahan', 'tundrus', 'magnus'
 ],
 "torto guns": [
   'wild buster', 'stoic buster', 'primal buster', 'grim buster', 'nether cannon', 'mighty cannon', 
@@ -128,23 +128,23 @@ const equipmentFamilies = {
   'antigua', 'raptor', 'silversix', 'blackhawk', 'gilded griffin', 'obsidian carbine', 'sentenza', 'argent peacemaker'
 ],
 "shard bombs": [
-  'splinter bomb', 'shard bomb', 'dark matter bomb', 'crystal bomb', 'super splinter bomb', 'super shard bomb',
-  'super dark matter bomb', 'super crystal bomb', 'sun shards', 'rock salt bomb', 'radiant sun shards', 'ionized salt bomb',
-  'heavy splinter bomb', 'heavy shard bomb', 'heavy dark matter bomb', 'heavy crystal bomb', 'shocking salt bomb',
-  'scintillating sun shards', 'deadly splinter bomb', 'deadly shard bomb', 'deadly dark matter bomb', 'deadly crystal bomb'
+  'super splinter bomb', 'super shard bomb', 'super dark matter bomb', 'super crystal bomb', 'rock salt bomb', 'radiant sun shards',
+  'ionized salt bomb', 'heavy splinter bomb', 'heavy shard bomb', 'heavy dark matter bomb', 'heavy crystal bomb',
+  'shocking salt bomb', 'scintillating sun shards', 'deadly splinter bomb', 'deadly shard bomb', 'deadly dark matter bomb',
+  'deadly crystal bomb', 'splinter bomb', 'shard bomb', 'dark matter bomb', 'crystal bomb', 'sun shards'
 ],
-"mist bombs": [
-  'haze bomb', 'static capacitor', 'toxic vaporizer', 'slumber smogger', 'freezing vaporizer', 'fiery vaporizer', 
+"mist bombs": [ 
   'haze bomb mk ii', 'lightning capacitor', 'toxic vaporizer mk ii', 'slumber smogger mk ii', ' freezing vaporizer mk ii',
   'fiery vaporizer mk ii', 'haze burst', 'plasma capacitor', 'toxic atomizer', 'slumber squall', 'freezing atomizer',
-  'fiery atomizer', 'stagger storm', 'voltaic tempest', 'venom veiler', 'torpor tantrum', 'shivermist buster', 'ash of agni'
+  'fiery atomizer', 'stagger storm', 'voltaic tempest', 'venom veiler', 'torpor tantrum', 'shivermist buster', 'ash of agni',
+  'haze bomb', 'static capacitor', 'toxic vaporizer', 'slumber smogger', 'freezing vaporizer', 'fiery vaporizer'
 ],
 "snarb bombs": [
-  'spine cone', 'twisted spine cone', 'spike shower', 'dark briar barrage'
+  'twisted spine cone', 'spike shower', 'dark briar barrage', 'spine cone'
 ],
 "blast bombs": [
-  'blast bomb', 'super blast bomb', 'deconstructor', 'master blast bomb', 'irontech bomb', 
-  'heavy deconstructor', 'nitronome', 'irontech destroyer', 'big angry bomb'
+  'super blast bomb', 'master blast bomb', 'irontech bomb', 
+  'heavy deconstructor', 'nitronome', 'irontech destroyer', 'big angry bomb', 'blast bomb', 'deconstructor'
 ],
 "vortexes 1": [
   'electron charge', 'electron bomb', 'electron vortex'
@@ -155,7 +155,7 @@ const equipmentFamilies = {
 "wolver set": [
   'wolver coat', 'padded hunting coat', 'dusker coat', 'quilted hunting coat', 'ash tail coat', 'vog cub coat',
   'starlit hunting coat', 'snarbolax coat', 'skolver coat', 'wolver cap', 'padded hunting cap', 'dusker cap',
-  'quilted hunting cap', 'ash tail cap', 'vog cub capt', 'starlit hunting cap', 'snarbolax cap', 'skolver cap'
+  'quilted hunting cap', 'ash tail cap', 'vog cub cap', 'starlit hunting cap', 'snarbolax cap', 'skolver cap'
 ],
 "cloak sets": [
   'magic cloak', 'elemental cloak', 'miracle cloak', 'chaos cloak', 'divine mantle', 'grey feather mantle',
@@ -183,21 +183,21 @@ const equipmentFamilies = {
   'skelly mask', 'scary skelly mask', 'sinister skelly mask', 'dread skelly mask'
 ],
 "cobalt sets": [
-  'cobalt armor, solid cobalt armor', 'mighty cobalt armor', 'azure guardian armor', 'almirian crusador armor',
-  'cobalt helm', 'solid cobalt helm', 'mighty cobalt helm', 'azure guardian helm', 'almirian crusader helm'
+  'solid cobalt armor', 'mighty cobalt armor', 'azure guardian armor', 'almirian crusador armor', 'cobalt amor',
+  'solid cobalt helm', 'mighty cobalt helm', 'azure guardian helm', 'almirian crusader helm', 'cobalt helm'
 ],
 "jelly sets": [
-  'jelly mail', 'brute jelly mail', 'rock jelly mail', 'ice queen mail', 'royal jelly mail', 'jelly helm', 
-  'brute jelly helm', 'rock jelly helm', 'ice queen crown', 'royal jelly crown', 'quicksilver mail',
-  'charged quicksilver mail', 'mercurial mail', 'quicksilver helm', 'charged quicksilver helm', 'mercurial helm'
+  'brute jelly mail', 'rock jelly mail', 'ice queen mail', 'royal jelly mail',
+  'brute jelly helm', 'rock jelly helm', 'ice queen crown', 'royal jelly crown', 'jelly helm', 'jelly mail',
+  'charged quicksilver mail', 'mercurial mail', 'charged quicksilver helm', 'mercurial helm', 'quicksilver mail', 'quicksilver helm'
 ],
 "plate sets": [
   'spiral plate mail', 'boosted plate mail', 'heavy plate mail', 'ironmight plate mail', 'volcanic plate mail',
   'spiral plate helm', 'boosted plate helm', 'heavy plate helm', 'ironmight plate helm', 'volcanic plate helm'
 ],
 "chroma sets": [
-  'chroma suit', 'salamander suit', 'virulisk suit', 'arcane salamander suit', 'volcanic salamander suit', 'deadly virulisk suit',
-  'chroma mask', 'salamander mask', 'virulisk mask', 'arcane salamander mask', 'volcanic salamander mask', 'deadly virulisk mask'
+  'chroma suit', 'arcane salamander suit', 'volcanic salamander suit', 'deadly virulisk suit', 'salamander suit', 'virulisk suit',
+  'chroma mask', 'arcane salamander mask', 'volcanic salamander mask', 'deadly virulisk mask', 'salamander mask', 'virulisk mask'
 ],
 "angelic sets": [
   'angelic raiment', 'seraphic mail', 'armor of the fallen', 'heavenly iron armor', 'valkyrie mail',
@@ -208,58 +208,60 @@ const equipmentFamilies = {
   'radiant silvermail','drake scale helm', 'wyvern scale helm', 'dragon scale helm'
 ],
 "pathfinder sets": [
-  'pathfinder armor', 'woven falcon pathfinder armor', 'woven firefly pathfinder armor', 'woven grizzle pathfinder armor',
+  'woven falcon pathfinder armor', 'woven firefly pathfinder armor', 'woven grizzle pathfinder armor',
   'woven snakebite pathfinder armor', 'plated falcon pathfinder armor', 'plated firefly pathfinder armor', 'plated grizzly pathfinder armor',
   'plated snakebite pathfinder armor', 'sacred falcon pathfinder armor', 'sacred falcon guerrila armor', 'sacred falcon hazard armor',
   'sacred firefly pathfinder armor', 'sacred firefly guerilla armor', 'sacred firefly hazard armor', 'sacred grizzly pathfinder armor',
   'sacred grizlly guerilla armor', 'sacred grizzly hazard armor', 'sacred snakebite pathfinder armor', 'sacred snakebite guerilla armor',
-  'sacred snakebite hazard armor', 'pathfinder helm', 'woven falcon pathfinder helm', 'woven firefly pathfinder helm',
+  'sacred snakebite hazard armor', 'woven falcon pathfinder helm', 'woven firefly pathfinder helm',
   'woven grizzly pathfinder helm', 'woven snakebite pathfinder helm', 'plated falcon pathfinder helm', 'plated firefly pathfinder helm',
   'plated grizzly pathfinder helm', 'plated snakebite pathfinder helm', 'sacred falcon pathfinder helm', 'sacred falcon guerilla helm',
   'sacred falcon hazard helm', 'sacred firefly pathfinder helm', 'sacred firefly guerilla helm', 'sacred firefly hazard helm',
   'sacred grizzly pathfinder helm', 'sacred grizzly guerilla helm', 'sacred grizzly hazard helm', 'sacred snakebite pathfinder helm',
-  'sacred snakebite guerilla helm', 'sacred snakebite hazard helm'
+  'sacred snakebite guerilla helm', 'sacred snakebite hazard helm', 'pathfinder armor', 'pathfinder helm'
 ],
 "sentinel sets": [
-  'sentinel armor', 'woven falcon sentinel armor', 'woven firefly sentinel armor', 'woven grizzly sentinel armor', 'woven snakebite sentinel armor',
+  'woven falcon sentinel armor', 'woven firefly sentinel armor', 'woven grizzly sentinel armor', 'woven snakebite sentinel armor',
   'plated falcon sentinel armor', 'plated firefly sentinel armor', 'plated grizzly sentinel armor', 'plated snakebite sentinel armor',
   'sacred falcon sentinel armor', 'sacred falcon keeper armor', 'sacred falcon wraith armor', 'sacred firefly sentinel armor',
   'sacred firefly keeper armor', ' sacred firefly wraith armor', 'sacred grizzly sentinel armor', 'sacred grizzly keeper armor',
   'sacred grizzly wraith armor', 'sacred snakebite sentinel armor', 'sacred snakebite keeper armor', 'sacred snakebite wraith armor',
-  'sentinel helm', 'woven falcon sentinel helm', 'woven firefly sentinel helm', 'woven grizzly sentinel helm', 'woven snakebite sentinel helm',
+  'woven falcon sentinel helm', 'woven firefly sentinel helm', 'woven grizzly sentinel helm', 'woven snakebite sentinel helm',
   'plated falcon sentinel helm', 'plated firefly sentinel helm', 'plated grizzly sentinel helm', 'plated snakebite sentinel helm',
   'sacred falcon sentinel helm', 'sacred falcon keeper helm', 'sacred falcon wraith helm', 'sacred firefly sentinel helm',
   'sacred firefly keeper helm', 'sacred firefly wraith helm', 'sacred grizzly sentinel helm', 'sacred grizzly keeper helm',
-  'sacred grizzly wraith helm', 'sacred snakebite sentinel helm', 'sacred snakebite keeper helm', 'sacred snakebite wraith helm'
+  'sacred grizzly wraith helm', 'sacred snakebite sentinel helm', 'sacred snakebite keeper helm', 'sacred snakebite wraith helm',
+  'sentinel armor', 'sentinel helm'
 ],
 "shade sets": [
-  'shade armor', 'woven falcon shade armor', 'woven firefly shade armor', 'woven grizzly shade armor', 'woven snakebite shade armor',
+  'woven falcon shade armor', 'woven firefly shade armor', 'woven grizzly shade armor', 'woven snakebite shade armor',
   'plated falcon shade armor', 'plated firefly shade armor', 'plated grizzly shade armor', 'plated snakebite shade armor',
   'sacred falcon shade armor', 'sacred falcon ghost armor', 'sacred falcon hex armor', 'sacred firefly shade armor', 'sacred firefly ghost armor',
   'sacred firefly hex armor', 'sacred grizzly shade armor', 'sacred grizzly ghost armor', 'saccred grizzly hex armor',
-  'sacred snakebite shade armor', 'sacred snakebite gohst armor', 'sacred snakebite hex armor', 'shade helm', 'woven falcon shade helm',
+  'sacred snakebite shade armor', 'sacred snakebite gohst armor', 'sacred snakebite hex armor', 'woven falcon shade helm',
   'woven firefly shade helm', 'woven grizzly shade helm', 'woven snakebite shade helm', 'plated falcon shade helm', 'plated firefly shade helm',
   'plated grizzly shade helm', 'plated snakebite shade helm', 'sacred falcon shade helm', 'sacred falcon ghost helm', 'sacred falcon hex helm',
   'sacred firefly shade helm', 'sacred firefly ghost helm', 'sacred firefly hex helm', 'sacred grizzly shade helm', 'sacred grizzly ghost helm',
-  'sacred grizzly hex helm', 'sacred snakebite shade helm', 'sacred snakebite ghost helm', 'sacred snakebite hex helm'
+  'sacred grizzly hex helm', 'sacred snakebite shade helm', 'sacred snakebite ghost helm', 'sacred snakebite hex helm',
+  'shade armor', 'shade helm'
 ],
 "snarb shields": [
   'bristling buckler', 'twisted targe', 'dark thorn shield', 'barbarous thorn shield'
 ],
 "skelly shields": [
-  'skelly shield', 'scary skelly shield', 'sinister skelly shield', 'dread skelly shield'
+  'scary skelly shield', 'sinister skelly shield', 'dread skelly shield', 'skelly shield'
 ],
 "plate shields": [
-  'plate shield', 'boosted plate shield', 'heavy plate shield', 'ironmight plate shield', 'volcanic plate shield'
+  'boosted plate shield', 'heavy plate shield', 'ironmight plate shield', 'volcanic plate shield', 'plate shield'
 ],
 "owlite shields": [
-  'owlite shield', 'horned owlite shield', 'wise owlite shield', 'grey owlite shield'
+  'horned owlite shield', 'wise owlite shield', 'grey owlite shield', 'owlite shield'
 ],
 "jelly shields": [
-  'jelly shield', 'brute jelly shield', 'rock jelly shield', 'royal jelly shield'
+  'brute jelly shield', 'rock jelly shield', 'royal jelly shield', 'jelly shield'
 ],
 "defenders": [
-  'defender', 'great defender', 'mighty defender', 'aegis', 'heater shield'
+  'great defender', 'mighty defender', 'aegis', 'heater shield', 'defender'
 ],
 "scale shields": [
   'drake scale shield', 'wyvern scale shield', 'stone tortoise', 'dragon scale shield', 'omega shell'
