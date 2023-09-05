@@ -10,7 +10,7 @@ module.exports = {
     const reply = buildEmbed(interaction).setTitle('Clearing messages.');
     interaction.commandName = 'clear'; //needed for proper logging when command is ran through the button
     
-		await interaction.editReply({ embeds: [reply] });
+		await interaction.editReply({ embeds: [reply], components: [] });
     await logCommand(interaction);
 
     await interaction.user.createDM();
