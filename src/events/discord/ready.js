@@ -4,6 +4,7 @@ const { dbCheckExpiredMutes } = require('@functions/database/tradeMute');
 const { checkForNewLogs } = require('@functions/commands/update');
 const { stillAlive } = require('@functions/general');
 const { checkTimedEvents } = require('@functions/other/timedEvents');
+const logger = require('@functions/logger');
 
 module.exports = {
 	name: 'ready',
@@ -12,6 +13,8 @@ module.exports = {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
     client.user.setPresence({ activities: [{ name: '/help', type: ActivityType.Listening }], status: 'online' });
     client.keepAlive();
+
+    logger.setLogChannel(client);
     
     await checkOldMessages(client);
     
