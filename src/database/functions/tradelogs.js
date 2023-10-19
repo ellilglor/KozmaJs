@@ -1,4 +1,4 @@
-const tradelog = require('@schemas/commands/tradelogs');
+const tradelog = require('@database/schemas/commands/tradelogs');
 
 const createLog = (msg) => {
   const profile = new tradelog({

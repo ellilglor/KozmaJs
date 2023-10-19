@@ -9,7 +9,7 @@ client.buttons = new Collection();
 
 const handlerFiles = fs.readdirSync('./src/functions/handlers').filter(f => f.endsWith('.js'));
 const botEventFiles = fs.readdirSync('./src/events/discord').filter(f => f.endsWith('.js'));
-const dbEventFiles = fs.readdirSync('./src/events/database').filter(f => f.endsWith('.js'));
+const dbEventFiles = fs.readdirSync('./src/database/events').filter(f => f.endsWith('.js'));
 const componentFolders = fs.readdirSync('./src/components');
 const commandFolders = fs.readdirSync('./src/commands');
 

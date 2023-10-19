@@ -1,6 +1,6 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const { updatePlayer, rollUv, logGambler } = require('@functions/commands/punch');
-const { saveGambler } = require('@functions/database/saveStats');
+const { saveGambler } = require('@database/functions/saveStats');
 const { buildEmbed } = require('@functions/general');
 const { data } = require('@structures/punch');
 const wait = require('util').promisify(setTimeout);

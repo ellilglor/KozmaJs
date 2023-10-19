@@ -24,7 +24,7 @@
     "@components": "./src/components",
     "@functions": "./src/functions",
     "@data": "./src/data",
-    "@schemas": "./src/data/schemas",
+    "@database": "./src/database",
     "@structures": "./src/data/structures"
   },
   "devDependencies": {

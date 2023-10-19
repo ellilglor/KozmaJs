@@ -1,5 +1,5 @@
-const buy = require('@schemas/moderation/buyMute');
-const sell = require('@schemas/moderation/sellMute');
+const buy = require('@database/schemas/moderation/buyMute');
+const sell = require('@database/schemas/moderation/sellMute');
 const wait = require('util').promisify(setTimeout);
 const { globals } = require('@data/variables');
 

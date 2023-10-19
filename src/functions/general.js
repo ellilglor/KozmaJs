@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
-const db = require('@functions/database/saveStats');
+const db = require('@database/functions/saveStats');
 const { filters } = require('@structures/findlogs');
 const { globals } = require('@data/variables');
 

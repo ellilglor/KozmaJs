@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const command = require('@schemas/stats/command');
-const item = require('@schemas/stats/findlogs');
-const box = require('@schemas/stats/unbox');
-const user = require('@schemas/stats/user');
-const gambler = require('@schemas/stats/punch');
+const command = require('@database/schemas/stats/command');
+const item = require('@database/schemas/stats/findlogs');
+const box = require('@database/schemas/stats/unbox');
+const user = require('@database/schemas/stats/user');
+const gambler = require('@database/schemas/stats/punch');
 const { globals } = require('@data/variables');
 
 const saveCommand = async (cmd) => {

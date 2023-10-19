@@ -1,4 +1,4 @@
-const { createLog, saveLogs, checkLog } = require('@functions/database/tradelogs');
+const { createLog, saveLogs, checkLog } = require('@database/functions/tradelogs');
 const { contentFilter } = require('@functions/general');
 const { channels } = require('@structures/findlogs');
 const { globals } = require('@data/variables');

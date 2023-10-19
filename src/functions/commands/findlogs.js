@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { tradelogEmbed, buildEmbed, contentFilter } = require('@functions/general');
-const { findLogs } = require('@functions/database/tradelogs');
+const { findLogs } = require('@database/functions/tradelogs');
 const structures = require('@structures/findlogs');
 const { globals } = require('@data/variables');
 

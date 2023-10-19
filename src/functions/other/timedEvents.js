@@ -1,7 +1,7 @@
 const { tradelogEmbed } = require('@functions/general');
 const fetch = require('node-fetch');
-const { insertEvent, getEvent, updateEvent } = require('@functions/database/timedEvents');
-const { saveRate } = require('@functions/database/rate');
+const { insertEvent, getEvent, updateEvent } = require('@database/functions/timedEvents');
+const { saveRate } = require('@database/functions/rate');
 
 const checkTimedEvents = async (client) => {
   const energyMarket = await getEvent('energyMarket');

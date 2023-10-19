@@ -1,5 +1,5 @@
 const { buildEmbed } = require('@functions/general');
-const db = require('@functions/database/getStats');
+const db = require('@database/functions/getStats');
 const { calculateCost } = require('@functions/commands/unbox');
 const { boxes } = require('@structures/unbox');
 const { version } = require('@root/package.json');

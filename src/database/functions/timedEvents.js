@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const event = require('@schemas/timedEvents');
+const event = require('@database/schemas/timedEvents');
 
 const insertEvent = async (name) => {
   const profile = new event({

@@ -1,5 +1,5 @@
 const { globals } = require('@data/variables');
-const db = require('@functions/database/saveStats');
+const db = require('@database/functions/saveStats');
 
 class MyLogger {
   constructor() {

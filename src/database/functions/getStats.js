@@ -1,9 +1,9 @@
-const tradelog = require('@schemas/commands/tradelogs');
-const command = require('@schemas/stats/command');
-const item = require('@schemas/stats/findlogs');
-const gambler = require('@schemas/stats/punch');
-const box = require('@schemas/stats/unbox');
-const user = require('@schemas/stats/user');
+const tradelog = require('@database/schemas/commands/tradelogs');
+const command = require('@database/schemas/stats/command');
+const item = require('@database/schemas/stats/findlogs');
+const gambler = require('@database/schemas/stats/punch');
+const box = require('@database/schemas/stats/unbox');
+const user = require('@database/schemas/stats/user');
 
 const getCommandStats = async () => {
   const result = await command.aggregate([

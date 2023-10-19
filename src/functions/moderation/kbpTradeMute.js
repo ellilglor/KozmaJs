@@ -1,4 +1,4 @@
-const { dbBuyMute, dbSellMute } = require('@functions/database/tradeMute');
+const { dbBuyMute, dbSellMute } = require('@database/functions/tradeMute');
 const { scamPrevention } = require('@structures/reminders');
 const { tradelogEmbed } = require('@functions/general');
 const { globals } = require('@data/variables');

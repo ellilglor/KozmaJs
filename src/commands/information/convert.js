@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('@functions/general');
-const { getRate } = require('@functions/database/rate');
+const { getRate } = require('@database/functions/rate');
 
 module.exports = {
   data: new SlashCommandBuilder()
