@@ -23,8 +23,9 @@ class MyLogger {
   }
 
   async saveCommandToDb(user, command) {
-    await db.saveUser(user, command);
-    await db.saveCommand(command);
+    console.log(`${user.username} used ${command}`);
+    //await db.saveUser(user, command);
+    //await db.saveCommand(command);
   }
 
   async saveItemToDb(item, command) {
@@ -55,7 +56,7 @@ class MyLogger {
   }
 
   async saveCommand(interaction, extra, item) {
-    if (interaction.user.id == globals.ownerId) return;
+    //if (interaction.user.id == globals.ownerId) return;
     
     const command = this.buildCommand(interaction, extra, item);
     

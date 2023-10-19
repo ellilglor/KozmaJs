@@ -19,7 +19,7 @@ module.exports = {
     await checkOldMessages(client);
     
     const check = async () => {
-      //await checkTimedEvents(client);
+      await checkTimedEvents(client);
       await dbCheckExpiredMutes(client);
       await checkForNewLogs(client);
       await stillAlive(client);
