@@ -4,7 +4,7 @@
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/bot.js"
+    "start": "node src/bot/bot.js"
   },
   "keywords": [],
   "author": "",
@@ -20,12 +20,12 @@
   },
   "_moduleAliases": {
     "@root": ".",
-    "@commands": "./src/commands",
-    "@components": "./src/components",
-    "@functions": "./src/functions",
-    "@data": "./src/data",
+    "@commands": "./src/bot/commands",
+    "@components": "./src/bot/components",
+    "@functions": "./src/bot/functions",
+    "@data": "./src/bot/data",
     "@database": "./src/database",
-    "@structures": "./src/data/structures"
+    "@structures": "./src/bot/data/structures"
   },
   "devDependencies": {
     "node": "^17.9.1"

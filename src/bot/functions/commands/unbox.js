@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const unbox = (box) => {
-  const content = JSON.parse(fs.readFileSync(`src/data/boxes/${box}.json`));
+  const content = JSON.parse(fs.readFileSync(`src/bot/data/boxes/${box}.json`));
   const bonusBoxes = ['Confection', 'Lucky'];
   const roll = Math.random() * 100;
   const result = [content[0]];

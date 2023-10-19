@@ -7,11 +7,11 @@ const client = new Client({ intents: [Int.Guilds, Int.GuildMessages, Int.GuildMe
 client.commands = new Collection();
 client.buttons = new Collection();
 
-const handlerFiles = fs.readdirSync('./src/functions/handlers').filter(f => f.endsWith('.js'));
-const botEventFiles = fs.readdirSync('./src/events/discord').filter(f => f.endsWith('.js'));
+const handlerFiles = fs.readdirSync('./src/bot/functions/handlers').filter(f => f.endsWith('.js'));
+const botEventFiles = fs.readdirSync('./src/bot/events').filter(f => f.endsWith('.js'));
 const dbEventFiles = fs.readdirSync('./src/database/events').filter(f => f.endsWith('.js'));
-const componentFolders = fs.readdirSync('./src/components');
-const commandFolders = fs.readdirSync('./src/commands');
+const componentFolders = fs.readdirSync('./src/bot/components');
+const commandFolders = fs.readdirSync('./src/bot/commands');
 
 (async () => {
   handlerFiles.forEach(file => require(`./functions/handlers/${file}`)(client));

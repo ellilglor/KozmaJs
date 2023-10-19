@@ -5,9 +5,9 @@ module.exports = (client) => {
     const { buttons, modals } = client;
     
     for (const folder of componentFolders) {
-      const componentTypeFolder = fs.readdirSync(`./src/components/${folder}`);
+      const componentTypeFolder = fs.readdirSync(`./src/bot/components/${folder}`);
       for (const subFolder of componentTypeFolder) {
-        const files = fs.readdirSync(`./src/components/${folder}/${subFolder}`).filter(f => f.endsWith('.js'));
+        const files = fs.readdirSync(`./src/bot/components/${folder}/${subFolder}`).filter(f => f.endsWith('.js'));
         for (const file of files) {
           const component = require(`@components/${folder}/${subFolder}/${file}`);
           switch (folder) {
