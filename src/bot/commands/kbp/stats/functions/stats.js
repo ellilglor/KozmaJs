@@ -1,4 +1,4 @@
-const { buildEmbed } = require('@functions/general');
+const { buildEmbed } = require('@utils/functions');
 const db = require('@database/functions/getStats');
 const { calculateCost } = require('@commands/games/unbox/functions/unbox');
 const { boxes } = require('@commands/games/unbox/data/boxData');

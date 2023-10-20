@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { buildEmbed, logCommand } = require('@functions/general');
+const { buildEmbed, logCommand } = require('@utils/functions');
 const { globals } = require('@utils/variables');
 const { text } = require('./data/languages');
 

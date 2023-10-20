@@ -1,5 +1,5 @@
 const { createLog, saveLogs, checkLog } = require('@database/functions/tradelogs');
-const { contentFilter } = require('@functions/general');
+const { contentFilter } = require('@utils/functions');
 const { channels } = require('@commands/information/findLogs/data/findlogs');
 const { globals } = require('@utils/variables');
 const fetchAll = require('discord-fetch-all');

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
-const { buildEmbed, logCommand } = require('@functions/general');
+const { buildEmbed, logCommand } = require('@utils/functions');
 const { unbox } = require('./functions/unbox');
 const { boxes } = require('./data/boxData');
 const wait = require('util').promisify(setTimeout);

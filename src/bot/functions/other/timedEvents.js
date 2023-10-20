@@ -1,4 +1,4 @@
-const { tradelogEmbed } = require('@functions/general');
+const { tradelogEmbed } = require('@utils/functions');
 const fetch = require('node-fetch');
 const { insertEvent, getEvent, updateEvent } = require('@database/functions/timedEvents');
 const { saveRate } = require('@database/functions/rate');

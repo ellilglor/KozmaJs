@@ -1,5 +1,5 @@
 const { InteractionType: type } = require('discord.js');
-const { buildEmbed } = require('@functions/general');
+const { buildEmbed } = require('@utils/functions');
 const { globals } = require('@utils/variables');
 
 module.exports = {

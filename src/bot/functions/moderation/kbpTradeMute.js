@@ -1,6 +1,6 @@
 const { dbBuyMute, dbSellMute } = require('@database/functions/tradeMute');
 const { scamPrevention } = require('@utils/reminders');
-const { tradelogEmbed } = require('@functions/general');
+const { tradelogEmbed } = require('@utils/functions');
 const { globals } = require('@utils/variables');
 
 const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => {
