@@ -4,7 +4,7 @@ const { dbCheckExpiredMutes } = require('@database/functions/tradeMute');
 const { checkForNewLogs } = require('@commands/kbp/update/functions/update');
 const { stillAlive } = require('@utils/functions');
 const { checkTimedEvents } = require('@services/timedActions/timedEvents');
-const logger = require('@services/logger');
+const logger = require('@utils/logger');
 
 module.exports = {
 	name: 'ready',
