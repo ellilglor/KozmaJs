@@ -42,21 +42,35 @@ const deployCommands = async (globalCommands, kozmaCommands) => {
 }
 
 module.exports = (client) => {
-  client.handleCommands = async (commandFolders) => {
+  client.handleCommands = async () => {
     const globalCommands = [], kozmaCommands = [];
-    
-    for (const folder of commandFolders) {
-      const commandFiles = fs.readdirSync(`./src/bot/commands/${folder}`).filter(f => f.endsWith('.js'));
-      for (const file of commandFiles) {
-	      const command = require(`@commands/${folder}/${file}`);
-	      client.commands.set(command.data.name, command);
+    const path = './src/bot/commands';
 
-        switch (folder) {
+    fs.readdirSync(path).forEach(group => {
+      fs.readdirSync(`${path}/${group}`).forEach(cmd => {
+        const command = require(`@commands/${group}/${cmd}/command.js`);
+        client.commands.set(command.data.name, command);
+
+        switch (cmd) {
           case 'kbp': kozmaCommands.push(command.data.toJSON()); break;
           default: globalCommands.push(command.data.toJSON());
         }
-      }
-    }
+
+        if (!fs.existsSync(`${path}/${group}/${cmd}/components`)) return;
+        
+        fs.readdirSync(`${path}/${group}/${cmd}/components`).forEach(folder => {
+          fs.readdirSync(`${path}/${group}/${cmd}/components/${folder}`).filter(f => f.endsWith('.js'))
+            .forEach(file => {
+              const component = require(`@commands/${group}/${cmd}/components/${folder}/${file}`);
+
+              switch (folder) {
+                case 'buttons': client.buttons.set(component.data.name, component); break;
+                case 'modals': client.modals.set(component.data.name, component); break;
+              }
+            });
+        });
+      });
+    });
 
     //await deployCommands(globalCommands, kozmaCommands);
   }

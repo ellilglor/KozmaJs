@@ -1,7 +1,7 @@
 const { ActivityType } = require('discord.js');
 const { checkOldMessages } = require('@functions/moderation/kbpTradeMute');
 const { dbCheckExpiredMutes } = require('@database/functions/tradeMute');
-const { checkForNewLogs } = require('@functions/commands/update');
+const { checkForNewLogs } = require('@commands/kbp/update/functions/update');
 const { stillAlive } = require('@functions/general');
 const { checkTimedEvents } = require('@functions/other/timedEvents');
 const logger = require('@functions/logger');
