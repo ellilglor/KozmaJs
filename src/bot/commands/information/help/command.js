@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('@functions/general');
 const { globals } = require('@data/variables');
-const { text } = require('@structures/languages');
+const { text } = require('./data/languages');
 
 module.exports = {
 	data: new SlashCommandBuilder()

@@ -1,4 +1,4 @@
-const { boxes } = require('@structures/unbox');
+const { boxes } = require('../../data/boxData');
 const { calculateCost } = require('../../functions/unbox');
 const command = require(`@commands/games/unbox/command`);
 

@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, PermissionFlagsBits: perms } = require('discord.js');
 const { buildEmbed } = require('@functions/general');
 const { convertLogs } = require('./functions/update');
-const { channels } = require('@structures/findlogs');
+const { channels } = require('@commands/information/findLogs/data/findlogs');
 const { globals } = require('@data/variables');
 
 module.exports = {

@@ -1,7 +1,7 @@
 const { buildEmbed } = require('@functions/general');
 const db = require('@database/functions/getStats');
 const { calculateCost } = require('@commands/games/unbox/functions/unbox');
-const { boxes } = require('@structures/unbox');
+const { boxes } = require('@commands/games/unbox/data/boxData');
 const { version } = require('@root/package.json');
 const { globals } = require('@data/variables');
 

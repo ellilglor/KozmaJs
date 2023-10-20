@@ -1,5 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
-const { memes } = require('@structures/punch');
+const { memes } = require('../data/punch');
 const { globals } = require('@data/variables');
 
 const players = {};

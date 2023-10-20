@@ -8,7 +8,7 @@ module.exports = {
 	async execute(interaction) {
     await interaction.channel.send({ 
       content: 'Asking for prices outside of <#1022505768869711963>?', 
-      files: ['./src/bot/data/images/we-dont-do-that-here.jpg'] 
+      files: ['./src/bot/commands/kbp/pricecheck/data/we-dont-do-that-here.jpg'] 
     });
     
 	  await interaction.editReply({ content: 'Image posted.' });

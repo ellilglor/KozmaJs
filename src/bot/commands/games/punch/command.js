@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { setPlayer, updatePlayer, craftItem, checkForGm, logCrafter } = require('./functions/punch');
 const { buildEmbed, logCommand } = require('@functions/general');
-const { data } = require('@structures/punch');
+const { data } = require('./data/punch');
 const wait = require('util').promisify(setTimeout);
 
 module.exports = {

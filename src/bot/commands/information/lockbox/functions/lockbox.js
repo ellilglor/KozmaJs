@@ -1,4 +1,4 @@
-const { boxes, slimeBoxes } = require('@structures/lockbox');
+const { boxes, slimeBoxes } = require('../data/lockboxData');
 
 const findBox = (name) => {
   return boxes.get(name);
