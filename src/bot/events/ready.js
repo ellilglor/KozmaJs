@@ -1,10 +1,10 @@
 const { ActivityType } = require('discord.js');
-const { checkOldMessages } = require('@functions/moderation/kbpTradeMute');
+const { checkOldMessages } = require('@services/moderation/kbpTradeMute');
 const { dbCheckExpiredMutes } = require('@database/functions/tradeMute');
 const { checkForNewLogs } = require('@commands/kbp/update/functions/update');
 const { stillAlive } = require('@utils/functions');
-const { checkTimedEvents } = require('@functions/other/timedEvents');
-const logger = require('@functions/logger');
+const { checkTimedEvents } = require('@services/timedActions/timedEvents');
+const logger = require('@services/logger');
 
 module.exports = {
 	name: 'ready',

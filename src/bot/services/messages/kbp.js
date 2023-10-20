@@ -1,4 +1,4 @@
-const { giveMute } = require('@functions/moderation/kbpTradeMute');
+const { giveMute } = require('@services/moderation/kbpTradeMute');
 const { globals } = require('@utils/variables');
 
 const kbp = async (message, logChannel) => {

@@ -1,5 +1,5 @@
-const { knightlauncher } = require('@functions/messages/knightlauncher');
-const { kbp } = require('@functions/messages/kbp');
+const { knightlauncher } = require('@services/messages/knightlauncher');
+const { kbp } = require('@services/messages/kbp');
 const { globals } = require('@utils/variables');
 
 module.exports = {
