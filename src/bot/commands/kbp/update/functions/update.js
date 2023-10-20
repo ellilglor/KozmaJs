@@ -1,7 +1,7 @@
 const { createLog, saveLogs, checkLog } = require('@database/functions/tradelogs');
 const { contentFilter } = require('@functions/general');
 const { channels } = require('@commands/information/findLogs/data/findlogs');
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 const fetchAll = require('discord-fetch-all');
 
 const convertLogs = async (channel, channelName, collectAll) => {

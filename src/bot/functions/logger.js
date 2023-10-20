@@ -1,4 +1,4 @@
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 const db = require('@database/functions/saveStats');
 
 class MyLogger {

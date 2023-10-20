@@ -1,6 +1,6 @@
 const { knightlauncher } = require('@functions/messages/knightlauncher');
 const { kbp } = require('@functions/messages/kbp');
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 
 module.exports = {
 	name: 'messageCreate',

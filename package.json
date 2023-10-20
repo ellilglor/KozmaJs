@@ -21,11 +21,9 @@
   "_moduleAliases": {
     "@root": ".",
     "@commands": "./src/bot/commands",
-    "@components": "./src/bot/components",
     "@functions": "./src/bot/functions",
-    "@data": "./src/bot/data",
-    "@database": "./src/database",
-    "@structures": "./src/bot/data/structures"
+    "@utils": "./src/bot/utils",
+    "@database": "./src/database"
   },
   "devDependencies": {
     "node": "^17.9.1"

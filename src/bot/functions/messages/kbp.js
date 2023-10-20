@@ -1,5 +1,5 @@
 const { giveMute } = require('@functions/moderation/kbpTradeMute');
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 
 const kbp = async (message, logChannel) => {
   if (message.author.bot) {

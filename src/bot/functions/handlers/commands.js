@@ -1,4 +1,4 @@
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord.js');
 const fs = require('fs');

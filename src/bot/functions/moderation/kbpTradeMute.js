@@ -1,7 +1,7 @@
 const { dbBuyMute, dbSellMute } = require('@database/functions/tradeMute');
-const { scamPrevention } = require('@structures/reminders');
+const { scamPrevention } = require('@utils/reminders');
 const { tradelogEmbed } = require('@functions/general');
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 
 const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => {
   if (member.roles.cache.has(globals.adminId) || member.roles.cache.has(globals.modId)) return;

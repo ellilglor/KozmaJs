@@ -4,7 +4,7 @@ const item = require('@database/schemas/stats/findlogs');
 const box = require('@database/schemas/stats/unbox');
 const user = require('@database/schemas/stats/user');
 const gambler = require('@database/schemas/stats/punch');
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 
 const saveCommand = async (cmd) => {
   let commandProfile = await command.findOne({ command: cmd });

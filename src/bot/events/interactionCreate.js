@@ -1,6 +1,6 @@
 const { InteractionType: type } = require('discord.js');
 const { buildEmbed } = require('@functions/general');
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 
 module.exports = {
 	name: 'interactionCreate',

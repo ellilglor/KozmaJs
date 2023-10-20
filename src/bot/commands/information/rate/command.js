@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('@functions/general');
 const { saveRate, getRate } = require('@database/functions/rate');
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 
 module.exports = {
 	data: new SlashCommandBuilder()

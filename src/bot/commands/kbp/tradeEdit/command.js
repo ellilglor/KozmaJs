@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('@functions/general');
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 const wait = require('util').promisify(setTimeout);
 
 module.exports = {

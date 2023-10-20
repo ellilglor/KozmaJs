@@ -1,7 +1,7 @@
 const buy = require('@database/schemas/moderation/buyMute');
 const sell = require('@database/schemas/moderation/sellMute');
 const wait = require('util').promisify(setTimeout);
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 
 const dbBuyMute = async (member, logChannel, expires) => {
   let buyProfile = await buy.findOne({ _id: member.id });

@@ -3,7 +3,7 @@ const db = require('@database/functions/getStats');
 const { calculateCost } = require('@commands/games/unbox/functions/unbox');
 const { boxes } = require('@commands/games/unbox/data/boxData');
 const { version } = require('@root/package.json');
-const { globals } = require('@data/variables');
+const { globals } = require('@utils/variables');
 
 const buildStats = async (interaction, embeds, defer) => {
   const client = interaction.client;
