@@ -65,25 +65,25 @@ const dbCheckExpiredMutes = async (client) => {
   await sell.deleteMany(query);
 }
 
-const removeRole = async (members, results, role, logChannel) => {
-  results.forEach(async (result) => {
-    const member = members.cache.get(result._id);
+const removeRole = async (members, expiredUsers, role, logChannel) => {
+  expiredUsers.forEach(async (user) => {
+    const member = members.cache.get(user._id);
     
     if (!member) {
-      return await logChannel.send(`<@${globals.ownerId}> Failed to find <@${result._id}>`);
+      return await logChannel.send(`<@${globals.ownerId}> Failed to find <@${user._id}>`);
     }
     
     await member.roles.remove(role);
     await wait(100);
     
     if (member.roles.cache.has(role.id)) {
-      await logChannel.send(`<@${globals.ownerId}> Failed to remove ${role.name} from <@${result._id}>`);
+      await logChannel.send(`<@${globals.ownerId}> Failed to remove ${role.name} from <@${user._id}>`);
     }
   });
 }
 
-const getMentions = (results, mentions) => {
-  results.forEach(r => { mentions = mentions.concat(' ', `<@${r._id}>`) });
+const getMentions = (users, mentions) => {
+  users.forEach(u => { mentions = mentions.concat(' ', `<@${u._id}>`) });
 
   console.log(mentions);
   return mentions;

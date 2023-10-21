@@ -77,15 +77,15 @@ const rollUv = (itemType, crafting, uvs) => {
 
 const getUvGrade = (type) => {
   const gradeRoll = roll();
-  let result = '\n';
+  let uvGrade = '\n';
 
   if (gradeRoll <= 245) {
-    result += type === 'Weapon' || type === 'Bomb' ? 'Very High' : 'Maximum';
+    uvGrade += type === 'Weapon' || type === 'Bomb' ? 'Very High' : 'Maximum';
   } else {
-    result += gradeRoll <= 732 ? 'High' : gradeRoll <= 2683 ? 'Medium' : 'Low';
+    uvGrade += gradeRoll <= 732 ? 'High' : gradeRoll <= 2683 ? 'Medium' : 'Low';
   } 
 
-  return result;
+  return uvGrade;
 }
 
 const getUvType = (type, crafting) => {
@@ -94,35 +94,35 @@ const getUvType = (type, crafting) => {
     const weaponRoll = Math.floor(Math.random() * num);
     
     switch (weaponRoll) {
-      case 0: result = 'Damage Bonus vs Undead:'; break;
-      case 1: result = 'Damage Bonus vs Slime:'; break;
-      case 2: result = 'Damage Bonus vs Construct:'; break;
-      case 3: result = 'Damage Bonus vs Gremlin:'; break;
-      case 4: result = 'Damage Bonus vs Fiend:'; break;
-      case 5: result = 'Damage Bonus vs Beast:'; break;
-      case 6: result = 'Charge Time Reduction:'; break;
-      case 7: result = 'Attack Speed Increase:';
+      case 0: uvType = 'Damage Bonus vs Undead:'; break;
+      case 1: uvType = 'Damage Bonus vs Slime:'; break;
+      case 2: uvType = 'Damage Bonus vs Construct:'; break;
+      case 3: uvType = 'Damage Bonus vs Gremlin:'; break;
+      case 4: uvType = 'Damage Bonus vs Fiend:'; break;
+      case 5: uvType = 'Damage Bonus vs Beast:'; break;
+      case 6: uvType = 'Charge Time Reduction:'; break;
+      case 7: uvType = 'Attack Speed Increase:';
     }
   } else {
     const num = type === 'Armor' || (type === 'Shield' && crafting) ? 11 : 4;
     const armorRoll = Math.floor(Math.random() * num);
     
     switch (armorRoll) {
-      case 0: result = 'Increased Normal Defense:'; break;
-      case 1: result = 'Increased Piercing Defense:'; break;
-      case 2: result = 'Increased Elemental Defense:'; break;
-      case 3: result = 'Increased Shadow Defense:'; break;
-      case 4: result = 'Increased Stun Resistance:'; break;
-      case 5: result = 'Increased Freeze Resistance:'; break;
-      case 6: result = 'Increased Poison Resistance:'; break;
-      case 7: result = 'Increased Fire Resistance:'; break;
-      case 8: result = 'Increased Shock Resistance:'; break;
-      case 9: result = 'Increased Curse Resistance:'; break;
-      case 10: result = 'Increased Sleep Resistance:';
+      case 0: uvType = 'Increased Normal Defense:'; break;
+      case 1: uvType = 'Increased Piercing Defense:'; break;
+      case 2: uvType = 'Increased Elemental Defense:'; break;
+      case 3: uvType = 'Increased Shadow Defense:'; break;
+      case 4: uvType = 'Increased Stun Resistance:'; break;
+      case 5: uvType = 'Increased Freeze Resistance:'; break;
+      case 6: uvType = 'Increased Poison Resistance:'; break;
+      case 7: uvType = 'Increased Fire Resistance:'; break;
+      case 8: uvType = 'Increased Shock Resistance:'; break;
+      case 9: uvType = 'Increased Curse Resistance:'; break;
+      case 10: uvType = 'Increased Sleep Resistance:';
     }
   }
 
-  return result;
+  return uvType;
 }
 
 const roll = () => {

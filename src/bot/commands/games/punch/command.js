@@ -22,7 +22,7 @@ module.exports = {
 	async execute(interaction, defer, option, crafted) {
     const item = data.get(option || interaction.options.getString('item'));
     const punch = data.get('Punch');
-    const reply = buildEmbed(interaction).setAuthor(punch).setImage(data.get('Crafting').gif);
+    const embed = buildEmbed(interaction).setAuthor(punch).setImage(data.get('Crafting').gif);
     const craftUvs = craftItem(item.type);
     
     const buttons = new ActionRowBuilder().addComponents(
@@ -39,19 +39,19 @@ module.exports = {
       logCrafter(interaction, item.name);
     }
     
-    let result = buildEmbed(interaction)
+    let finalEmbed = buildEmbed(interaction)
       .setAuthor(punch)
       .setTitle(`You crafted: ${item.name}`)
       .setThumbnail(item.image);
     
     craftUvs.forEach((uv, ind) => {
       updatePlayer(interaction, item.name, uv);
-      result.addFields([{ name: `UV #${ind + 1}`, value: uv, inline: true }]);
+      finalEmbed.addFields([{ name: `UV #${ind + 1}`, value: uv, inline: true }]);
     });
-    result.addFields([{ name: 'Amount crafted', value: crafted || '1' }]);
-    result = checkForGm(result, interaction);
+    finalEmbed.addFields([{ name: 'Amount crafted', value: crafted || '1' }]);
+    finalEmbed = checkForGm(finalEmbed, interaction);
       
-    await interaction.editReply({ embeds: [reply], components: [] });
-    await wait(2500); await interaction.editReply({ embeds: [result], components: [buttons] });
+    await interaction.editReply({ embeds: [embed], components: [] });
+    await wait(2500); await interaction.editReply({ embeds: [finalEmbed], components: [buttons] });
 	}
 };

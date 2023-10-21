@@ -6,7 +6,7 @@ const box = require('@database/schemas/stats/unbox');
 const user = require('@database/schemas/stats/user');
 
 const getCommandStats = async () => {
-  const result = await command.aggregate([
+  const data = await command.aggregate([
     { $sort: { 
       amount: -1, command: 1
     }},
@@ -27,11 +27,11 @@ const getCommandStats = async () => {
     }}
   ]);
 
-  return result;
+  return data;
 }
 
 const getFindlogStats = async () => {
-  const result = await item.aggregate([
+  const data = await item.aggregate([
     { $group: {
       _id: null, totalSearched: { $count: { } }, searched: { $push: '$$ROOT' }
     }},
@@ -49,11 +49,11 @@ const getFindlogStats = async () => {
     }},
   ]);
 
-  return result[0];
+  return data[0];
 }
 
 const getUnboxStats = async () => {
-  const result = await box.aggregate([
+  const data = await box.aggregate([
     { $sort: { 
       'amount': -1, 'box': 1
     }},
@@ -71,11 +71,11 @@ const getUnboxStats = async () => {
     }},
   ]);
 
-  return result[0];
+  return data[0];
 }
 
 const getPunchStats = async () => {
-  const result = await gambler.aggregate([
+  const data = await gambler.aggregate([
     { $group: {
       _id: null, total: { $sum: '$total' }, users: { $push: '$$ROOT' }
     }},
@@ -96,11 +96,11 @@ const getPunchStats = async () => {
     }},
   ]);
 
-  return result[0];
+  return data[0];
 }
 
 const getUserStats = async (commands, boxes) => {
-  const result = await user.aggregate([
+  const data = await user.aggregate([
     { $group: {
       _id: null, total: { $count: { } }, users: { $push: '$$ROOT' }, unboxers: { $push: '$$ROOT' }
     }},
@@ -136,7 +136,7 @@ const getUserStats = async (commands, boxes) => {
     }},
   ]);
 
-  return result[0];
+  return data[0];
 }
 
 const getTotalLogs = async () => {
@@ -144,7 +144,7 @@ const getTotalLogs = async () => {
 }
 
 const getLogStats = async (group, total) => {
-  const result = await tradelog.aggregate([
+  const data = await tradelog.aggregate([
     { $group: {
       _id: group,
       amount: { $count: { } }
@@ -157,7 +157,7 @@ const getLogStats = async (group, total) => {
     }}
   ]);
 
-  return result;
+  return data;
 }
 
 module.exports = {

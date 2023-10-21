@@ -10,12 +10,12 @@ const saveRate = async (r) => {
 
 const getRate = async () => {
   try {
-    result = await rate.findOne({ _id: '62389702e725f74faaf731b1' });
+    data = await rate.findOne({ _id: '62389702e725f74faaf731b1' });
   } catch (error) {
     console.log(error);
   }
 
-  return result.rate;
+  return data.rate;
 }
 
 module.exports = {

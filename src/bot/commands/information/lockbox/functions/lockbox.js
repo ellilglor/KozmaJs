@@ -10,25 +10,25 @@ const findSlimeBox = (name) => {
 
 const findItem = (item) => {
   const replace = /['"\+\[\]()\-{},]/g;
-  let result = '';
+  let boxOdds = '';
   
   item = item.replace(replace,"").toLowerCase();
 
   boxes.forEach((content, box) => {
     if (!content.toLowerCase().replace(replace,"").includes(item)) return;
 
-    result += `\n\n__**${box.toUpperCase()} LOCKBOX:**__\n`;
+    boxOdds += `\n\n__**${box.toUpperCase()} LOCKBOX:**__\n`;
 
     if (box === 'Iron') {
       const pools = content.replace(replace,"").toLowerCase().split('80%');
-      result += pools[0].includes(item) ? '**Inside 20% pool:**\n' : '**Inside 80% pool:**\n';
+      boxOdds += pools[0].includes(item) ? '**Inside 20% pool:**\n' : '**Inside 80% pool:**\n';
     }
 
     const lines = content.split('\n');
-    lines.forEach(l => { if (l.replace(replace,"").toLowerCase().includes(item)) result += `${l}\n` });
+    lines.forEach(l => { if (l.replace(replace,"").toLowerCase().includes(item)) boxOdds += `${l}\n` });
   });
 
-  return result;
+  return boxOdds;
 };
 
 module.exports = {

@@ -50,16 +50,16 @@ const saveData = async (user, command, option) => {
 }
 
 const contentFilter = (content) => {
-  let result = content
+  let filtered = content
     .toLowerCase()
     .replace(/vh/g, "very high")
     .replace(/['"’\+\[\]()\-{},|]/g, ' ').replace(/ {2,}/g, ' ').trim();
 
   for (const check of filters) {
-    if (result.includes(check.old) && !result.includes(check.exclude)) result = result.replace(check.old, check.new);
+    if (filtered.includes(check.old) && !filtered.includes(check.exclude)) filtered = filtered.replace(check.old, check.new);
   }
 
-	return result;
+	return filtered;
 };
 
 const stillAlive = async (client) => {

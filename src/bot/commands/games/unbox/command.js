@@ -41,7 +41,7 @@ module.exports = {
     let desc = '**In this session you opened:**';
     items[id] ||= {};
 
-    const result = buildEmbed(interaction)
+    const finalEmbed = buildEmbed(interaction)
       .setAuthor(author)
       .addFields([
         { name: 'Opened:', value: amount.toLocaleString('en'), inline: true },
@@ -50,7 +50,7 @@ module.exports = {
     
     if (showStats) {
       if (!items[id][box]) {
-        result.setDescription('The bot has restarted and this data is lost!');
+        finalEmbed.setDescription('The bot has restarted and this data is lost!');
       } else {
         // sort items from most to least opened
         items[id][box] = Object.fromEntries(
@@ -62,7 +62,7 @@ module.exports = {
           return desc.length < 4030 ? true : false;
         });
 
-        result.setDescription(desc)
+        finalEmbed.setDescription(desc)
           .addFields([
             { name: '\u200b', value: '\u200b', inline: true },
             { name: 'Unique:', value: Object.keys(items[id][box]).length.toString(), inline: true },
@@ -79,7 +79,7 @@ module.exports = {
       if (!items[id][box] || !choice) items[id][box] = {};
       unboxed.forEach(item => { items[id][box][item.name] = items[id][box][item.name] + 1 || 1 });
       
-      result.setTitle('You unboxed:').setDescription(`*${desc}*`).setImage(unboxed[0].url);
+      finalEmbed.setTitle('You unboxed:').setDescription(`*${desc}*`).setImage(unboxed[0].url);
     }
 
     const buttons = new ActionRowBuilder().addComponents(
@@ -97,11 +97,11 @@ module.exports = {
     }
 
     if (!showStats) {
-      const reply = buildEmbed(interaction).setAuthor(author).setImage(boxData.gif);
-      await interaction.editReply({ embeds: [reply], components: [] });
+      const embed = buildEmbed(interaction).setAuthor(author).setImage(boxData.gif);
+      await interaction.editReply({ embeds: [embed], components: [] });
       await wait(3000);
 	  }
     
-    await interaction.editReply({ embeds: [result], components: [buttons] });
+    await interaction.editReply({ embeds: [finalEmbed], components: [buttons] });
 	}
 };

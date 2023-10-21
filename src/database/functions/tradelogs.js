@@ -25,7 +25,7 @@ const checkLog = (id) => {
 }
 
 const findLogs = async (matches, date, checkMixed, skipSpecial, ignore) => {
-  const result = await tradelog.aggregate([
+  const data = await tradelog.aggregate([
     { $match: { $and: [
       { content: { $regex: matches, $options: 'i' } },
       { date: { $gt: date } },
@@ -45,7 +45,7 @@ const findLogs = async (matches, date, checkMixed, skipSpecial, ignore) => {
     }}
   ]);
 
-  return result;
+  return data;
 }
 
 module.exports = {

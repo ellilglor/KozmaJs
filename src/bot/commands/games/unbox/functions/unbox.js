@@ -4,31 +4,31 @@ const unbox = (box) => {
   const content = JSON.parse(fs.readFileSync(`./src/bot/commands/games/unbox/data/boxes/${box}.json`));
   const bonusBoxes = ['Confection', 'Lucky'];
   const roll = Math.random() * 100;
-  const result = [content[0]];
+  const unboxed = [content[0]];
   let prevOdds = 0;
 
   for (const item of content) {
     if ((prevOdds <= roll) && (roll < prevOdds + item.chance)) {
-      result.splice(0, result.length);
-      result.push(item)
+      unboxed.splice(0, unboxed.length);
+      unboxed.push(item)
       if (bonusBoxes.includes(box)) {
         const bonusItem = bonusRoll(box, content, roll, item.name);
-        if (bonusItem) result.push(bonusItem);
+        if (bonusItem) unboxed.push(bonusItem);
       }
-      return result;
+      return unboxed;
     }
     prevOdds += item.chance;
   }
 
-  return result;
+  return unboxed;
 }
 
 const bonusRoll = (box, content, roll, unboxed) => {
-  let result = '';
+  let bonus = '';
   
   if (box === 'Confection') {
     const bRoll = Math.random() * 100;
-    if (bRoll <= 1) result = { name: 'Sprinkle Aura' };
+    if (bRoll <= 1) bonus = { name: 'Sprinkle Aura' };
   } else if (box === 'Lucky' && roll <= 32) {
     let finished = false;
     while (!finished) {
@@ -41,7 +41,7 @@ const bonusRoll = (box, content, roll, unboxed) => {
           if (unboxed.includes(item.name)) {
             break bonusRollLoop;
           } else {
-            result = item;
+            bonus = item;
             finished = true;
             break bonusRollLoop;
           }
@@ -51,7 +51,7 @@ const bonusRoll = (box, content, roll, unboxed) => {
     }
   }
 
-  return result;
+  return bonus;
 }
 
 const calculateCost = (amount) => {

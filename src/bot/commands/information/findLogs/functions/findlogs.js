@@ -174,19 +174,19 @@ const uvSwap = (name) => {
 	const name_list = name.split(' ');
 	const ctr = name_list.indexOf('ctr');
 	const asi = name_list.indexOf('asi');
-  let result = '';
+  let swapped = '';
 
 	for (i = 0; i < Math.min(ctr, asi); i++) {
-		result += name_list[i] + ' ';
+    swapped += name_list[i] + ' ';
 	}
 	for (i = Math.max(ctr, asi); i < name_list.length; i++) {
-		result += name_list[i] + ' ';
+    swapped += name_list[i] + ' ';
 	}
 	for (i = Math.min(ctr, asi); i < Math.max(ctr, asi); i++) {
-		result += name_list[i] + ' ';
+    swapped += name_list[i] + ' ';
 	}
 
-	return result.trim();
+	return swapped.trim();
 };
 
 module.exports = {
