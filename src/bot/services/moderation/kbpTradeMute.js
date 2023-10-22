@@ -55,12 +55,12 @@ const checkOldMessages = async (client) => {
 
 const checkTradeMessages = async (channel, role, logChannel) => {
   const messages = await channel.messages.fetch({ limit: 25 });
-  const title = 'This message is a reminder of the __22 hour slowmode__ in this channel!';
+  const title = `This message is a reminder of the __${globals.slowmodeHours} hour slowmode__ in this channel!`;
   let remind = true;
 
   for (const [id, msg] of messages) {
     const expires = msg.createdAt;
-    expires.setHours(expires.getHours() + 22);
+    expires.setHours(expires.getHours() + globals.slowmodeHours);
     if (globals.date > expires) break;
 
     if (msg.author.bot && msg.embeds[0]?.data.title === title) remind = false;

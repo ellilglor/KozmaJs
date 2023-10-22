@@ -15,6 +15,7 @@ const globals = {
   serverInvite: 'https://discord.gg/7tX9hxezvZ',
   github: 'https://github.com/ellilglor/KozmaJs',
   date: new Date(),
+  slowmodeHours: 22,
 }
 
 module.exports = { globals };

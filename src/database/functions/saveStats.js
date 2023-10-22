@@ -5,6 +5,7 @@ const box = require('@database/schemas/stats/unbox');
 const user = require('@database/schemas/stats/user');
 const gambler = require('@database/schemas/stats/punch');
 const { globals } = require('@utils/variables');
+const { prices } = require('@commands/games/punch/data/punch');
 
 const saveCommand = async (cmd) => {
   let commandProfile = await command.findOne({ command: cmd });
@@ -97,9 +98,9 @@ const saveGambler = async (u, ticket) => {
     gProfile = new gambler({
       _id: u.id,
       tag: u.tag,
-      ...(ticket === 20000 && { single: ticket }),
-      ...(ticket === 75000 && { double: ticket }),
-      ...(ticket === 225000 && { triple: ticket }),
+      ...(ticket === prices.single && { single: ticket }),
+      ...(ticket === prices.double && { double: ticket }),
+      ...(ticket === prices.triple && { triple: ticket }),
       total: ticket
     })
     
@@ -107,9 +108,9 @@ const saveGambler = async (u, ticket) => {
   } else {
     try {
       switch (ticket) {
-        case 20000: await gambler.findOneAndUpdate({ _id: u.id }, { single: gProfile.single += ticket }); break;
-        case 75000: await gambler.findOneAndUpdate({ _id: u.id }, { double: gProfile.double += ticket }); break;
-        case 225000: await gambler.findOneAndUpdate({ _id: u.id }, { triple: gProfile.triple += ticket }); break;
+        case prices.single: await gambler.findOneAndUpdate({ _id: u.id }, { single: gProfile.single += ticket }); break;
+        case prices.double: await gambler.findOneAndUpdate({ _id: u.id }, { double: gProfile.double += ticket }); break;
+        case prices.triple: await gambler.findOneAndUpdate({ _id: u.id }, { triple: gProfile.triple += ticket }); break;
       }
 
       await gambler.findOneAndUpdate({ _id: u.id }, { total: gProfile.total += ticket });

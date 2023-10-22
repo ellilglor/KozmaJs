@@ -2,7 +2,7 @@ const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const { updatePlayer, rollUv, checkForGm, logGambler } = require('../../functions/punch');
 const { saveGambler } = require('@database/functions/saveStats');
 const { buildEmbed } = require('@utils/functions');
-const { data } = require('../../data/punch');
+const { data, prices } = require('../../data/punch');
 const wait = require('util').promisify(setTimeout);
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
     let embed = EmbedBuilder.from(interaction.message.embeds[0]).setDescription(null);
     const lockButtons = ActionRowBuilder.from(interaction.message.components[0]);
     const gambleButtons = ActionRowBuilder.from(interaction.message.components[1]);
-    const uvs = [], crafting = false, item = data.get(embed.data.title), ticket = 225000;
+    const uvs = [], crafting = false, item = data.get(embed.data.title);
     let lock1Loc = -1, lock2Loc = -1, index = 4, tripleRolls = false;
 
     embed.data.fields.every((f, ind) => {
@@ -50,7 +50,7 @@ module.exports = {
     const field = { name: '🔓 UV #3', value: rollUv(item.type, crafting, uvs), inline: true };
     embed.data.fields[2].name.includes('UV') ? embed.data.fields[2] = field : embed.data.fields.splice(2, 0, field);
 
-    embed.data.fields[3].value = (parseInt(embed.data.fields[3].value.replace(/,/g, '')) + ticket).toLocaleString('en');
+    embed.data.fields[3].value = (parseInt(embed.data.fields[3].value.replace(/,/g, '')) + prices.triple).toLocaleString('en');
     embed.data.fields.forEach(f => {
       if (f.name.includes('🔓')) updatePlayer(interaction, item.name, f.value);
       
@@ -63,8 +63,8 @@ module.exports = {
     if (!tripleRolls) embed.data.fields.splice(index, 0, { name: 'Triple Rolls', value: '1', inline: true });
 
     embed = checkForGm(embed, interaction);
-    await saveGambler(interaction.user, ticket);
-    logGambler(interaction, ticket);
+    await saveGambler(interaction.user, prices.triple);
+    logGambler(interaction, prices.triple);
 
     lockButtons.components[1].setDisabled(false);
     lockButtons.components[2].setDisabled(false);

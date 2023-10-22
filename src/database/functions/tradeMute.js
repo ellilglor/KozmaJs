@@ -3,11 +3,12 @@ const sell = require('@database/schemas/moderation/sellMute');
 const wait = require('util').promisify(setTimeout);
 const { globals } = require('@utils/variables');
 
+
 const dbBuyMute = async (member, logChannel, expires) => {
   let buyProfile = await buy.findOne({ _id: member.id });
 
   if (!buyProfile) {
-    expires.setHours(expires.getHours() + 22);
+    expires.setHours(expires.getHours() + globals.slowmodeHours);
     
     buyProfile = new buy({
       _id: member.id,
@@ -24,7 +25,7 @@ const dbSellMute = async (member, logChannel, expires) => {
   let sellProfile = await sell.findOne({ _id: member.id });
 
   if (!sellProfile) {
-    expires.setHours(expires.getHours() + 22);
+    expires.setHours(expires.getHours() + globals.slowmodeHours);
     
     sellProfile = new sell({
       _id: member.id,

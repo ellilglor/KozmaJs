@@ -58,7 +58,14 @@ const memes = [
 { author: 'sirzlime#7373', url: 'https://cdn.discordapp.com/attachments/647164081572282388/887822773764898816/unknown.png' }
 ];
 
+const prices = {
+  single: 20000,
+  double: 75000,
+  triple: 225000
+}
+
 module.exports = {
   data,
-  memes
+  memes,
+  prices
 }
