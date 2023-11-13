@@ -12,7 +12,6 @@ module.exports = {
 	async execute(client) {
 		console.log(`Ready! Logged in as ${client.user.tag}`);
     client.user.setPresence({ activities: [{ name: '/help', type: ActivityType.Listening }], status: 'online' });
-    client.keepAlive();
 
     logger.setLogChannel(client);
     

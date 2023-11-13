@@ -1,7 +1,2 @@
 node_modules/
 .env
-.cache/replit
-eng.traineddata
-.replit
-.replit.backup
-replit.nix
