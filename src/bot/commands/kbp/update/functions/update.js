@@ -1,7 +1,5 @@
 const { createLog, saveLogs, checkLog } = require('@database/functions/tradelogs');
 const { contentFilter } = require('@utils/functions');
-const { channels } = require('@commands/information/findLogs/data/findlogs');
-const { globals } = require('@utils/variables');
 const fetchAll = require('discord-fetch-all');
 
 const convertLogs = async (channel, channelName, collectAll) => {
@@ -30,37 +28,6 @@ const convertLogs = async (channel, channelName, collectAll) => {
   await saveLogs(logs, channelName, clearDB);
   return { name: channelName, amount: logs.length };
 };
-
-const checkForNewLogs = async (client) => {
-  const logChannel = client.channels.cache.get(globals.botLogsChannelId);
-  const string = 'Checking for new tradelogs.';
-  let stop = false;
-
-  const logMessages = await logChannel.messages.fetch({ limit: 20 });
-  logMessages.every(msg => {
-    if (msg.content === string) stop = true;
-    return !stop;
-  });
-
-  if (stop) return;
-
-  console.log(string);
-  await logChannel.send(string);
-  const collectAll = false;
-  
-  for (const [name, id] of channels) {
-    const chnl = client.channels.cache.get(id);
-
-    if (!chnl) continue;
-
-    if (chnl.isThread()) {
-      await chnl.setArchived(true);
-      await chnl.setArchived(false);
-    }
-    
-    await convertLogs(chnl, name, collectAll);
-  }
-}
 
 const messageSnipper = (msg, channel) => {
   if (!msg.content) return;
@@ -97,6 +64,5 @@ const messageSnipper = (msg, channel) => {
 };
 
 module.exports = {
-  convertLogs,
-  checkForNewLogs
+  convertLogs
 };

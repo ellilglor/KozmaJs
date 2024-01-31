@@ -1,5 +1,4 @@
 const globals = {
-  ownerTag: 'ellilglor#6866',
   ownerId: '214787913097936896',
   botId: '898505614404235266',
   serverId: '760222722919497820',
@@ -14,7 +13,6 @@ const globals = {
   wtsRole: 'WTS-Cooldown',
   serverInvite: 'https://discord.gg/7tX9hxezvZ',
   github: 'https://github.com/ellilglor/KozmaJs',
-  date: new Date(),
   slowmodeHours: 22,
 }
 

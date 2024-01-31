@@ -1,9 +1,7 @@
 const { ActivityType } = require('discord.js');
-const { checkOldMessages } = require('@services/moderation/kbpTradeMute');
 const { dbCheckExpiredMutes } = require('@database/functions/tradeMute');
-const { checkForNewLogs } = require('@commands/kbp/update/functions/update');
 const { stillAlive } = require('@utils/functions');
-const { checkTimedEvents } = require('@services/timedActions/timedEvents');
+const { checkTimedEvents, checkTradeMessages } = require('@services/timedActions/timedEvents');
 const logger = require('@utils/logger');
 
 module.exports = {
@@ -15,12 +13,11 @@ module.exports = {
 
     logger.setLogChannel(client);
     
-    await checkOldMessages(client);
+    await checkTradeMessages(client);
     
     const check = async () => {
       await checkTimedEvents(client);
       await dbCheckExpiredMutes(client);
-      await checkForNewLogs(client);
       await stillAlive(client);
       setTimeout(check, 1000 * 60 * 30);
     }

@@ -10,8 +10,8 @@ const insertEvent = async (name) => {
   await profile.save().catch(err => console.log(err));
 }
 
-const getEvent = async (name) => {
-  return await event.findOne({ name: name });
+const getEvents = async (filter) => {
+  return await event.find(filter, 'name updatedAt');
 }
 
 const updateEvent = async (name) => {
@@ -20,6 +20,6 @@ const updateEvent = async (name) => {
 
 module.exports = {
   insertEvent,
-  getEvent,
+  getEvents,
   updateEvent
 }
