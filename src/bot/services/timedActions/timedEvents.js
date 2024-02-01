@@ -6,6 +6,7 @@ const { globals } = require('@utils/variables');
 const { scamPrevention } = require('@utils/reminders');
 const { convertLogs } = require('@commands/kbp/update/functions/update');
 const { channels } = require('@commands/information/findLogs/data/findlogs');
+const { dbBuyMute, dbSellMute } = require('@database/functions/tradeMute');
 
 const checkTimedEvents = async (client) => {
   const entries = await getEvents({ name: { $ne: events.offlineMutes.name }});
@@ -144,12 +145,6 @@ const checkTradeMessages = async (client) => {
   const WTBrole = guild.roles.cache.find(r => r.name === globals.wtbRole);
   const WTSrole = guild.roles.cache.find(r => r.name === globals.wtsRole);
 
-  console.log(string);
-  await logChannel.send(string);
-  await checkMessages(WTBchannel, WTBrole, logChannel, d);
-  await checkMessages(WTSchannel, WTSrole, logChannel, d);
-  await updateEvent(entry.name);
-
   const checkMessages = async (channel, role, logChannel, d) => {
     const messages = await channel.messages.fetch({ limit: 25 });
   
@@ -171,6 +166,12 @@ const checkTradeMessages = async (client) => {
       }
     }
   }
+
+  console.log(string);
+  await logChannel.send(string);
+  await checkMessages(WTBchannel, WTBrole, logChannel, d);
+  await checkMessages(WTSchannel, WTSrole, logChannel, d);
+  await updateEvent(entry.name);
 }
 
 const events = {
