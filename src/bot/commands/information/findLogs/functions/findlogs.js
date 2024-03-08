@@ -1,6 +1,6 @@
 const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { tradelogEmbed, buildEmbed, contentFilter } = require('@utils/functions');
-const { findLogs } = require('@database/functions/tradelogs');
+const dbRepo = require('@database/repos/dbRepo');
 const structures = require('../data/findlogs');
 const { globals } = require('@utils/variables');
 
@@ -32,7 +32,7 @@ const searchLogs = async (interaction, items, months, checkVariants, checkClean,
   const checkForMatch = items.concat(reverse).toString().replace(/,/g, '.*|').concat('.*');
   const ignoreString = ignore.toString().replace(/,/g, '.*|').concat('.*');
 
-  const matches = await findLogs(checkForMatch, stopHere, checkMixed, skipSpecial, ignoreString);
+  const matches = await dbRepo.findTradelogs(checkForMatch, stopHere, checkMixed, skipSpecial, ignoreString);
   const matchCount = matches.reduce((total, channel) => total += channel.messages.length, 0);
 
   for (const channel of matches) {

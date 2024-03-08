@@ -1,5 +1,5 @@
 const { ActivityType } = require('discord.js');
-const { dbCheckExpiredMutes } = require('@database/functions/tradeMute');
+const dbRepo = require('@database/repos/dbRepo');
 const { stillAlive } = require('@utils/functions');
 const { checkTimedEvents, checkTradeMessages } = require('@services/timedActions/timedEvents');
 const logger = require('@utils/logger');
@@ -17,7 +17,7 @@ module.exports = {
     
     const check = async () => {
       await checkTimedEvents(client);
-      await dbCheckExpiredMutes(client);
+      await dbRepo.checkExpiredMutes(client);
       await stillAlive(client);
       setTimeout(check, 1000 * 60 * 30);
     }

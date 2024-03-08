@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('@utils/functions');
-const { saveRate, getRate } = require('@database/functions/rate');
+const dbRepo = require('@database/repos/dbRepo');
+const { statTypes } = require('@database/repos/types');
 const { globals } = require('@utils/variables');
 
 module.exports = {
@@ -16,13 +17,13 @@ module.exports = {
 
     if (newValue) {
       if (interaction.member?.roles.cache.some(r => r.id === globals.adminId || r.id === globals.modId)) {
-        await saveRate(newValue);
+        await dbRepo.saveToDb(statTypes.rate, newValue);
         reply.setTitle(`The conversion rate has been changed to: ${newValue}.`);
       } else { 
         reply.setTitle(`You don't have permission to set a new rate!`).setColor('#e74c3c');;
       }
     } else {
-      const rate = await getRate();
+      const rate = await dbRepo.getMarketRate();
       reply.setTitle(`The current crowns per energy rate is: ${rate}.`);
     }
     

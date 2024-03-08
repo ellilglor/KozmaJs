@@ -1,4 +1,4 @@
-const { createLog, saveLogs, checkLog } = require('@database/functions/tradelogs');
+const dbRepo = require('@database/repos/dbRepo');
 const { contentFilter } = require('@utils/functions');
 const fetchAll = require('discord-fetch-all');
 
@@ -20,12 +20,12 @@ const convertLogs = async (channel, channelName, collectAll) => {
     for (const [id, message] of messages) {
       const msg = messageSnipper(message, channelName);
       if (!msg) continue;
-      if (await checkLog(id)) break;
+      if (await dbRepo.checkIfTradelogExists(id)) break;
       logs.push(msg);
     }
   }
 
-  await saveLogs(logs, channelName, clearDB);
+  await dbRepo.saveTradelogs(logs, channelName, clearDB);
   return { name: channelName, amount: logs.length };
 };
 
@@ -49,7 +49,7 @@ const messageSnipper = (msg, channel) => {
     text = text.concat('\n\n', '*This message had multiple images*\n*Click the date to look at them*');
   }
 
-  const profile = createLog({
+  const profile = dbRepo.createTradelog({
     id: msg.id,
     channel: channel,
     author: author,

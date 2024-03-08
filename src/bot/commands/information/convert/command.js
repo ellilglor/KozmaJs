@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { buildEmbed, logCommand } = require('@utils/functions');
+const dbRepo = require('@database/repos/dbRepo');
 const { getRate } = require('@database/functions/rate');
 
 module.exports = {
@@ -26,7 +27,7 @@ module.exports = {
   async execute(interaction) {
     const amount = interaction.options.getInteger('amount');
     const currency = interaction.options.getString('currency');
-    const rate = interaction.options.getInteger('rate') || await getRate();
+    const rate = interaction.options.getInteger('rate') || await dbRepo.getMarketRate();
     const reply = buildEmbed(interaction).setDescription(`Used conversion rate: **${rate}** Crowns per Energy.`);
 
     if (currency === 'crowns') {

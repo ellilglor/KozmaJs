@@ -1,15 +1,14 @@
 const { tradelogEmbed } = require('@utils/functions');
 const fetch = require('node-fetch');
-const { getEvents, updateEvent } = require('@database/functions/timedEvents');
-const { saveRate } = require('@database/functions/rate');
+const dbRepo = require('@database/repos/dbRepo');
 const { globals } = require('@utils/variables');
 const { scamPrevention } = require('@utils/reminders');
 const { convertLogs } = require('@commands/kbp/update/functions/update');
 const { channels } = require('@commands/information/findLogs/data/findlogs');
-const { dbBuyMute, dbSellMute } = require('@database/functions/tradeMute');
+const { muteTypes, statTypes } = require('@database/repos/types');
 
 const checkTimedEvents = async (client) => {
-  const entries = await getEvents({ name: { $ne: events.offlineMutes.name }});
+  const entries = await dbRepo.getEvents({ name: { $ne: events.offlineMutes.name }});
   const d = new Date();
 
   entries.forEach(async (entry) => {
@@ -24,7 +23,7 @@ const checkTimedEvents = async (client) => {
       case events.newLogs.name: await checkForNewLogs(client); break;
     }
 
-    await updateEvent(entry.name);
+    await dbRepo.updateEvent(entry.name);
   })
 }
 
@@ -64,7 +63,7 @@ const postEnergyMarket = async (client) => {
       inline: true
     }]);
 
-  await saveRate(rate);
+  await dbRepo.saveToDb(statTypes.rate, rate);
   await channel.send({ embeds: [embed] });
 }
 
@@ -126,7 +125,7 @@ const checkForNewLogs = async (client) => {
 
 const checkTradeMessages = async (client) => {
   const d = new Date();
-  const fetched = await getEvents({ name: events.offlineMutes.name });
+  const fetched = await dbRepo.getEvents({ name: events.offlineMutes.name });
   const entry = fetched[Object.keys(fetched)[0]];
 
   if (entry.updatedAt.setHours(entry.updatedAt.getHours() + events[entry.name].time) > d) return;
@@ -161,8 +160,8 @@ const checkTradeMessages = async (client) => {
       await member.roles.add(role);
   
       switch (role.name) {
-        case globals.wtbRole: await dbBuyMute(member.user, logChannel, msg.createdAt); break;
-        case globals.wtsRole: await dbSellMute(member.user, logChannel, msg.createdAt); break;
+        case globals.wtbRole: await dbRepo.giveMute(muteTypes.buy, member.user, msg.createdAt, logChannel); break;
+        case globals.wtsRole: await dbRepo.giveMute(muteTypes.sell, member.user, msg.createdAt, logChannel); break;
       }
     }
   }
@@ -171,7 +170,7 @@ const checkTradeMessages = async (client) => {
   await logChannel.send(string);
   await checkMessages(WTBchannel, WTBrole, logChannel, d);
   await checkMessages(WTSchannel, WTSrole, logChannel, d);
-  await updateEvent(entry.name);
+  await dbRepo.updateEvent(entry.name);
 }
 
 const events = {

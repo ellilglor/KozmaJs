@@ -1,6 +1,7 @@
 const { EmbedBuilder, ActionRowBuilder } = require('discord.js');
 const { updatePlayer, rollUv, checkForGm, logGambler } = require('../../functions/punch');
-const { saveGambler } = require('@database/functions/saveStats');
+const dbRepo = require('@database/repos/dbRepo');
+const { statTypes } = require('@database/repos/types');
 const { buildEmbed } = require('@utils/functions');
 const { data, prices } = require('../../data/punch');
 const wait = require('util').promisify(setTimeout);
@@ -47,7 +48,7 @@ module.exports = {
     if (!doubleRolls) embed.data.fields.splice(index, 0, { name: 'Double Rolls', value: '1', inline: true });
 
     embed = checkForGm(embed, interaction);
-    await saveGambler(interaction.user, prices.double);
+    await dbRepo.saveToDb(statTypes.gambler, interaction.user, prices.double);
     logGambler(interaction, prices.double);
 
     lockButtons.components[1].setDisabled(false);

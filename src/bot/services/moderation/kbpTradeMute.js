@@ -1,4 +1,5 @@
-const { dbBuyMute, dbSellMute } = require('@database/functions/tradeMute');
+const dbRepo = require('@database/repos/dbRepo');
+const { muteTypes } = require('@database/repos/types');
 const { globals } = require('@utils/variables');
 
 const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => {
@@ -10,8 +11,8 @@ const giveMute = async ({ member, guild, createdAt, channelId }, logChannel) => 
   if (!role) return await logChannel.send(`<@${globals.ownerId}> no role "${name}" was found`);
 
   switch (name) {
-    case globals.wtbRole: await dbBuyMute(member.user, logChannel, createdAt); break;
-    case globals.wtsRole: await dbSellMute(member.user, logChannel, createdAt); break;
+    case globals.wtbRole: await dbRepo.giveMute(muteTypes.buy ,member.user, createdAt, logChannel); break;
+    case globals.wtsRole: await dbRepo.giveMute(muteTypes.sell, member.user, createdAt, logChannel); break;
   }
 
   await member.roles.add(role);

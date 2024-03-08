@@ -1,5 +1,6 @@
 const { buildEmbed } = require('@utils/functions');
-const db = require('@database/functions/getStats');
+const dbRepo = require('@database/repos/dbRepo');
+const { statTypes } = require('@database/repos/types');
 const { calculateCost } = require('@commands/games/unbox/functions/unbox');
 const { boxes } = require('@commands/games/unbox/data/boxData');
 const { version } = require('@root/package.json');
@@ -8,12 +9,13 @@ const { globals } = require('@utils/variables');
 const buildStats = async (interaction, embeds, defer) => {
   const client = interaction.client;
   const guild = await client.guilds.fetch(globals.serverId);
-  const logCount = await db.getTotalLogs();
-  const unboxStats = await db.getUnboxStats();
-  const findlogStats = await db.getFindlogStats();
-  const commandStats = await db.getCommandStats();
-  const punchStats = await db.getPunchStats();
-  const userStats = await db.getUserStats(commandStats[0].total, unboxStats.total);
+  const logCount = await dbRepo.getStats(statTypes.logCount);
+  const unboxStats = await dbRepo.getStats(statTypes.box);
+  const findlogStats = await dbRepo.getStats(statTypes.searched);
+  const commandStats = await dbRepo.getStats(statTypes.command);
+  const punchStats = await dbRepo.getStats(statTypes.gambler);
+  const userStats = await dbRepo.getStats(statTypes.user, commandStats[0].total, unboxStats.total);
+
   const punchSessions = commandStats[1].total - unboxStats.total;
 
   const info = buildEmbed(interaction).setTitle('General info');
@@ -221,7 +223,7 @@ const buildTradelogEmbed = async (interaction, type, total) => {
   const title = type === '$author' ? 'All loggers' : 'Tradelog channels';
   const fieldName = type === '$author' ? 'Discord tag:' : 'Channel:';
   const embed = buildEmbed(interaction).setTitle(title);
-  const stats = await db.getLogStats(type, total);
+  const stats = await dbRepo.getStats(statTypes.logStats, type, total);
   let field1 = '', posts = '', percentages = '';
 
   stats.forEach((stat, index) => {

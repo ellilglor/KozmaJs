@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require('discord.js');
-const db = require('@database/functions/saveStats');
+const { statTypes } = require('@database/repos/types');
+const dbRepo = require('@database/repos/dbRepo')
 const { filters } = require('@commands/information/findLogs/data/findlogs');
 const { globals } = require('@utils/variables');
 
@@ -35,17 +36,17 @@ const logCommand = async ({ client, options, member, user, commandName, message:
 };
 
 const saveData = async (user, command, option) => {
-  await db.saveUser(user, command);
-  await db.saveCommand(command);
+  await dbRepo.saveToDb(statTypes.user, user, command);
+  await dbRepo.saveToDb(statTypes.command, command);
 
   switch (command) {
     case 'findlogs':
       option = option.replace(/[0-9]/g, '').replace(' variant-search', '').replace(' single-search', '');
       option = option.replace(' mixed-search', '').replace(' mixed-ignore', '');
       option = contentFilter(option);
-      await db.saveSearched(option); break;
+      await dbRepo.saveToDb(statTypes.searched, option); break;
     case 'unbox':
-      await db.saveBox(option.trim()); break;
+      await dbRepo.saveToDb(statTypes.box, option.trim()); break;
   }
 }
 

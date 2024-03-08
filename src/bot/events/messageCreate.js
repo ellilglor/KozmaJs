@@ -5,8 +5,9 @@ const { globals } = require('@utils/variables');
 module.exports = {
 	name: 'messageCreate',
 	async execute(message, client) {
+    let logChannel;
     try {
-      const logChannel = client.channels.cache.get(globals.botLogsChannelId);
+      logChannel = client.channels.cache.get(globals.botLogsChannelId);
 
       switch (message.guildId) {
         case '653349356459786240': await knightlauncher(message); break;
