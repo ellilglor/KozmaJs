@@ -105,7 +105,7 @@ const equipmentFamilies = {
   'toxic catalyzer', 'industrial catalyzer', 'volatile catalyzer', 'virulent catalyzer', 'neutralizer', 'biohazard', 'catalyzer'
 ],
 "alchemers": [
-   'shadowtech alchemer mk ii', 'prismatech alchemer mk ii', 'firotech alchemer mk ii', 'cryotech alchemer mk ii', 'volt driver',
+  'alchemer', 'shadowtech alchemer mk ii', 'prismatech alchemer mk ii', 'firotech alchemer mk ii', 'cryotech alchemer mk ii', 'volt driver',
   'shadow driver', 'prisma driver', 'firo driver', 'cryo driver', 'umbra driver', 'storm driver', 'nova driver', 'magma driver',
   'hail driver', 'voltech alchemer', 'shadowtech alchemer', 'prismatech alchemer', 'firotech alchemer', 'cryotech alchemer'
 ],
@@ -131,13 +131,13 @@ const equipmentFamilies = {
   'super splinter bomb', 'super shard bomb', 'super dark matter bomb', 'super crystal bomb', 'rock salt bomb', 'radiant sun shards',
   'ionized salt bomb', 'heavy splinter bomb', 'heavy shard bomb', 'heavy dark matter bomb', 'heavy crystal bomb',
   'shocking salt bomb', 'scintillating sun shards', 'deadly splinter bomb', 'deadly shard bomb', 'deadly dark matter bomb',
-  'deadly crystal bomb', 'splinter bomb', 'shard bomb', 'dark matter bomb', 'crystal bomb', 'sun shards'
+  'deadly crystal bomb', 'splinter bomb', 'shard bomb', 'dark matter bomb', 'crystal bomb', 'sun shards', 'shard bomb'
 ],
 "mist bombs": [ 
   'haze bomb mk ii', 'lightning capacitor', 'toxic vaporizer mk ii', 'slumber smogger mk ii', ' freezing vaporizer mk ii',
   'fiery vaporizer mk ii', 'haze burst', 'plasma capacitor', 'toxic atomizer', 'slumber squall', 'freezing atomizer',
   'fiery atomizer', 'stagger storm', 'voltaic tempest', 'venom veiler', 'torpor tantrum', 'shivermist buster', 'ash of agni',
-  'haze bomb', 'static capacitor', 'toxic vaporizer', 'slumber smogger', 'freezing vaporizer', 'fiery vaporizer'
+  'haze bomb', 'static capacitor', 'toxic vaporizer', 'slumber smogger', 'freezing vaporizer', 'fiery vaporizer', 'mist bomb'
 ],
 "snarb bombs": [
   'twisted spine cone', 'spike shower', 'dark briar barrage', 'spine cone'
