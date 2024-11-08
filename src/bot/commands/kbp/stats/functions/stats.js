@@ -48,7 +48,7 @@ const buildStats = async (interaction, embeds, defer) => {
 
   embeds.push(
     info,
-    serverStats.embed,
+    ...serverStats.embeds,
     commandEmbed,
     gameEmbed,
     userEmbed,
@@ -68,11 +68,8 @@ const buildStats = async (interaction, embeds, defer) => {
 }
 
 const buildServerStats = async (interaction, client) => {
-  const embed = buildEmbed(interaction).setTitle('Servers');
-  const servers = client.guilds.cache.map(g => { return { name: g.name, members: g.memberCount } });
-  servers.sort((a, b) => b.members - a.members);
+  const embeds = [];
   const members = {};
-  let field1 = '', field2 = '';
 
   for (const [id, guild] of client.guilds.cache) {
     await guild.members.fetch();
@@ -86,23 +83,33 @@ const buildServerStats = async (interaction, client) => {
 
   const uniqueMembers = Object.keys(members).length;
 
-  servers.forEach((server, index) => {
-    if (index < (servers.length / 2)) {
-      field1 = field1.concat('', `${index + 1}. **${server.name}**: ${server.members}\n`);
-    } else {
-      field2 = field2.concat('', `${index + 1}. **${server.name}**: ${server.members}\n`);
-    }
-  });
-  
-  embed.addFields([
-    { name: '\u200B', value: field1, inline: true },
-    { name: '\u200B', value: field2, inline: true },
-    { name: '\u200B', value: '\u200B', inline: true },
-    { name: 'Total:', value: client.guilds.cache.size.toLocaleString('en'), inline: true },
-    { name: 'Unique available users:', value: uniqueMembers.toLocaleString('en'), inline: true }
-  ]);
+  const serverPages = Array.from(client.guilds.cache.values())
+    .sort((a, b) => b.memberCount - a.memberCount)
+    .map((server, index) => `${index + 1}. **${server.name}**: ${server.memberCount}`)
+    .reduce((pages, info, index) => {
+        const pageIndex = Math.floor(index / 20);
+        if (!pages[pageIndex]) {
+            pages[pageIndex] = [];
+        }
+        pages[pageIndex].push(info);
+        return pages;
+    }, [])
+    .map(page => page.join("\n"));
 
-  return { embed: embed, total: uniqueMembers };
+    for (let i = 0; i < serverPages.length; i += 2) {
+      const embed = buildEmbed(interaction).setTitle('Servers');
+      embed.addFields([
+        { name: '\u200B', value: serverPages[i], inline: true },
+        { name: '\u200B', value: i + 1 < serverPages.length ? serverPages[i + 1] : '\u200B', inline: true },
+        { name: '\u200B', value: '\u200B', inline: true },
+        { name: 'Total:', value: client.guilds.cache.size.toLocaleString('en'), inline: true },
+        { name: 'Unique available users:', value: uniqueMembers.toLocaleString('en'), inline: true }
+      ]);
+
+      embeds.push(embed);
+    }
+
+  return { embeds: embeds, total: uniqueMembers };
 }
 
 const buildCommandEmbed = (interaction, stats) => {
