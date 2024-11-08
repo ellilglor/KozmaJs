@@ -3,14 +3,14 @@
   "version": "2.6.9",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --nolazy --inspect src/bot/bot.js",
     "start": "node src/bot/bot.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/rest": "^1.7.1",
+    "@discordjs/rest": "^2.4.0",
     "discord-fetch-all": "^3.0.2",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
@@ -25,7 +25,7 @@
     "@database": "./src/database"
   },
   "devDependencies": {
-    "node": "^17.9.1"
+    "node": "^22.11.0"
   },
   "description": "A Discord bot for the [Spiral Knights](https://store.steampowered.com/app/99900/Spiral_Knights/) community.",
   "repository": {
