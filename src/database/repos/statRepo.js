@@ -258,7 +258,7 @@ class statRepo {
     }
 
     async getTotalLogs() {
-        return await tradelogSchema.count();
+        return await tradelogSchema.countDocuments();
     }
 
     async getLogStats(group, total) {

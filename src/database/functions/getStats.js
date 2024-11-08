@@ -140,7 +140,7 @@ const getUserStats = async (commands, boxes) => {
 }
 
 const getTotalLogs = async () => {
-  return await tradelog.count();
+  return await tradelog.countDocuments();
 }
 
 const getLogStats = async (group, total) => {

@@ -13,9 +13,6 @@ module.exports = (client) => {
     
     mongoose.set('strictQuery', false);
     mongoose.Promise = global.Promise;
-    await mongoose.connect(process.env.dbToken, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-    });
+    await mongoose.connect(process.env.dbToken);
   }
 }
