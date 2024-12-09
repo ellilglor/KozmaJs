@@ -174,7 +174,7 @@ const checkTradeMessages = async (client) => {
 }
 
 const events = {
-  energyMarket: { name: 'energyMarket', time: 12 },
+  energyMarket: { name: 'energyMarket', time: 6 },
   slowmodeReminder: { name: 'slowmodeReminder', time: 36 },
   scamPrevention: { name: 'scamPrevention', time: 72 },
   newLogs: { name: 'newLogs', time: 6 },
